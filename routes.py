@@ -23,6 +23,9 @@ def apiPeople():
     if people == 'failed':
         return 'Connection to DB failed'
     else:
+
+        """ https://stackoverflow.com/questions/16908943/display-json-returned-from-flask-in-a-neat-way
+        https://www.programiz.com/python-programming/json """
         return current_app.response_class(
                                         json.dumps(
                                                     people,

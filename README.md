@@ -4,7 +4,7 @@ Data Centric Development Milestone Project - Code Institute
 ## Table Of Contents:
 
 ## Demo
-You can try the live version of the game [Here]()<br><br>
+You can try the live version of the API [Here](https://expanse-api.herokuapp.com/)<br><br>
 
 
 ## UX
