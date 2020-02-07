@@ -1,4 +1,4 @@
-# Star Wars: Side-Scrolling Shooter
+# The Expanse API
 Data Centric Development Milestone Project - Code Institute
 
 ## Table Of Contents:
