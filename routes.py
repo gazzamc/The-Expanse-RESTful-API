@@ -1,5 +1,7 @@
 import os
-from flask import Flask
+from flask import Flask, request, json, current_app
+from queries import getPeople
+
 
 app = Flask(__name__)
 
@@ -11,12 +13,22 @@ def home():
 
 @app.route('/api')
 def apiBase():
-    return 'api endpoints here'
+    return request.args
 
 
 @app.route('/api/people')
 def apiPeople():
-    return 'people results here'
+    people = getPeople()
+
+    if people == 'failed':
+        return 'Connection to DB failed'
+    else:
+        return current_app.response_class(
+                                        json.dumps(
+                                                    people,
+                                                    indent=4,
+                                                    sort_keys=False
+                                                ), mimetype="application/json")
 
 
 @app.route('/api/systems')

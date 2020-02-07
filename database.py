@@ -14,11 +14,11 @@ def connectToDb():
 
         # Connect to the database
         connection = pymysql.connect(host=host,
-                                    user=user,
-                                    password=password,
-                                    db=dbName,
-                                    charset='utf8mb4',
-                                    cursorclass=pymysql.cursors.DictCursor)
+                                     user=user,
+                                     password=password,
+                                     db=dbName,
+                                     charset='utf8mb4',
+                                     cursorclass=pymysql.cursors.DictCursor)
     else:
         connection = "failed"
 
