@@ -125,7 +125,7 @@ for table in tables:
         continue
     else:
         """ html = getPage("/wiki/Iafrate") """
-        html = getPage(table.a['href']) 
+        html = getPage(table.a['href'])
 
         name = getCharName(html)
         status = getCharStatus(html)

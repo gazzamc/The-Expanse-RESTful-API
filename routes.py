@@ -1,5 +1,6 @@
 import os
-from flask import Flask, request, json, current_app
+import json
+from flask import Flask, request, current_app
 from queries import getPeople
 
 
@@ -16,22 +17,41 @@ def apiBase():
     return request.args
 
 
-@app.route('/api/people')
-def apiPeople():
-    people = getPeople()
+methods = ['GET', 'POST', 'PUT', 'DELETE']
+@app.route('/api/people', methods=methods)
+@app.route('/api/people/<id>', methods=methods)
+def apiPeople(id="all"):
 
-    if people == 'failed':
-        return 'Connection to DB failed'
+    if request.method == "POST":
+        return "post"
+    elif request.method == "PUT":
+        return "put"
+    elif request.method == "DELETE":
+        return "delete"
     else:
+        print("GET")
 
-        """ https://stackoverflow.com/questions/16908943/display-json-returned-from-flask-in-a-neat-way
-        https://www.programiz.com/python-programming/json """
-        return current_app.response_class(
-                                        json.dumps(
-                                                    people,
-                                                    indent=4,
-                                                    sort_keys=False
-                                                ), mimetype="application/json")
+        people = getPeople()
+
+        if people == 'failed':
+            return 'Connection to DB failed'
+        else:
+
+            """
+            https://stackoverflow.com/questions/16908943/display-json-returned-from-flask-in-a-neat-way
+            https://www.programiz.com/python-programming/json
+            https://stackoverflow.com/questions/37255313/what-is-a-right-way-for-rest-api-response """
+            return current_app.response_class(
+                    json.dumps(
+                                {
+                                    'Status': 'Success',
+                                    'Count': len(people),
+                                    'Data': people
+                                },
+                                indent=4,
+                                sort_keys=False,
+                                ensure_ascii=False
+                                ), mimetype="application/json")
 
 
 @app.route('/api/systems')
