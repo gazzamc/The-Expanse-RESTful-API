@@ -21,3 +21,24 @@ def getPeople():
         result = "failed"
 
     return result
+
+
+def addPeople(name, status, gender, desc):
+    isAdded = False
+    connection = connectToDb()
+
+    if connection != "failed":
+        try:
+            with connection.cursor() as cursor:
+                sql = "\
+                \
+                INSERT INTO `people` (`name`, `status`, `gender`, `desc`) VALUES(%s, %s, %s, %s);"
+                cursor.execute(sql, (name, status, gender, desc))
+                connection.commit()
+                isAdded = True
+        except pymysql.Error as err:
+            print(err)
+        finally:
+            connection.close()
+
+    return isAdded

@@ -1,7 +1,7 @@
 import os
 import json
 from flask import Flask, request, current_app
-from queries import getPeople
+from queries import getPeople, addPeople
 
 
 app = Flask(__name__)
@@ -23,7 +23,51 @@ methods = ['GET', 'POST', 'PUT', 'DELETE']
 def apiPeople(id="all"):
 
     if request.method == "POST":
-        return "post"
+        data = request.get_json()
+
+        if data is None:
+            response = {
+                'Status': 400,
+                'Message': 'Bad Request. Data must be in JSON format'
+            }
+            return json.dumps(
+                    response,
+                    indent=4,
+                    sort_keys=False)
+        else:
+            name = data['name']
+            gender = data['gender']
+            status = data['status']
+            desc = ""
+
+            if (type(name) is str and type(gender) is str
+                and type(status) is str and type(desc) is str):
+                if len(name) == 0 or len(gender) == 0 or len(status) == 0:
+                    return "empty"
+                else:
+                    isAdded = addPeople(name, status, gender, desc)
+
+                    if isAdded:
+                        response = {
+                            'Status': 201,
+                            'Message': 'Record created in database'
+                        }
+                        return json.dumps(
+                                response,
+                                indent=4,
+                                sort_keys=False)
+                    else:
+                        response = {
+                            'Status': 201,
+                            'Message': 'Record created in database'
+                        }
+                        return json.dumps(
+                                response,
+                                indent=4,
+                                sort_keys=False)
+            else:
+                return "Is number"
+
     elif request.method == "PUT":
         return "put"
     elif request.method == "DELETE":
@@ -44,7 +88,7 @@ def apiPeople(id="all"):
             return current_app.response_class(
                     json.dumps(
                                 {
-                                    'Status': 'Success',
+                                    'Status': 200,
                                     'Count': len(people),
                                     'Data': people
                                 },
