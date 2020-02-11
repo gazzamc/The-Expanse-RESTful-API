@@ -7,6 +7,17 @@ from queries import getPeople, addPeople
 app = Flask(__name__)
 
 
+def responseCode(code, message):
+    response = {
+        'status': code,
+        'message': message
+    }
+    return json.dumps(
+                    response,
+                    indent=4,
+                    sort_keys=False)
+
+
 @app.route('/')
 def home():
     return 'Home Page'
@@ -26,59 +37,63 @@ def apiPeople(id="all"):
         data = request.get_json()
 
         if data is None:
-            response = {
-                'Status': 400,
-                'Message': 'Bad Request. Data must be in JSON format'
-            }
-            return json.dumps(
-                    response,
-                    indent=4,
-                    sort_keys=False)
+            return responseCode(
+                400,
+                'Bad Request. Data must be in JSON format'
+            )
+
         else:
-            name = data['name']
-            gender = data['gender']
-            status = data['status']
-            desc = ""
+            try:
+                name = data['name']
+                gender = data['gender']
+                status = data['status']
+                desc = ""
+
+            except KeyError:
+                return responseCode(
+                    400,
+                    'Bad Request. One or more fields not supplied or invalid'
+                )
 
             if (type(name) is str and type(gender) is str
-                and type(status) is str and type(desc) is str):
+                    and type(status) is str and type(desc) is str):
                 if len(name) == 0 or len(gender) == 0 or len(status) == 0:
-                    return "empty"
+                    return responseCode(
+                        400,
+                        'Bad Request. One or more fields not supplied or invalid'
+                    )
                 else:
                     isAdded = addPeople(name, status, gender, desc)
 
-                    if isAdded:
-                        response = {
-                            'Status': 201,
-                            'Message': 'Record created in database'
-                        }
-                        return json.dumps(
-                                response,
-                                indent=4,
-                                sort_keys=False)
+                    if isAdded != "failed":
+                        return responseCode(
+                            201,
+                            'Record created in database'
+                        )
                     else:
-                        response = {
-                            'Status': 403,
-                            'Message': 'Record was not added to database'
-                        }
-                        return json.dumps(
-                                response,
-                                indent=4,
-                                sort_keys=False)
+                        return responseCode(
+                            403,
+                            'Record was not created in database'
+                        )
             else:
-                return "Is number"
+                return responseCode(
+                    400,
+                    'Bad Request. One or more fields not supplied or invalid'
+                )
 
     elif request.method == "PUT":
         return "put"
     elif request.method == "DELETE":
         return "delete"
     else:
-        print("GET")
 
         people = getPeople()
 
         if people == 'failed':
-            return 'Connection to DB failed'
+            return responseCode(
+                503,
+                'Cannot connect to database'
+            )
         else:
 
             """
@@ -88,9 +103,9 @@ def apiPeople(id="all"):
             return current_app.response_class(
                     json.dumps(
                                 {
-                                    'Status': 200,
-                                    'Count': len(people),
-                                    'Data': people
+                                    'status': 200,
+                                    'count': len(people),
+                                    'data': people
                                 },
                                 indent=4,
                                 sort_keys=False,
