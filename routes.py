@@ -58,8 +58,8 @@ def apiPeople(id="all"):
                                 sort_keys=False)
                     else:
                         response = {
-                            'Status': 201,
-                            'Message': 'Record created in database'
+                            'Status': 403,
+                            'Message': 'Record was not added to database'
                         }
                         return json.dumps(
                                 response,
