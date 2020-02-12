@@ -1,17 +1,17 @@
 from bs4 import BeautifulSoup
-from database import connectToDb
+from database import connect_to_db
 import requests
 import pymysql.cursors
 
 
-def getPage(link):
+def get_page(link):
     page = requests.get(baseUrl + link)
     html = BeautifulSoup(page.text, 'lxml')
 
     return html
 
 
-def getCharName(source):
+def get_char_name(source):
     html = source
 
     try:
@@ -24,7 +24,7 @@ def getCharName(source):
     return name
 
 
-def getCharStatus(source):
+def get_char_status(source):
     html = source
 
     try:
@@ -51,7 +51,7 @@ def getCharStatus(source):
     return status
 
 
-def getCharGender(source):
+def get_char_gender(source):
     html = source
 
     try:
@@ -69,7 +69,7 @@ def getCharGender(source):
     return gender
 
 
-def getCharOccupation(source):
+def get_char_occupation(source):
     html = source
 
     try:
@@ -80,7 +80,7 @@ def getCharOccupation(source):
     return occupation
 
 
-def getCharDesc(source):
+def get_char_desc(source):
     html = source
 
     try:
@@ -102,8 +102,8 @@ def getCharDesc(source):
     return description
 
 
-def getCharFirstApp(source):
-    html = getPage(link)
+def get_char_first_app(source):
+    html = get_page(link)
 
     try:
         firstApp = html.find("div", attrs={'data-source': 'first appearance'})
@@ -115,22 +115,21 @@ def getCharFirstApp(source):
 baseUrl = "https://expanse.fandom.com"
 
 
-soup = getPage("/wiki/Characters_(TV)")
+soup = get_page("/wiki/Characters_(TV)")
 tables = soup.find_all("div", attrs={'class': 'floatnone'})
 
-connection = connectToDb()
+connection = connect_to_db()
 
 for table in tables:
     if table.a['href'] == "/wiki/Characters_(TV)" or table.a['href'] == "/wiki/Menacing_Belter_#2":
         continue
     else:
-        """ html = getPage("/wiki/Iafrate") """
-        html = getPage(table.a['href'])
+        html = get_page(table.a['href'])
 
-        name = getCharName(html)
-        status = getCharStatus(html)
-        gender = getCharGender(html)
-        desc = getCharDesc(html)
+        name = get_char_name(html)
+        status = get_char_status(html)
+        gender = get_char_gender(html)
+        desc = get_char_desc(html)
 
         if name is not None:
             if status is not None:

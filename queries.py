@@ -1,9 +1,9 @@
 import pymysql.cursors
-from database import connectToDb
+from database import connect_to_db
 
 
-def getPeople():
-    connection = connectToDb()
+def get_people():
+    connection = connect_to_db()
 
     if connection != "failed":
         result = []
@@ -23,8 +23,8 @@ def getPeople():
     return result
 
 
-def addPeople(name, status, gender, desc):
-    connection = connectToDb()
+def add_people(name, status, gender, desc):
+    connection = connect_to_db()
 
     if connection != "failed":
         try:
@@ -42,8 +42,8 @@ def addPeople(name, status, gender, desc):
     return connection
 
 
-def deletePeople(id):
-    connection = connectToDb()
+def delete_people(id):
+    connection = connect_to_db()
 
     if connection != "failed":
         try:

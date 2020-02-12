@@ -1,13 +1,13 @@
 import os
 import json
 from flask import Flask, request, current_app
-from queries import getPeople, addPeople, deletePeople
+from queries import get_people, add_people, delete_people
 
 
 app = Flask(__name__)
 
 
-def responseCode(code, message):
+def response_code(code, message):
     response = {
         'status': code,
         'message': message
@@ -24,20 +24,20 @@ def home():
 
 
 @app.route('/api')
-def apiBase():
+def api_base():
     return request.args
 
 
 methods = ['GET', 'POST', 'PUT', 'DELETE']
 @app.route('/api/people', methods=methods)
 @app.route('/api/people/<id>', methods=methods)
-def apiPeople(id="all"):
+def api_people(id="all"):
 
     if request.method == "POST":
         data = request.get_json()
 
         if data is None:
-            return responseCode(
+            return response_code(
                 400,
                 'Bad Request. Data must be in JSON format'
             )
@@ -47,38 +47,38 @@ def apiPeople(id="all"):
                 name = data['name']
                 gender = data['gender']
                 status = data['status']
-                desc = ['desc']
+                desc = data['desc']
 
             except KeyError:
-                return responseCode(
+                return response_code(
                     400,
-                    'Bad Request. One or more fields not supplied or invalid'
+                    'Bad Request. One or more fields not supplied or invalid keyerror'
                 )
 
             if (type(name) is str and type(gender) is str
                     and type(status) is str and type(desc) is str):
                 if len(name) == 0 or len(gender) == 0 or len(status) == 0:
-                    return responseCode(
+                    return response_code(
                         400,
                         'Bad Request. One or more fields not supplied or invalid'
                     )
                 else:
-                    isAdded = addPeople(name, status, gender, desc)
+                    is_added = add_people(name, status, gender, desc)
 
-                    if isAdded != "failed":
-                        return responseCode(
+                    if is_added != "failed":
+                        return response_code(
                             201,
                             'Record created in database'
                         )
                     else:
-                        return responseCode(
+                        return response_code(
                             403,
                             'Record was not created in database'
                         )
             else:
-                return responseCode(
+                return response_code(
                     400,
-                    'Bad Request. One or more fields not supplied or invalid'
+                    'Bad Request. One or more fields not supplied or invalid not str'
                 )
 
     elif request.method == "PUT":
@@ -89,34 +89,34 @@ def apiPeople(id="all"):
         try:
             id = data['id']
             if type(id) is int:
-                deleteRec = deletePeople(id)
+                delete_rec = delete_people(id)
 
-                if deleteRec != "failed":
-                    return responseCode(
+                if delete_rec != "failed":
+                    return response_code(
                         200,
                         'Record successfully deleted'
                     )
                 else:
-                    return responseCode(
+                    return response_code(
                         204,
                         'Cannot delete record as it does not exist'
                     )
             else:
-                return responseCode(
+                return response_code(
                     400,
                     'Bad Request. One or more fields not supplied or invalid'
                 )
         except KeyError:
-            return responseCode(
+            return response_code(
                 400,
                 'Bad Request. One or more fields not supplied or invalid'
             )
     else:
 
-        people = getPeople()
+        people = get_people()
 
         if people == 'failed':
-            return responseCode(
+            return response_code(
                 503,
                 'Cannot connect to database'
             )
@@ -140,12 +140,12 @@ def apiPeople(id="all"):
 
 
 @app.route('/api/systems')
-def apiSystems():
+def api_systems():
     return 'system results here'
 
 
 @app.route('/api/planets')
-def apiPlanets():
+def api_planets():
     return 'planets results here'
 
 
