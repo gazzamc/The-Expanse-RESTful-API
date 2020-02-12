@@ -1,7 +1,7 @@
 import os
 import json
 from flask import Flask, request, current_app
-from queries import getPeople, addPeople
+from queries import getPeople, addPeople, deletePeople
 
 
 app = Flask(__name__)
@@ -47,7 +47,7 @@ def apiPeople(id="all"):
                 name = data['name']
                 gender = data['gender']
                 status = data['status']
-                desc = ""
+                desc = ['desc']
 
             except KeyError:
                 return responseCode(
@@ -84,7 +84,33 @@ def apiPeople(id="all"):
     elif request.method == "PUT":
         return "put"
     elif request.method == "DELETE":
-        return "delete"
+        data = request.get_json()
+
+        try:
+            id = data['id']
+            if type(id) is int:
+                deleteRec = deletePeople(id)
+
+                if deleteRec != "failed":
+                    return responseCode(
+                        200,
+                        'Record successfully deleted'
+                    )
+                else:
+                    return responseCode(
+                        204,
+                        'Cannot delete record as it does not exist'
+                    )
+            else:
+                return responseCode(
+                    400,
+                    'Bad Request. One or more fields not supplied or invalid'
+                )
+        except KeyError:
+            return responseCode(
+                400,
+                'Bad Request. One or more fields not supplied or invalid'
+            )
     else:
 
         people = getPeople()

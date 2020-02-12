@@ -40,3 +40,33 @@ def addPeople(name, status, gender, desc):
             connection.close()
 
     return connection
+
+
+def deletePeople(id):
+    connection = connectToDb()
+
+    if connection != "failed":
+        try:
+            # check if record exists first
+            with connection.cursor() as cursor:
+                sql = "SELECT * FROM `people` WHERE `id` = %s;"
+                cursor.execute(sql, (id))
+                result = cursor.fetchone()
+
+                if len(result) != 0:
+                    with connection.cursor() as cursor:
+                        sql = "\
+                        \
+                        DELETE FROM `people` WHERE `id` = %s;"
+                        cursor.execute(sql, (id))
+                        connection.commit()
+                else:
+                    return "failed"
+        except pymysql.Error:
+            return "failed"
+        except TypeError:
+            return "failed"
+        finally:
+            connection.close()
+
+    return connection
