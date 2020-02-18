@@ -16,10 +16,12 @@ def response_code(code=400, message=None):
         'status': code,
         'message': message
     }
-    return json.dumps(
+    return current_app.response_class(
+                json.dumps(
                     response,
                     indent=4,
-                    sort_keys=False)
+                    sort_keys=False
+                    ), mimetype="application/json")
 
 
 @app.route('/')
@@ -71,7 +73,7 @@ def api_people(id=None):
                     else:
                         return response_code(
                             403,
-                            'Record was not created in database'
+                            'Duplicate, Record was not created in database'
                         )
             else:
                 return response_code()
