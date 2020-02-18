@@ -33,7 +33,7 @@ def api_base():
 
 
 methods = ['GET', 'POST', 'PUT', 'DELETE']
-@app.route('/api/people', methods=methods)
+@app.route('/api/people/', methods=methods)
 @app.route('/api/people/<id>', methods=methods)
 def api_people(id=None):
 
@@ -131,40 +131,49 @@ def api_people(id=None):
             return response_code()
     else:
 
-        people = get_people(id)
+        try:
+            if id is not None:
+                id = int(id)
 
-        if people == 'failed':
-            return response_code(
-                503,
-                'Cannot connect to database'
-            )
-        if people == 'not found':
-            return response_code(
-                404,
-                'Record does not exist'
-            )
-        else:
+            people = get_people(id)
 
-            if id is None:
-                count = len(people)
+            if people == 'failed':
+                return response_code(
+                    503,
+                    'Cannot connect to database'
+                )
+            if people == 'not found':
+                return response_code(
+                    404,
+                    'Record does not exist'
+                )
             else:
-                count = 1
 
-            """
-            https://stackoverflow.com/questions/16908943/display-json-returned-from-flask-in-a-neat-way
-            https://www.programiz.com/python-programming/json
-            https://stackoverflow.com/questions/37255313/what-is-a-right-way-for-rest-api-response """
-            return current_app.response_class(
-                    json.dumps(
-                                {
-                                    'status': 200,
-                                    'count': count,
-                                    'data': people
-                                },
-                                indent=4,
-                                sort_keys=False,
-                                ensure_ascii=False
-                                ), mimetype="application/json")
+                if id is None:
+                    count = len(people)
+                else:
+                    count = 1
+
+                    """
+                https://stackoverflow.com/questions/16908943/display-json-returned-from-flask-in-a-neat-way
+                https://www.programiz.com/python-programming/json
+                https://stackoverflow.com/questions/37255313/what-is-a-right-way-for-rest-api-response """
+                return current_app.response_class(
+                        json.dumps(
+                                    {
+                                        'status': 200,
+                                        'count': count,
+                                        'data': people
+                                    },
+                                    indent=4,
+                                    sort_keys=False,
+                                    ensure_ascii=False
+                                    ), mimetype="application/json")
+        except ValueError:
+            return response_code(
+                400,
+                'Bad Request. ID must be an integer'
+            )
 
 
 @app.route('/api/systems')
