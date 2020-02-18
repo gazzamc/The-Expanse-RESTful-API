@@ -28,14 +28,23 @@ def add_people(name, status, gender, desc):
 
     if connection != "failed":
         try:
+            # check if record exists first
             with connection.cursor() as cursor:
-                sql = "\
-                \
-                INSERT INTO `people` (`name`, `status`, `gender`, `desc`) VALUES(%s, %s, %s, %s);"
-                cursor.execute(sql, (name, status, gender, desc))
-                connection.commit()
-        except pymysql.Error as err:
-            print(err)
+                sql = "SELECT * FROM `people` WHERE `name` = %s;"
+                cursor.execute(sql, (name))
+                result = cursor.fetchone()
+
+                if result is None:
+                    with connection.cursor() as cursor:
+                        sql = "\
+                        \
+                        INSERT INTO `people` (`name`, `status`, `gender`, `desc`) VALUES(%s, %s, %s, %s);"
+                        cursor.execute(sql, (name, status, gender, desc))
+                        connection.commit()
+                else:
+                    return "failed"
+        except pymysql.Error:
+            return "failed"
         finally:
             connection.close()
 
@@ -44,7 +53,6 @@ def add_people(name, status, gender, desc):
 
 def delete_people(id):
     connection = connect_to_db()
-
     if connection != "failed":
         try:
             # check if record exists first
@@ -53,7 +61,7 @@ def delete_people(id):
                 cursor.execute(sql, (id))
                 result = cursor.fetchone()
 
-                if len(result) != 0:
+                if result is not None:
                     with connection.cursor() as cursor:
                         sql = "\
                         \
@@ -64,7 +72,43 @@ def delete_people(id):
                     return "failed"
         except pymysql.Error:
             return "failed"
-        except TypeError:
+        finally:
+            connection.close()
+
+    return connection
+
+
+def edit_people(id, name="", status="", gender="", desc=""):
+    connection = connect_to_db()
+
+    if connection != "failed":
+        try:
+            # check if record exists first
+            with connection.cursor() as cursor:
+                sql = "SELECT * FROM `people` WHERE `id` = %s;"
+                cursor.execute(sql, (id))
+                result = cursor.fetchone()
+
+                # set values if inputed value is empty
+                if name == "" or name is None:
+                    name = result['name']
+                if status == "" or status is None:
+                    status = result['status']
+                if gender == "" or gender is None:
+                    gender = result['gender']
+                if desc == "" or desc is None:
+                    desc = result['desc']
+
+                if result is not None:
+                    with connection.cursor() as cursor:
+                        sql = "\
+                        \
+                        UPDATE `people` SET `name` = %s, `status` = %s, `gender` = %s, `desc` = %s WHERE `id` = %s;"
+                        cursor.execute(sql, (name, status, gender, desc, id))
+                        connection.commit()
+                else:
+                    return "failed"
+        except pymysql.Error:
             return "failed"
         finally:
             connection.close()

@@ -1,13 +1,17 @@
 import os
 import json
 from flask import Flask, request, current_app
-from queries import get_people, add_people, delete_people
+from queries import get_people, add_people, delete_people, edit_people
 
 
 app = Flask(__name__)
 
 
-def response_code(code, message):
+def response_code(code=400, message=None):
+
+    if code == 400 and message is None:
+        message = 'Bad Request. One or more fields not supplied or invalid'
+
     response = {
         'status': code,
         'message': message
@@ -50,18 +54,12 @@ def api_people(id="all"):
                 desc = data['desc']
 
             except KeyError:
-                return response_code(
-                    400,
-                    'Bad Request. One or more fields not supplied or invalid keyerror'
-                )
+                return response_code()
 
             if (type(name) is str and type(gender) is str
                     and type(status) is str and type(desc) is str):
                 if len(name) == 0 or len(gender) == 0 or len(status) == 0:
-                    return response_code(
-                        400,
-                        'Bad Request. One or more fields not supplied or invalid'
-                    )
+                    return response_code()
                 else:
                     is_added = add_people(name, status, gender, desc)
 
@@ -76,13 +74,39 @@ def api_people(id="all"):
                             'Record was not created in database'
                         )
             else:
-                return response_code(
-                    400,
-                    'Bad Request. One or more fields not supplied or invalid not str'
-                )
+                return response_code()
 
     elif request.method == "PUT":
-        return "put"
+        data = request.get_json()
+        try:
+            id = data['id']
+            name = data['name']
+            status = data['status']
+            gender = data['gender']
+            desc = data['desc']
+
+            if id is not None:
+                if (status is not None and name is not None
+                        and gender is not None and desc is not None):
+                    edited = edit_people(id, name, status, gender, desc)
+
+                    if edited != "failed":
+                        return response_code(
+                            200,
+                            'Record was successfully altered'
+                        )
+                    else:
+                        return response_code(
+                            403,
+                            'Record was not altered'
+                        )
+                else:
+                    return response_code()
+            else:
+                return response_code()
+        except KeyError:
+            return response_code()
+
     elif request.method == "DELETE":
         data = request.get_json()
 
@@ -102,15 +126,9 @@ def api_people(id="all"):
                         'Cannot delete record as it does not exist'
                     )
             else:
-                return response_code(
-                    400,
-                    'Bad Request. One or more fields not supplied or invalid'
-                )
+                return response_code()
         except KeyError:
-            return response_code(
-                400,
-                'Bad Request. One or more fields not supplied or invalid'
-            )
+            return response_code()
     else:
 
         people = get_people()
