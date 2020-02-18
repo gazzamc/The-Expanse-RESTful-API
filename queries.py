@@ -2,7 +2,7 @@ import pymysql.cursors
 from database import connect_to_db
 
 
-def get_people():
+def get_people(id=None):
     connection = connect_to_db()
 
     if connection != "failed":
@@ -10,11 +10,19 @@ def get_people():
 
         try:
             with connection.cursor() as cursor:
-                sql = "SELECT * FROM `people`;"
-                cursor.execute(sql)
-                result = cursor.fetchall()
+                if id is None:
+                    sql = "SELECT * FROM `people`;"
+                    cursor.execute(sql)
+                    result = cursor.fetchall()
+                else:
+                    sql = "SELECT * FROM `people` WHERE `id` = %s;"
+                    cursor.execute(sql, (id))
+                    result = cursor.fetchone()
+
+                    if result is None:
+                        return "not found"
         except pymysql.Error as err:
-            print(err)
+            result = err
         finally:
             connection.close()
     else:

@@ -35,7 +35,7 @@ def api_base():
 methods = ['GET', 'POST', 'PUT', 'DELETE']
 @app.route('/api/people', methods=methods)
 @app.route('/api/people/<id>', methods=methods)
-def api_people(id="all"):
+def api_people(id=None):
 
     if request.method == "POST":
         data = request.get_json()
@@ -131,14 +131,24 @@ def api_people(id="all"):
             return response_code()
     else:
 
-        people = get_people()
+        people = get_people(id)
 
         if people == 'failed':
             return response_code(
                 503,
                 'Cannot connect to database'
             )
+        if people == 'not found':
+            return response_code(
+                404,
+                'Record does not exist'
+            )
         else:
+
+            if id is None:
+                count = len(people)
+            else:
+                count = 1
 
             """
             https://stackoverflow.com/questions/16908943/display-json-returned-from-flask-in-a-neat-way
@@ -148,7 +158,7 @@ def api_people(id="all"):
                     json.dumps(
                                 {
                                     'status': 200,
-                                    'count': len(people),
+                                    'count': count,
                                     'data': people
                                 },
                                 indent=4,
