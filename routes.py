@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request
+from flask import Flask, request, render_template
 from people import get_people, add_people, edit_people, delete_people
 
 
@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return 'Home Page'
+    return render_template("index.html")
 
 
 @app.route('/api')

@@ -28,12 +28,12 @@ def get_people(id=None):
 
         people = get_people_query(id)
 
-        if people == 'failed':
+        if people == 'no connection':
             return response_code(
                 503,
                 'Cannot connect to database'
             )
-        if people == 'not found':
+        elif people == 'failed':
             return response_code(
                 404,
                 'Record does not exist'
@@ -89,17 +89,22 @@ def add_people(data):
             if len(name) == 0 or len(gender) == 0 or len(status) == 0:
                 return response_code()
             else:
-                is_added = add_people_query(name, status, gender, desc)
+                added = add_people_query(name, status, gender, desc)
 
-                if is_added != "failed":
+                if added == 'no connection':
                     return response_code(
-                        201,
-                        'Record created in database'
+                        503,
+                        'Cannot connect to database'
                     )
-                else:
+                elif added == "duplicate":
                     return response_code(
                         403,
                         'Duplicate, Record was not created in database'
+                    )
+                else:
+                    return response_code(
+                        201,
+                        'Record created in database'
                     )
         else:
             return response_code()
@@ -127,15 +132,25 @@ def edit_people(data):
                 else:
                     edited = edit_people_query(id, name, status, gender, desc)
 
-                    if edited != "failed":
+                    if edited == 'no connection':
                         return response_code(
-                            200,
-                            'Record was successfully altered'
+                            503,
+                            'Cannot connect to database'
                         )
-                    else:
+                    elif edited == "no record":
+                        return response_code(
+                            404,
+                            'Record does not exist'
+                        )
+                    elif edited == "failed":
                         return response_code(
                             403,
                             'Record was not altered'
+                        )
+                    else:
+                        return response_code(
+                            200,
+                            'Record was successfully altered'
                         )
             else:
                 return response_code()
@@ -156,15 +171,22 @@ def delete_people(data):
         if type(id) is int:
             delete_rec = delete_people_query(id)
 
-            if delete_rec != "failed":
+            print(delete_rec, flush=False)
+
+            if delete_rec == 'no connection':
                 return response_code(
-                    200,
-                    'Record successfully deleted'
+                    503,
+                    'Cannot connect to database'
                 )
-            else:
+            elif delete_rec == 'no record':
                 return response_code(
                     204,
                     'Cannot delete record as it does not exist'
+                )
+            else:
+                return response_code(
+                    200,
+                    'Record successfully deleted'
                 )
         else:
             return response_code()

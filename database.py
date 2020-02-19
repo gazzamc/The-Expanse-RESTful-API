@@ -20,6 +20,6 @@ def connect_to_db():
                                      charset='utf8mb4',
                                      cursorclass=pymysql.cursors.DictCursor)
     else:
-        connection = "failed"
+        connection = "no connection"
 
     return connection

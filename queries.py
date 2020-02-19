@@ -5,7 +5,7 @@ from database import connect_to_db
 def get_people_query(id=None):
     connection = connect_to_db()
 
-    if connection != "failed":
+    if connection != "no connection":
         result = []
 
         try:
@@ -20,13 +20,13 @@ def get_people_query(id=None):
                     result = cursor.fetchone()
 
                     if result is None:
-                        return "not found"
-        except pymysql.Error as err:
-            result = err
+                        return "failed"
+        except pymysql.Error:
+            return "failed"
         finally:
             connection.close()
     else:
-        result = "failed"
+        return connection
 
     return result
 
@@ -34,7 +34,7 @@ def get_people_query(id=None):
 def add_people_query(name, status, gender, desc):
     connection = connect_to_db()
 
-    if connection != "failed":
+    if connection != "no connection":
         try:
             # check if record exists first
             with connection.cursor() as cursor:
@@ -50,18 +50,18 @@ def add_people_query(name, status, gender, desc):
                         cursor.execute(sql, (name, status, gender, desc))
                         connection.commit()
                 else:
-                    return "failed"
+                    return "duplicate"
         except pymysql.Error:
             return "failed"
         finally:
             connection.close()
-
-    return connection
+    else:
+        return connection
 
 
 def delete_people_query(id):
     connection = connect_to_db()
-    if connection != "failed":
+    if connection != "no connection":
         try:
             # check if record exists first
             with connection.cursor() as cursor:
@@ -77,19 +77,19 @@ def delete_people_query(id):
                         cursor.execute(sql, (id))
                         connection.commit()
                 else:
-                    return "failed"
+                    return "no record"
         except pymysql.Error:
             return "failed"
         finally:
             connection.close()
-
-    return connection
+    else:
+        return connection
 
 
 def edit_people_query(id, name="", status="", gender="", desc=""):
     connection = connect_to_db()
 
-    if connection != "failed":
+    if connection != "no connection":
         try:
             # check if record exists first
             with connection.cursor() as cursor:
@@ -115,10 +115,10 @@ def edit_people_query(id, name="", status="", gender="", desc=""):
                         cursor.execute(sql, (name, status, gender, desc, id))
                         connection.commit()
                 else:
-                    return "failed"
+                    return "no record"
         except pymysql.Error:
             return "failed"
         finally:
             connection.close()
-
-    return connection
+    else:
+        return connection
