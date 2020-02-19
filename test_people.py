@@ -7,6 +7,10 @@ class PeopleTestCase(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
 
+    def test_api_people_response(self):
+        rv = self.app.get('/api/people', follow_redirects=True)
+        self.assertEqual(rv.status, '200 OK')
+
     def test_api_people_valid_record(self):
         rv = self.app.get('/api/people/1')
         self.get_json = json.loads(rv.data)
