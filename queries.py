@@ -2,7 +2,7 @@ import pymysql.cursors
 from database import connect_to_db
 
 
-def get_people(id=None):
+def get_people_query(id=None):
     connection = connect_to_db()
 
     if connection != "failed":
@@ -31,7 +31,7 @@ def get_people(id=None):
     return result
 
 
-def add_people(name, status, gender, desc):
+def add_people_query(name, status, gender, desc):
     connection = connect_to_db()
 
     if connection != "failed":
@@ -59,7 +59,7 @@ def add_people(name, status, gender, desc):
     return connection
 
 
-def delete_people(id):
+def delete_people_query(id):
     connection = connect_to_db()
     if connection != "failed":
         try:
@@ -86,7 +86,7 @@ def delete_people(id):
     return connection
 
 
-def edit_people(id, name="", status="", gender="", desc=""):
+def edit_people_query(id, name="", status="", gender="", desc=""):
     connection = connect_to_db()
 
     if connection != "failed":
