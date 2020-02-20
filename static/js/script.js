@@ -3,7 +3,7 @@ var baseUrl = window.location.href + "api/";
 
 baseUrl = baseUrl.replace("?", "").replace("#", "");
 
-function getData(endpoint="people"){
+function getData(endpoint="people/"){
     request.open('GET', baseUrl + endpoint, true)
 
     request.onload = function(){
