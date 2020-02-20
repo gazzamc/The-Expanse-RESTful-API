@@ -1,10 +1,9 @@
 var request = new XMLHttpRequest();
-var baseUrl = window.location.href + "api/"
+var baseUrl = window.location.href + "api/";
 
 baseUrl = baseUrl.replace("?", "").replace("#", "");
 
 function getData(endpoint="people"){
-
     request.open('GET', baseUrl + endpoint, true)
 
     request.onload = function(){
@@ -14,32 +13,23 @@ function getData(endpoint="people"){
         }
     }
 
-    request.send()
+    request.send();
 }
 
-document.getElementById("apiBtn").addEventListener("click", function(){
+document.getElementById("apiSearchForm").addEventListener("submit", function(e){
+
     let endpointData = document.getElementById("apiSearch").value;
 
     /* validate input */
     endpointDataSplt = endpointData.split("/");
     endpoint = endpointDataSplt[0];
-    id = endpointDataSplt[1];
 
     if(endpoint != "people" && endpoint != "systems" && endpoint != "planets"){
         endpoint = ""
     }
 
-    if(isNaN(id)){
-        endpointData = endpoint;
-    }else{
-        if(endpoint != undefined){
-            endpointData = endpoint + "/" + id;
-        }else{
-            endpointData = ""
-        }
-    }
-
     getData(endpointData);
-});
+    e.preventDefault();
+}, false);
 
 getData();
