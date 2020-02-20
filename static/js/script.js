@@ -32,4 +32,4 @@ document.getElementById("apiSearchForm").addEventListener("submit", function(e){
     e.preventDefault();
 }, false);
 
-getData();
+window.onload = getData();
