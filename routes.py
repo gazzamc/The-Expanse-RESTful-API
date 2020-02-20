@@ -11,7 +11,7 @@ def home():
     return render_template("index.html")
 
 
-@app.route('/api')
+@app.route('/api/')
 def api_base():
     return request.args
 

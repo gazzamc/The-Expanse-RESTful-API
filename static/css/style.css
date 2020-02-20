@@ -18,3 +18,19 @@ body{
     top: 20vh;
     color: #fff;
 }
+
+/* JSON result */
+.outerJson{
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    overflow: scroll;
+    padding: 2% 5% 5% 5%;
+    min-height: 18vh;
+    max-height: 50vh;
+}
+
+#jsonRes{
+    position: absolute;
+    height: inherit;
+}

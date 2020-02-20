@@ -49,18 +49,18 @@
                 <div class="col-10 offset-1">
                     <form class="form-inline">
                         <label class="" type="">{{request.url}}api/</label>
-                        <input class="form-control mr-sm-2" type="search" placeholder="people/1" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="">request</button>
+                        <input class="form-control mr-sm-2" type="search" placeholder="people/1" id="apiSearch" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" id="apiBtn" type="">request</button>
                     </form>
                 </div>
-                <div class="col-10 offset-1">
-                    <textarea style="width:100%; height:30vh; padding: 5vh 5vw 0 0;">
+                <div class="col-10 offset-1 outerJson">
+                    <code id="jsonRes">
                             {
                                 "test": "1234",
                                 "test": "1234",
                                 "test": "1234",
                             }
-                    </textarea>
+                    </code>
                 </div>
             </div>
         </div>
