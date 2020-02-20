@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}{% endblock %} - The Expanse API</title>
+
+    <!-- External Libraries-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='libraries/css/bootstrap.min.css') }}" type="text/css">
+    <script src="{{ url_for('static', filename='libraries/js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libraries/js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libraries/js/bootstrap.min.js') }}"></script>
+    <script src="https://kit.fontawesome.com/8534959afc.js" crossorigin="anonymous"></script>
+
+    <!-- Local Imports-->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <!-- NavBar-->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">TEAPI</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Documentation</a>
+            </li>
+            </ul>
+        </div>
+        </nav>
+        <div class="jumbotron">
+            <h1 class="page-header">TEAPI</h1>
+            <p class="lead">The Expanse API</p>
+        </div>
+    </header>
+    <!-- API Search / JSON result -->
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-10 offset-1">
+                    <form class="form-inline">
+                        <label class="" type="">{{request.url}}api/</label>
+                        <input class="form-control mr-sm-2" type="search" placeholder="people/1" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="">request</button>
+                    </form>
+                </div>
+                <div class="col-10 offset-1">
+                    <textarea style="width:100%; height:30vh; padding: 5vh 5vw 0 0;">
+                            {
+                                "test": "1234",
+                                "test": "1234",
+                                "test": "1234",
+                            }
+                    </textarea>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Section -->
+    <section>
+        <div class="container">
+            <div class="row mx-auto text-center">
+                <div class="col-6">
+                    <h3>About:</h3>
+                </div>
+                <div class="col-6">
+                    <h3>How to use:</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer / Social media-->
+    <footer>
+        <div class="container">
+            <div class="row mx-auto text-center">
+                <div class="col-4">
+                    <i class="fab fa-github-alt"></i>
+                </div>
+                <div class="col-4">
+                    <i class="fab fa-linkedin-in"></i>
+                </div>
+                <div class="col-4">
+                    <i class="fas fa-code-branch"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </footer>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

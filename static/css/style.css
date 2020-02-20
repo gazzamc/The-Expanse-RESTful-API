@@ -1,0 +1,20 @@
+/* global */
+
+body{
+    background-color: rgba(0,0,0, 0.8);
+    color: #fff;
+}
+
+/* jumbotron */
+.jumbotron{
+    background: url("../images/nasa.jpg") no-repeat center center fixed;
+    background-size: cover;
+    height: 50vh;
+}
+
+.jumbotron h1, .jumbotron .lead{
+    position: relative;
+    text-align: center;
+    top: 20vh;
+    color: #fff;
+}
