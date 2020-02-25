@@ -1,4 +1,5 @@
 import json
+import math
 from flask import current_app
 from queries import (get_people_query, add_people_query,
                      delete_people_query, edit_people_query,
@@ -22,12 +23,12 @@ def response_code(code=400, message=None):
                     ), mimetype="application/json")
 
 
-def get_people(id=None):
+def get_people(id=None, offset=0):
     try:
         if id is not None:
             id = int(id)
 
-        people = get_people_query(id)
+        people = get_people_query(id, offset)
 
         if people == 'no connection':
             return response_code(
@@ -40,22 +41,26 @@ def get_people(id=None):
                 'Record does not exist'
             )
         else:
-
             if id is None:
-                count = len(people)
+                count = people[1]['COUNT(*)']
+                page = round(int(offset) / 25) + 1
+                pages = round(count / 25) + 1
             else:
                 count = 1
+                page = 1
+                pages = 1
 
-                """
-                https://stackoverflow.com/questions/16908943/display-json-returned-from-flask-in-a-neat-way
-                https://www.programiz.com/python-programming/json
-                https://stackoverflow.com/questions/37255313/what-is-a-right-way-for-rest-api-response """
+            """
+            https://stackoverflow.com/questions/16908943/display-json-returned-from-flask-in-a-neat-way
+            https://www.programiz.com/python-programming/json
+            https://stackoverflow.com/questions/37255313/what-is-a-right-way-for-rest-api-response """
             return current_app.response_class(
                     json.dumps(
                                 {
                                     'code': 200,
-                                    'count': count,
-                                    'data': people
+                                    'results': count,
+                                    'pages': '{} of {}'.format(page, pages),
+                                    'data': people[0]
                                 },
                                 indent=4,
                                 sort_keys=False,
@@ -71,16 +76,36 @@ def get_people(id=None):
 def get_people_filtered(filter):
 
     for key in filter:
+        if key == 'offset':
+            return get_people(None, filter[key])
         if key == 'name':
             query = get_people_query_filtered("name", filter[key])
+
         elif key == 'status':
-            query = get_people_query_filtered("status", filter[key])
+            if (filter[key] == "alive" or filter[key] == "deceased" or
+                    filter[key] == "unknown"):
+
+                query = get_people_query_filtered("status", filter[key])
+            else:
+                return response_code(
+                    400,
+                    'Bad Request. Status must be alive, deceased or unknown'
+                )
         elif key == 'gender':
-            query = get_people_query_filtered("gender", filter[key])
+
+            if (filter[key] == "male" or filter[key] == "female" or
+                    filter[key] == "unknown"):
+
+                query = get_people_query_filtered("gender", filter[key])
+            else:
+                return response_code(
+                    400,
+                    'Bad Request. Gender must be male, female or unknown'
+                )
         else:
             return response_code(
                 400,
-                'Bad Request. QueryString unrecognised'
+                'Bad Request. Query string unrecognised'
             )
 
         count = len(query)

@@ -2,7 +2,7 @@ import pymysql.cursors
 from database import connect_to_db
 
 
-def get_people_query(id=None):
+def get_people_query(id=None, offset=0):
     connection = connect_to_db()
 
     if connection != "no connection":
@@ -11,13 +11,19 @@ def get_people_query(id=None):
         try:
             with connection.cursor() as cursor:
                 if id is None:
-                    sql = "SELECT * FROM `people`;"
+                    """ Get Count of Rows """
+                    sql = "SELECT COUNT(*) FROM `people`;"
                     cursor.execute(sql)
+                    count = cursor.fetchone()
+
+                    sql = "SELECT * FROM `people` LIMIT 25 OFFSET %s;"
+                    cursor.execute(sql, (int(offset)))
                     result = cursor.fetchall()
                 else:
                     sql = "SELECT * FROM `people` WHERE `id` = %s;"
                     cursor.execute(sql, (id))
                     result = cursor.fetchone()
+                    count = 1
 
                     if result is None:
                         return "failed"
@@ -28,7 +34,7 @@ def get_people_query(id=None):
     else:
         return connection
 
-    return result
+    return [result, count]
 
 
 def get_people_query_filtered(filter, param):
