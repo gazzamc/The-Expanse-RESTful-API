@@ -9,7 +9,7 @@ body{
 .jumbotron{
     background: url("../images/nasa.jpg") no-repeat center center fixed;
     background-size: cover;
-    height: 50vh;
+    height: 40vh;
 }
 
 .jumbotron h1, .jumbotron .lead{
@@ -26,11 +26,12 @@ body{
     width: 100%;
     overflow: scroll;
     padding: 2% 5% 5% 5%;
-    min-height: 18vh;
+    min-height: 27vh;
     max-height: 50vh;
 }
 
 #jsonRes{
     position: absolute;
     height: inherit;
+    color: #ff0000;
 }

@@ -9,7 +9,8 @@ function getData(endpoint="people"){
     request.onload = function(){
 
         if(request.status == 200){
-            document.getElementById("jsonRes").innerText = this.response;
+            /* https://stackoverflow.com/questions/4810841/pretty-print-json-using-javascript */
+            document.getElementById("jsonRes").innerText = JSON.stringify(JSON.parse(this.response),null,2); ;
         }
     }
 

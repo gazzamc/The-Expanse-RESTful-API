@@ -11,7 +11,7 @@ def response_code(code=400, message=None):
         message = 'Bad Request. One or more fields not supplied or invalid'
 
     response = {
-        'status': code,
+        'code': code,
         'message': message
     }
     return current_app.response_class(
@@ -53,7 +53,7 @@ def get_people(id=None):
             return current_app.response_class(
                     json.dumps(
                                 {
-                                    'status': 200,
+                                    'code': 200,
                                     'count': count,
                                     'data': people
                                 },

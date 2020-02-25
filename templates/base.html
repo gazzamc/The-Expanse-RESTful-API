@@ -42,42 +42,7 @@
             <p class="lead">The Expanse API</p>
         </div>
     </header>
-    <!-- API Search / JSON result -->
-    <section>
-        <div class="container">
-            <div class="row">
-                <div class="col-10 offset-1">
-                    <form class="form-inline" id="apiSearchForm">
-                        <label class="" type="">{{request.url}}api/</label>
-                        <input class="form-control mr-sm-2" placeholder="people/1" id="apiSearch" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" id="apiBtn" type="submit">request</button>
-                    </form>
-                </div>
-                <div class="col-10 offset-1 outerJson">
-                    <code id="jsonRes">
-                            {
-                                "test": "1234",
-                                "test": "1234",
-                                "test": "1234",
-                            }
-                    </code>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- About Section -->
-    <section>
-        <div class="container">
-            <div class="row mx-auto text-center">
-                <div class="col-6">
-                    <h3>About:</h3>
-                </div>
-                <div class="col-6">
-                    <h3>How to use:</h3>
-                </div>
-            </div>
-        </div>
-    </section>
+    {% block content %}{% endblock %}
     <!-- Footer / Social media-->
     <footer>
         <div class="container">
