@@ -1,6 +1,6 @@
 import os
 from flask import Flask, request, render_template
-from people import get_people, add_people, edit_people, delete_people
+from people import get_people, add_people, edit_people, delete_people, get_people_filtered
 
 
 app = Flask(__name__)
@@ -17,7 +17,7 @@ def api_base():
 
 
 methods = ['GET', 'POST', 'PUT', 'DELETE']
-@app.route('/api/people/', methods=methods)
+@app.route('/api/people', methods=methods)
 @app.route('/api/people/<id>', methods=methods)
 def api_people(id=None):
 
@@ -33,7 +33,12 @@ def api_people(id=None):
         data = request.get_json()
         return delete_people(data)
     else:
-        return get_people(id)
+        requests = len(request.args)
+
+        if requests > 0:
+            return get_people_filtered(request.args)
+        else:
+            return get_people(id)
 
 
 @app.route('/api/systems')

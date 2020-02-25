@@ -1,7 +1,8 @@
 import json
 from flask import current_app
 from queries import (get_people_query, add_people_query,
-                     delete_people_query, edit_people_query)
+                     delete_people_query, edit_people_query,
+                     get_people_query_filtered)
 
 
 def response_code(code=400, message=None):
@@ -65,6 +66,44 @@ def get_people(id=None):
             400,
             'Bad Request. ID must be an integer'
         )
+
+
+def get_people_filtered(filter):
+
+    for key in filter:
+        if key == 'name':
+            query = get_people_query_filtered("name", filter[key])
+        elif key == 'status':
+            query = get_people_query_filtered("status", filter[key])
+        elif key == 'gender':
+            query = get_people_query_filtered("gender", filter[key])
+        else:
+            return response_code(
+                400,
+                'Bad Request. QueryString unrecognised'
+            )
+
+        count = len(query)
+
+        if query != "failed":
+            return current_app.response_class(
+                                json.dumps(
+                                            {
+                                                'code': 200,
+                                                'count': count,
+                                                'data': query
+                                            },
+                                            indent=4,
+                                            sort_keys=False,
+                                            ensure_ascii=False
+                                            ), mimetype="application/json")
+        elif query == "no connection":
+            return response_code(
+                503,
+                'Cannot connect to database'
+            )
+        else:
+            return response_code()
 
 
 def add_people(data):
@@ -170,8 +209,6 @@ def delete_people(data):
         id = data['id']
         if type(id) is int:
             delete_rec = delete_people_query(id)
-
-            print(delete_rec, flush=False)
 
             if delete_rec == 'no connection':
                 return response_code(

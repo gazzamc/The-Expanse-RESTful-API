@@ -31,6 +31,40 @@ def get_people_query(id=None):
     return result
 
 
+def get_people_query_filtered(filter, param):
+    connection = connect_to_db()
+
+    if connection != "no connection":
+        result = []
+
+        try:
+            with connection.cursor() as cursor:
+
+                if filter == "name":
+                    sql = "SELECT id, name FROM `people` WHERE `name` LIKE %s;"
+                    query = (param + '%')
+                elif filter == "status":
+                    sql = "SELECT id, name, status FROM `people` WHERE `status` = %s;"
+                    query = param
+                else:
+                    sql = "SELECT id, name, gender FROM `people` WHERE `gender` = %s;"
+                    query = param
+
+                cursor.execute(sql, (query))
+                result = cursor.fetchall()
+
+                if result is None:
+                    return "failed"
+        except pymysql.Error:
+            return "failed"
+        finally:
+            connection.close()
+    else:
+        return connection
+
+    return result
+
+
 def add_people_query(name, status, gender, desc):
     connection = connect_to_db()
 

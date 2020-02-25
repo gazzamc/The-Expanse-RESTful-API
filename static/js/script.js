@@ -3,7 +3,7 @@ var baseUrl = window.location.href + "api/";
 
 baseUrl = baseUrl.replace("?", "").replace("#", "");
 
-function getData(endpoint="people/"){
+function getData(endpoint="people"){
     request.open('GET', baseUrl + endpoint, true)
 
     request.onload = function(){
@@ -15,7 +15,7 @@ function getData(endpoint="people/"){
 
     request.send();
 }
-
+/* https://stackoverflow.com/questions/8866053/stop-reloading-page-with-enter-key */
 document.getElementById("apiSearchForm").addEventListener("submit", function(e){
 
     let endpointData = document.getElementById("apiSearch").value;
