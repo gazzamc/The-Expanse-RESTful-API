@@ -1,5 +1,6 @@
 import os
-from flask import Flask, request, render_template
+import json
+from flask import Flask, request, render_template, current_app
 from people import get_people, add_people, edit_people, delete_people, get_people_filtered
 
 
@@ -11,9 +12,40 @@ def home():
     return render_template("index.html")
 
 
-@app.route('/api/')
+@app.route('/api')
 def api_base():
-    return request.args
+    response = {
+        "base_url": request.base_url,
+        "endpoints": [
+            {
+                "people": [
+                    request.base_url + "people",
+                    request.base_url + "people?offset=<offset>",
+                    request.base_url + "people/<id>",
+                    {
+                        "filter": [
+                            request.base_url + "people?name=<name>",
+                            request.base_url + "people?status=<status>",
+                            request.base_url + "people?gender=<gender>"
+                        ]
+                    }
+                ],
+                "systems":[
+                    request.base_url + "systems",
+                ],
+                "locations":[
+                    request.base_url + "locations",
+                ]
+            }
+        ]
+    }
+
+    return current_app.response_class(
+                json.dumps(
+                    response,
+                    indent=4,
+                    sort_keys=False
+                    ), mimetype="application/json")
 
 
 methods = ['GET', 'POST', 'PUT', 'DELETE']
@@ -46,9 +78,9 @@ def api_systems():
     return 'system results here'
 
 
-@app.route('/api/planets')
-def api_planets():
-    return 'planets results here'
+@app.route('/api/locations')
+def api_locations():
+    return 'location results here'
 
 
 if __name__ == '__main__':
