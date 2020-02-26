@@ -75,12 +75,30 @@ def api_people(id=None):
 
 @app.route('/api/systems')
 def api_systems():
-    return 'system results here'
+    response = {
+        "result": "system results here"
+    }
+
+    return current_app.response_class(
+                json.dumps(
+                    response,
+                    indent=4,
+                    sort_keys=False
+                    ), mimetype="application/json")
 
 
 @app.route('/api/locations')
 def api_locations():
-    return 'location results here'
+    response = {
+        "result": "location results here"
+    }
+
+    return current_app.response_class(
+                json.dumps(
+                    response,
+                    indent=4,
+                    sort_keys=False
+                    ), mimetype="application/json")
 
 
 if __name__ == '__main__':

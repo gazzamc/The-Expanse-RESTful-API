@@ -1,9 +1,13 @@
 var request = new XMLHttpRequest();
-var baseUrl = window.location.href + "api/";
+var baseUrl = window.location.href + "api";
 
 baseUrl = baseUrl.replace("?", "").replace("#", "");
 
-function getData(endpoint="people"){
+function getData(endpoint=""){
+    if (endpoint != ""){
+        endpoint = "/" + endpoint
+    }
+
     request.open('GET', baseUrl + endpoint, true)
 
     request.onload = function(){
@@ -25,7 +29,7 @@ document.getElementById("apiSearchForm").addEventListener("submit", function(e){
     endpointDataSplt = endpointData.split("/");
     endpoint = endpointDataSplt[0];
 
-    if(endpoint != "people" && endpoint != "systems" && endpoint != "planets"){
+    if(endpoint != "people" && endpoint != "systems" && endpoint != "locations"){
         endpoint = ""
     }
 
