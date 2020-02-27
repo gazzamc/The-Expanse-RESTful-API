@@ -3,6 +3,9 @@ from flask import current_app
 from people_queries import (get_people_query, add_people_query,
                             delete_people_query, edit_people_query,
                             get_people_query_filtered)
+from systems_queries import (get_systems_query, add_system_query,
+                             edit_system_query, delete_system_query,
+                             get_system_query_filtered)
 
 
 def response_code(code=400, message=None):
@@ -22,30 +25,37 @@ def response_code(code=400, message=None):
                     ), mimetype="application/json")
 
 
-def get_people(id=None, offset=0):
+def get_data(table, id=None, offset=0):
+
     try:
         if id is not None:
             id = int(id)
 
-        people = get_people_query(id, offset)
+        if table == "people":
+            results = get_people_query(id, offset)
+        elif table == "systems":
+            results = get_systems_query(id, offset)
 
-        if people == 'no connection':
+        if results == 'no connection':
             return response_code(
                 503,
                 'Cannot connect to database'
             )
-        elif people == 'failed':
+        elif results == 'failed':
             return response_code(
                 404,
                 'Record does not exist'
             )
         else:
-            if id is None:
-                count = people[1]['COUNT(*)']
+            if int(offset) >= int(results[1]):
+                return response_code(
+                    404,
+                    'Page does not exist'
+                )
+            elif results[1] > 25:
                 page = round(int(offset) / 25) + 1
-                pages = round(count / 25) + 1
+                pages = round(results[1] / 25) + 1
             else:
-                count = 1
                 page = 1
                 pages = 1
 
@@ -57,9 +67,9 @@ def get_people(id=None, offset=0):
                     json.dumps(
                                 {
                                     'code': 200,
-                                    'results': count,
+                                    'results': results[1],
                                     'pages': '{} of {}'.format(page, pages),
-                                    'data': people[0]
+                                    'data': results[0]
                                 },
                                 indent=4,
                                 sort_keys=False,
@@ -72,17 +82,20 @@ def get_people(id=None, offset=0):
         )
 
 
-def get_people_filtered(filter):
+def get_data_filtered(table, filter):
 
     for key in filter:
         if key == 'offset':
-            return get_people(None, filter[key])
-        if key == 'name':
-            query = get_people_query_filtered("name", filter[key])
+            return get_data("people", None, filter[key])
+        elif key == 'name':
+            if table == "people":
+                query = get_people_query_filtered("name", filter[key])
+            elif table == "systems":
+                query = get_system_query_filtered("name", filter[key])
 
         elif key == 'status':
             if (filter[key] == "alive" or filter[key] == "deceased" or
-                    filter[key] == "unknown"):
+                filter[key] == "unknown"):
 
                 query = get_people_query_filtered("status", filter[key])
             else:

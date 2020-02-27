@@ -15,6 +15,7 @@ def get_people_query(id=None, offset=0):
                     sql = "SELECT COUNT(*) FROM `people`;"
                     cursor.execute(sql)
                     count = cursor.fetchone()
+                    count = count['COUNT(*)']
 
                     sql = "SELECT * FROM `people` LIMIT 25 OFFSET %s;"
                     cursor.execute(sql, (int(offset)))

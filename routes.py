@@ -1,7 +1,10 @@
 import os
 import json
 from flask import Flask, request, render_template, current_app
-from people import get_people, add_people, edit_people, delete_people, get_people_filtered
+from people import (get_people, add_people, edit_people,
+                    delete_people)
+from systems import get_systems, add_system, edit_system, delete_system
+from validation import get_data, get_data_filtered
 
 
 app = Flask(__name__)
@@ -19,22 +22,22 @@ def api_base():
         "endpoints": [
             {
                 "people": [
-                    request.base_url + "people",
-                    request.base_url + "people?offset=<offset>",
-                    request.base_url + "people/<id>",
+                    request.base_url + "/people",
+                    request.base_url + "/people?offset=<offset>",
+                    request.base_url + "/people/<id>",
                     {
                         "filter": [
-                            request.base_url + "people?name=<name>",
-                            request.base_url + "people?status=<status>",
-                            request.base_url + "people?gender=<gender>"
+                            request.base_url + "/people?name=<name>",
+                            request.base_url + "/people?status=<status>",
+                            request.base_url + "/people?gender=<gender>"
                         ]
                     }
                 ],
                 "systems":[
-                    request.base_url + "systems",
+                    request.base_url + "/systems",
                 ],
                 "locations":[
-                    request.base_url + "locations",
+                    request.base_url + "/locations",
                 ]
             }
         ]
@@ -50,7 +53,7 @@ def api_base():
 
 methods = ['GET', 'POST', 'PUT', 'DELETE']
 @app.route('/api/people', methods=methods)
-@app.route('/api/people/<id>', methods=methods)
+@app.route('/api/people/<id>', methods=['GET'])
 def api_people(id=None):
 
     if request.method == "POST":
@@ -68,23 +71,32 @@ def api_people(id=None):
         requests = len(request.args)
 
         if requests > 0:
-            return get_people_filtered(request.args)
+            return get_data_filtered("people", request.args)
         else:
-            return get_people(id)
+            return get_data("people", id)
 
 
-@app.route('/api/systems')
-def api_systems():
-    response = {
-        "result": "system results here"
-    }
+@app.route('/api/systems', methods=methods)
+@app.route('/api/systems/<id>', methods=['GET'])
+def api_systems(id=None):
+    if request.method == "POST":
+        data = request.get_json()
+        return add_system(data)
 
-    return current_app.response_class(
-                json.dumps(
-                    response,
-                    indent=4,
-                    sort_keys=False
-                    ), mimetype="application/json")
+    elif request.method == "PUT":
+        data = request.get_json()
+        return edit_system(data)
+
+    elif request.method == "DELETE":
+        data = request.get_json()
+        return delete_system(data)
+    else:
+        requests = len(request.args)
+
+        if requests > 0:
+            return get_data_filtered("systems", request.args)
+        else:
+            return get_data("systems", id)
 
 
 @app.route('/api/locations')
