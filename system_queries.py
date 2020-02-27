@@ -17,8 +17,8 @@ def get_systems_query(id=None, offset=0):
                     count = cursor.fetchone()
                     count = count['COUNT(*)']
 
-                    sql = "SELECT * FROM `systems`;"
-                    cursor.execute(sql)
+                    sql = "SELECT * FROM `systems` LIMIT 25 OFFSET %s;"
+                    cursor.execute(sql, (int(offset)))
                     result = cursor.fetchall()
                 else:
                     sql = "SELECT * FROM `systems` WHERE `systemid` = %s;"

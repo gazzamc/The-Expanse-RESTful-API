@@ -2,7 +2,7 @@ import json
 from flask import current_app
 from systems_queries import (get_systems_query, add_system_query,
                              edit_system_query, delete_system_query)
-from people import response_code
+from validation import response_code
 
 
 def get_systems(id):

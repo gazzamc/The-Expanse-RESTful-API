@@ -3,7 +3,6 @@ import json
 from flask import Flask, request, render_template, current_app
 from people import (get_people, add_people, edit_people,
                     delete_people)
-from systems import get_systems, add_system, edit_system, delete_system
 from validation import get_data, get_data_filtered
 
 
@@ -99,18 +98,27 @@ def api_systems(id=None):
             return get_data("systems", id)
 
 
-@app.route('/api/locations')
-def api_locations():
-    response = {
-        "result": "location results here"
-    }
+@app.route('/api/locations', methods=methods)
+@app.route('/api/locations/<id>', methods=['GET'])
+def api_locations(id=None):
+    if request.method == "POST":
+        data = request.get_json()
+        return add_system(data)
 
-    return current_app.response_class(
-                json.dumps(
-                    response,
-                    indent=4,
-                    sort_keys=False
-                    ), mimetype="application/json")
+    elif request.method == "PUT":
+        data = request.get_json()
+        return edit_system(data)
+
+    elif request.method == "DELETE":
+        data = request.get_json()
+        return delete_system(data)
+    else:
+        requests = len(request.args)
+
+        if requests > 0:
+            return get_data_filtered("locations", request.args)
+        else:
+            return get_data("locations", id)
 
 
 if __name__ == '__main__':

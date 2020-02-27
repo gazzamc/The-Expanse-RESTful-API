@@ -3,9 +3,12 @@ from flask import current_app
 from people_queries import (get_people_query, add_people_query,
                             delete_people_query, edit_people_query,
                             get_people_query_filtered)
-from systems_queries import (get_systems_query, add_system_query,
-                             edit_system_query, delete_system_query,
-                             get_system_query_filtered)
+from system_queries import (get_systems_query, add_system_query,
+                            edit_system_query, delete_system_query,
+                            get_system_query_filtered)
+from location_queries import (get_locations_query, add_location_query,
+                              edit_location_query, delete_location_query,
+                              get_location_query_filtered)
 
 
 def response_code(code=400, message=None):
@@ -35,6 +38,8 @@ def get_data(table, id=None, offset=0):
             results = get_people_query(id, offset)
         elif table == "systems":
             results = get_systems_query(id, offset)
+        elif table == "locations":
+            results = get_locations_query(id, offset)
 
         if results == 'no connection':
             return response_code(
@@ -86,16 +91,24 @@ def get_data_filtered(table, filter):
 
     for key in filter:
         if key == 'offset':
-            return get_data("people", None, filter[key])
+            if table == "people":
+                return get_data("people", None, filter[key])
+            elif table == "systems":
+                return get_data("systems", None, filter[key])
+            elif table == "locations":
+                return get_data("locations", None, filter[key])
+
         elif key == 'name':
             if table == "people":
                 query = get_people_query_filtered("name", filter[key])
             elif table == "systems":
                 query = get_system_query_filtered("name", filter[key])
+            elif table == "locations":
+                query = get_location_query_filtered("name", filter[key])
 
         elif key == 'status':
             if (filter[key] == "alive" or filter[key] == "deceased" or
-                filter[key] == "unknown"):
+               filter[key] == "unknown"):
 
                 query = get_people_query_filtered("status", filter[key])
             else:
@@ -120,7 +133,13 @@ def get_data_filtered(table, filter):
                 'Bad Request. Query string unrecognised'
             )
 
-        count = len(query)
+        if len(query) > 0:
+            count = len(query)
+        else:
+            return response_code(
+                404,
+                'No records found for query \'' + filter[key] + '\''
+            )
 
         if query != "failed":
             return current_app.response_class(
