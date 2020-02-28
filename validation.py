@@ -162,7 +162,28 @@ def get_data_filtered(table, filter):
             return response_code()
 
 
-def add_people(data):
+def validate_input(table, value1="", value2="", value3="", value4=""):
+    valid = False
+
+    if table == "people":
+        name = value1
+        desc = value2
+        gender = value3
+        status = value4
+
+        if (type(name) is str and type(desc) is str
+                and type(gender) is str and type(status) is str):
+            if len(name) != 0 or len(gender) != 0 or len(status) != 0:
+                if (gender == "male" or gender == "female" or
+                   gender == "unknown"):
+                    if (status == "alive" or status == "deceased" or
+                       status == "unknown"):
+                        valid = True
+
+    return valid
+
+
+def add_data(table, data):
     if data is None:
         return response_code(
             400,
@@ -172,37 +193,47 @@ def add_people(data):
     else:
         try:
             name = data['name']
-            gender = data['gender']
-            status = data['status']
             desc = data['desc']
+
+            if table == "people":
+                gender = data['gender']
+                status = data['status']
+
+                is_valid = validate_input(
+                        "people",
+                        name,
+                        desc,
+                        gender,
+                        status)
 
         except KeyError:
             return response_code()
 
-        if (type(name) is str and type(gender) is str
-                and type(status) is str and type(desc) is str):
-            if len(name) == 0 or len(gender) == 0 or len(status) == 0:
-                return response_code()
-            else:
-                added = add_people_query(name, status, gender, desc)
-
-                if added == 'no connection':
-                    return response_code(
-                        503,
-                        'Cannot connect to database'
-                    )
-                elif added == "duplicate":
-                    return response_code(
-                        403,
-                        'Duplicate, Record was not created in database'
-                    )
-                else:
-                    return response_code(
-                        201,
-                        'Record created in database'
-                    )
-        else:
+        if not is_valid:
             return response_code()
+        else:
+            if table == "people":
+                added = add_people_query(name, status, gender, desc)
+            elif table == "locations":
+                added = add_location_query(name, status, gender, desc)
+            elif table == "systems":
+                added = add_system_query(name, status, gender, desc)
+
+            if added == 'no connection':
+                return response_code(
+                    503,
+                    'Cannot connect to database'
+                )
+            elif added == "duplicate":
+                return response_code(
+                    403,
+                    'Duplicate, Record was not created in database'
+                )
+            else:
+                return response_code(
+                    201,
+                    'Record created in database'
+                )
 
 
 def edit_people(data):

@@ -3,7 +3,7 @@ import json
 from flask import Flask, request, render_template, current_app
 from people import (get_people, add_people, edit_people,
                     delete_people)
-from validation import get_data, get_data_filtered
+from validation import get_data, get_data_filtered, add_data
 
 
 app = Flask(__name__)
@@ -57,7 +57,7 @@ def api_people(id=None):
 
     if request.method == "POST":
         data = request.get_json()
-        return add_people(data)
+        return add_data("people", data)
 
     elif request.method == "PUT":
         data = request.get_json()
