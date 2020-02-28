@@ -3,7 +3,8 @@ import json
 from flask import Flask, request, render_template, current_app
 from people import (get_people, add_people, edit_people,
                     delete_people)
-from validation import get_data, get_data_filtered, add_data
+from validation import (get_data, get_data_filtered,
+                        add_data, edit_data, delete_data)
 
 
 app = Flask(__name__)
@@ -61,11 +62,11 @@ def api_people(id=None):
 
     elif request.method == "PUT":
         data = request.get_json()
-        return edit_people(data)
+        return edit_data("people", data)
 
     elif request.method == "DELETE":
         data = request.get_json()
-        return delete_people(data)
+        return delete_data("people", data)
     else:
         requests = len(request.args)
 
@@ -80,15 +81,15 @@ def api_people(id=None):
 def api_systems(id=None):
     if request.method == "POST":
         data = request.get_json()
-        return add_system(data)
+        return add_data("systems", data)
 
     elif request.method == "PUT":
         data = request.get_json()
-        return edit_system(data)
+        return edit_data("systems", data)
 
     elif request.method == "DELETE":
         data = request.get_json()
-        return delete_system(data)
+        return delete_data("systems", data)
     else:
         requests = len(request.args)
 

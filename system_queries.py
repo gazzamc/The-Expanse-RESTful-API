@@ -111,15 +111,15 @@ def edit_system_query(id, name="", planets="", desc=""):
                 cursor.execute(sql, (id))
                 result = cursor.fetchone()
 
-                # set values if inputed value is empty
-                if name == "" or name is None:
-                    name = result['name']
-                if planets == "" or planets is None:
-                    planets = result['status']
-                if desc == "" or desc is None:
-                    desc = result['desc']
-
                 if result is not None:
+                    # set values if inputed value is empty
+                    if name == "" or name is None:
+                        name = result['name']
+                    if planets == "" or planets is None:
+                        planets = result['planets']
+                    if desc == "" or desc is None:
+                        desc = result['desc']
+
                     with connection.cursor() as cursor:
                         sql = "\
                         \

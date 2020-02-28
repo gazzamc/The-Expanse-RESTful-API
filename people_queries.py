@@ -138,17 +138,17 @@ def edit_people_query(id, name="", status="", gender="", desc=""):
                 cursor.execute(sql, (id))
                 result = cursor.fetchone()
 
-                # set values if inputed value is empty
-                if name == "" or name is None:
-                    name = result['name']
-                if status == "" or status is None:
-                    status = result['status']
-                if gender == "" or gender is None:
-                    gender = result['gender']
-                if desc == "" or desc is None:
-                    desc = result['desc']
-
                 if result is not None:
+                    # set values if inputed value is empty
+                    if name == "" or name is None:
+                        name = result['name']
+                    if status == "" or status is None:
+                        status = result['status']
+                    if gender == "" or gender is None:
+                        gender = result['gender']
+                    if desc == "" or desc is None:
+                        desc = result['desc']
+
                     with connection.cursor() as cursor:
                         sql = "\
                         \

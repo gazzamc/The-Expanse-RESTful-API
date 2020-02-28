@@ -162,7 +162,8 @@ def get_data_filtered(table, filter):
             return response_code()
 
 
-def validate_input(table, value1="", value2="", value3="", value4=""):
+def is_add_valid(table, value1="",
+                 value2="", value3="", value4=""):
     valid = False
 
     if table == "people":
@@ -183,6 +184,38 @@ def validate_input(table, value1="", value2="", value3="", value4=""):
     return valid
 
 
+def is_edit_valid(table, id, value1=None,
+                  value2=None, value3=None, value4=None):
+    valid = False
+    name = value1
+    desc = value2
+
+    if table == "people":
+        gender = value3
+        status = value4
+
+        if id is not None and type(id) is int:
+            if (status is not None and name is not None
+                    and gender is not None and desc is not None):
+                if status != "" or name != "" or gender != "" or desc != "":
+                    if (status == "alive" or status == "deceased" or
+                       status == "unknown" or status == ""):
+                        if (gender == "male" or gender == "female" or
+                           gender == "unknown" or gender == ""):
+                            valid = True
+
+    if table == "systems":
+        planets = value3
+
+        if id is not None and type(id) is int:
+            if (planets is not None and name is not None
+                    and desc is not None):
+                if name != "" or desc != "" or (planets != "" and type(planets) is int):
+                    valid = True
+
+    return valid
+
+
 def add_data(table, data):
     if data is None:
         return response_code(
@@ -199,94 +232,110 @@ def add_data(table, data):
                 gender = data['gender']
                 status = data['status']
 
-                is_valid = validate_input(
+                is_valid = is_add_valid(
                         "people",
                         name,
                         desc,
                         gender,
                         status)
 
+            if not is_valid:
+                return response_code()
+            else:
+                if table == "people":
+                    added = add_people_query(name, status, gender, desc)
+                elif table == "locations":
+                    added = add_location_query(name, status, gender, desc)
+                elif table == "systems":
+                    added = add_system_query(name, status, gender, desc)
+
+                if added == 'no connection':
+                    return response_code(
+                        503,
+                        'Cannot connect to database'
+                    )
+                elif added == "duplicate":
+                    return response_code(
+                        403,
+                        'Duplicate, Record was not created in database'
+                    )
+                else:
+                    return response_code(
+                        201,
+                        'Record created in database'
+                    )
+
         except KeyError:
             return response_code()
 
-        if not is_valid:
-            return response_code()
-        else:
-            if table == "people":
-                added = add_people_query(name, status, gender, desc)
-            elif table == "locations":
-                added = add_location_query(name, status, gender, desc)
-            elif table == "systems":
-                added = add_system_query(name, status, gender, desc)
 
-            if added == 'no connection':
-                return response_code(
-                    503,
-                    'Cannot connect to database'
-                )
-            elif added == "duplicate":
-                return response_code(
-                    403,
-                    'Duplicate, Record was not created in database'
-                )
-            else:
-                return response_code(
-                    201,
-                    'Record created in database'
-                )
-
-
-def edit_people(data):
+def edit_data(table, data):
     if data is None:
         return response_code(
             400,
             'Bad Request. Data must be in JSON format'
         )
+    else:
+        try:
+            id = data['id']
+            name = data['name']
+            desc = data['desc']
 
-    try:
-        id = data['id']
-        name = data['name']
-        status = data['status']
-        gender = data['gender']
-        desc = data['desc']
+            if table == "people":
+                gender = data['gender']
+                status = data['status']
 
-        if id is not None:
-            if (status is not None and name is not None
-                    and gender is not None and desc is not None):
-                if status == "" and name == "" and gender == "" and desc == "":
-                    return response_code()
-                else:
-                    edited = edit_people_query(id, name, status, gender, desc)
+                is_valid = is_edit_valid(
+                        "people",
+                        id,
+                        name,
+                        desc,
+                        gender,
+                        status)
 
-                    if edited == 'no connection':
-                        return response_code(
-                            503,
-                            'Cannot connect to database'
-                        )
-                    elif edited == "no record":
-                        return response_code(
-                            404,
-                            'Record does not exist'
-                        )
-                    elif edited == "failed":
-                        return response_code(
-                            403,
-                            'Record was not altered'
-                        )
-                    else:
-                        return response_code(
-                            200,
-                            'Record was successfully altered'
-                        )
-            else:
+            elif table == "systems":
+                planets = data['planets']
+
+                is_valid = is_edit_valid(
+                        "systems",
+                        id,
+                        name,
+                        desc,
+                        planets)
+
+            if not is_valid:
                 return response_code()
-        else:
+            else:
+                if table == "people":
+                    edited = edit_people_query(id, name, status, gender, desc)
+                if table == "systems":
+                    edited = edit_system_query(id, name, planets, desc)
+                if edited == 'no connection':
+                    return response_code(
+                        503,
+                        'Cannot connect to database'
+                    )
+                elif edited == "no record":
+                    return response_code(
+                        404,
+                        'Record does not exist'
+                    )
+                elif edited == "failed":
+                    return response_code(
+                        403,
+                        'Record was not altered'
+                    )
+                else:
+                    return response_code(
+                        200,
+                        'Record was successfully altered'
+                    )
+
+        except KeyError:
             return response_code()
-    except KeyError:
-        return response_code()
 
 
-def delete_people(data):
+def delete_data(table, data):
     if data is None:
         return response_code(
             400,
@@ -295,7 +344,10 @@ def delete_people(data):
     try:
         id = data['id']
         if type(id) is int:
-            delete_rec = delete_people_query(id)
+            if table == "people":
+                delete_rec = delete_people_query(id)
+            elif table == "systems":
+                delete_rec = delete_system_query(id)
 
             if delete_rec == 'no connection':
                 return response_code(
