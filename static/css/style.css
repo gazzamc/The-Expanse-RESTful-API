@@ -34,4 +34,5 @@ body{
     position: absolute;
     height: inherit;
     color: #ff0000;
+    white-space: pre-wrap;
 }

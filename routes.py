@@ -1,8 +1,6 @@
 import os
 import json
 from flask import Flask, request, render_template, current_app
-from people import (get_people, add_people, edit_people,
-                    delete_people)
 from validation import (get_data, get_data_filtered,
                         add_data, edit_data, delete_data)
 
@@ -104,15 +102,15 @@ def api_systems(id=None):
 def api_locations(id=None):
     if request.method == "POST":
         data = request.get_json()
-        return add_system(data)
+        return add_data("locations", data)
 
     elif request.method == "PUT":
         data = request.get_json()
-        return edit_system(data)
+        return edit_data("locations", data)
 
     elif request.method == "DELETE":
         data = request.get_json()
-        return delete_system(data)
+        return delete_data("locations", data)
     else:
         requests = len(request.args)
 

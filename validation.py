@@ -181,6 +181,16 @@ def is_add_valid(table, value1="",
                        status == "unknown"):
                         valid = True
 
+    if table == "systems":
+        name = value1
+        desc = value2
+        planets = value3
+
+        if (type(name) is str and type(desc) is str
+                and type(planets) is int):
+            if len(name) != 0 or len(planets) != 0:
+                valid = True
+
     return valid
 
 
@@ -210,7 +220,8 @@ def is_edit_valid(table, id, value1=None,
         if id is not None and type(id) is int:
             if (planets is not None and name is not None
                     and desc is not None):
-                if name != "" or desc != "" or (planets != "" and type(planets) is int):
+                if (name != "" or desc != "" or
+                   (planets != "" and type(planets) is int)):
                     valid = True
 
     return valid
@@ -239,15 +250,24 @@ def add_data(table, data):
                         gender,
                         status)
 
+            if table == "systems":
+                planets = data['planets']
+
+                is_valid = is_add_valid(
+                        "systems",
+                        name,
+                        desc,
+                        planets)
+
             if not is_valid:
                 return response_code()
             else:
                 if table == "people":
                     added = add_people_query(name, status, gender, desc)
+                elif table == "systems":
+                    added = add_system_query(name, planets, desc)
                 elif table == "locations":
                     added = add_location_query(name, status, gender, desc)
-                elif table == "systems":
-                    added = add_system_query(name, status, gender, desc)
 
                 if added == 'no connection':
                     return response_code(
@@ -310,6 +330,9 @@ def edit_data(table, data):
                     edited = edit_people_query(id, name, status, gender, desc)
                 if table == "systems":
                     edited = edit_system_query(id, name, planets, desc)
+                if table == "locations":
+                    edited = edit_location_query(id, name, planets, desc)
+
                 if edited == 'no connection':
                     return response_code(
                         503,
@@ -348,6 +371,8 @@ def delete_data(table, data):
                 delete_rec = delete_people_query(id)
             elif table == "systems":
                 delete_rec = delete_system_query(id)
+            elif table == "locations":
+                delete_rec = delete_location_query(id)
 
             if delete_rec == 'no connection':
                 return response_code(

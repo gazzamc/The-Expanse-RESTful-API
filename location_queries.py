@@ -79,7 +79,7 @@ def add_location_query(name, planets, desc):
         try:
             # check if record exists first
             with connection.cursor() as cursor:
-                sql = "SELECT * FROM `systems` WHERE `name` = %s;"
+                sql = "SELECT * FROM `locations` WHERE `name` = %s;"
                 cursor.execute(sql, (name))
                 result = cursor.fetchone()
 
@@ -87,7 +87,7 @@ def add_location_query(name, planets, desc):
                     with connection.cursor() as cursor:
                         sql = "\
                         \
-                        INSERT INTO `systems` (`name`, `planets`, `desc`) VALUES(%s, %s, %s);"
+                        INSERT INTO `locations` (`name`, `population`, `desc`) VALUES(%s, %s, %s);"
                         cursor.execute(sql, (name, planets, desc))
                         connection.commit()
                 else:
@@ -100,31 +100,31 @@ def add_location_query(name, planets, desc):
         return connection
 
 
-def edit_location_query(id, name="", planets="", desc=""):
+def edit_location_query(id, name="", population="", desc=""):
     connection = connect_to_db()
 
     if connection != "no connection":
         try:
             # check if record exists first
             with connection.cursor() as cursor:
-                sql = "SELECT * FROM `systems` WHERE `systemid` = %s;"
+                sql = "SELECT * FROM `locations` WHERE `locationid` = %s;"
                 cursor.execute(sql, (id))
                 result = cursor.fetchone()
 
-                # set values if inputed value is empty
-                if name == "" or name is None:
-                    name = result['name']
-                if planets == "" or planets is None:
-                    planets = result['status']
-                if desc == "" or desc is None:
-                    desc = result['desc']
-
                 if result is not None:
+                    # set values if inputed value is empty
+                    if name == "" or name is None:
+                        name = result['name']
+                    if population == "" or population is None:
+                        population = result['population']
+                    if desc == "" or desc is None:
+                        desc = result['desc']
+
                     with connection.cursor() as cursor:
                         sql = "\
                         \
-                        UPDATE `locations` SET `name` = %s, `planets` = %s, `desc` = %s WHERE `systemid` = %s;"
-                        cursor.execute(sql, (name, planets, desc, id))
+                        UPDATE `locations` SET `name` = %s, `population` = %s, `desc` = %s WHERE `systemid` = %s;"
+                        cursor.execute(sql, (name, population, desc, id))
                         connection.commit()
                 else:
                     return "no record"
