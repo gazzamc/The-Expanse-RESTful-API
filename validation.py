@@ -191,6 +191,19 @@ def is_add_valid(table, value1="",
             if len(name) != 0 or len(planets) != 0:
                 valid = True
 
+    if table == "locations":
+        name = value1
+        desc = value2
+        population = value3
+        system = value4
+
+        if (type(name) is str and type(desc) is str
+                and type(system) is str
+                and type(population) is str):
+            if len(name) != 0 or len(system) != 0:
+                if population.isdigit() or population[1:]:
+                    valid = True
+
     return valid
 
 
@@ -224,6 +237,20 @@ def is_edit_valid(table, id, value1=None,
                    (planets != "" and type(planets) is int)):
                     valid = True
 
+    if table == "locations":
+        population = value3
+        system = value4
+
+        if id is not None and type(id) is int:
+            if (population is not None and name is not None
+                    and desc is not None and system is not None):
+                if (name != "" or desc != "" or
+                   population != "" or system != ""):
+                    # Check if pop is digit and ignore
+                    # first index incase < or > sign
+                    if population.isdigit() or population[1:]:
+                        valid = True
+
     return valid
 
 
@@ -250,7 +277,7 @@ def add_data(table, data):
                         gender,
                         status)
 
-            if table == "systems":
+            elif table == "systems":
                 planets = data['planets']
 
                 is_valid = is_add_valid(
@@ -258,6 +285,17 @@ def add_data(table, data):
                         name,
                         desc,
                         planets)
+
+            elif table == "locations":
+                population = data['population']
+                system = data['system']
+
+                is_valid = is_add_valid(
+                        "locations",
+                        name,
+                        desc,
+                        population,
+                        system)
 
             if not is_valid:
                 return response_code()
@@ -267,7 +305,7 @@ def add_data(table, data):
                 elif table == "systems":
                     added = add_system_query(name, planets, desc)
                 elif table == "locations":
-                    added = add_location_query(name, status, gender, desc)
+                    added = add_location_query(name, population, system, desc)
 
                 if added == 'no connection':
                     return response_code(
@@ -279,6 +317,8 @@ def add_data(table, data):
                         403,
                         'Duplicate, Record was not created in database'
                     )
+                elif added == "system incorrect":
+                    return response_code()
                 else:
                     return response_code(
                         201,
@@ -323,6 +363,18 @@ def edit_data(table, data):
                         desc,
                         planets)
 
+            elif table == "locations":
+                population = data['population']
+                system = data['system']
+
+                is_valid = is_edit_valid(
+                        "locations",
+                        id,
+                        name,
+                        desc,
+                        population,
+                        system)
+
             if not is_valid:
                 return response_code()
             else:
@@ -331,7 +383,7 @@ def edit_data(table, data):
                 if table == "systems":
                     edited = edit_system_query(id, name, planets, desc)
                 if table == "locations":
-                    edited = edit_location_query(id, name, planets, desc)
+                    edited = edit_location_query(id, name, population, system, desc)
 
                 if edited == 'no connection':
                     return response_code(

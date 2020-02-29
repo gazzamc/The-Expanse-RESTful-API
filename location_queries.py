@@ -72,7 +72,7 @@ def get_location_query_filtered(filter, param):
     return result
 
 
-def add_location_query(name, planets, desc):
+def add_location_query(name, population, system, desc):
     connection = connect_to_db()
 
     if connection != "no connection":
@@ -84,11 +84,26 @@ def add_location_query(name, planets, desc):
                 result = cursor.fetchone()
 
                 if result is None:
+                    # Get system id
+                    with connection.cursor() as cursor:
+                        sql = "SELECT systemid \
+                                FROM `systems` \
+                                WHERE `name` = %s;"
+                        cursor.execute(sql, (system))
+                        result = cursor.fetchone()
+
+                        if result is not None:
+                            system_id = result['systemid']
+                        else:
+                            return "system incorrect"
+
                     with connection.cursor() as cursor:
                         sql = "\
-                        \
-                        INSERT INTO `locations` (`name`, `population`, `desc`) VALUES(%s, %s, %s);"
-                        cursor.execute(sql, (name, planets, desc))
+                        INSERT INTO `locations` \
+                        (`name`, `population`, `systemid`, `desc`) \
+                        VALUES(%s, %s, %s, %s);"
+                        cursor.execute(sql,
+                                       (name, population, system_id, desc))
                         connection.commit()
                 else:
                     return "duplicate"
@@ -100,7 +115,7 @@ def add_location_query(name, planets, desc):
         return connection
 
 
-def edit_location_query(id, name="", population="", desc=""):
+def edit_location_query(id, name="", population="", system="", desc=""):
     connection = connect_to_db()
 
     if connection != "no connection":
@@ -120,11 +135,27 @@ def edit_location_query(id, name="", population="", desc=""):
                     if desc == "" or desc is None:
                         desc = result['desc']
 
+                    # Get system id if changed
+                    if system == "" or system is None:
+                        system_id = result['SystemID']
+                    else:
+                        with connection.cursor() as cursor:
+                            sql = "SELECT systemid \
+                                    FROM `systems` \
+                                    WHERE `name` = %s;"
+                            cursor.execute(sql, (system))
+                            result = cursor.fetchone()
+                            system_id = result['systemid']
+
+                    # Added to DB
                     with connection.cursor() as cursor:
                         sql = "\
-                        \
-                        UPDATE `locations` SET `name` = %s, `population` = %s, `desc` = %s WHERE `systemid` = %s;"
-                        cursor.execute(sql, (name, population, desc, id))
+                        UPDATE `locations` \
+                        SET `name` = %s, `population` = %s, \
+                        `systemid` = %s, `desc` = %s \
+                        WHERE `locationid` = %s;"
+                        cursor.execute(sql,
+                                       (name, population, system_id, desc, id))
                         connection.commit()
                 else:
                     return "no record"
