@@ -380,9 +380,9 @@ def edit_data(table, data):
             else:
                 if table == "people":
                     edited = edit_people_query(id, name, status, gender, desc)
-                if table == "systems":
+                elif table == "systems":
                     edited = edit_system_query(id, name, planets, desc)
-                if table == "locations":
+                elif table == "locations":
                     edited = edit_location_query(id, name, population, system, desc)
 
                 if edited == 'no connection':

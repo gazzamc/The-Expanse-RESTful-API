@@ -36,3 +36,17 @@ body{
     color: #ff0000;
     white-space: pre-wrap;
 }
+
+/* Edit Buttons */
+
+#editRecord{
+    margin: 1%;
+}
+
+.hideBtn{
+    display: none;
+}
+
+.showBtn{
+    display: initial;
+}

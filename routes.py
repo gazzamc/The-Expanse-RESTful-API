@@ -13,6 +13,11 @@ def home():
     return render_template("index.html")
 
 
+@app.route('/documentation')
+def docs():
+    return render_template("docs.html")
+
+
 @app.route('/api')
 def api_base():
     response = {
