@@ -2,7 +2,7 @@ var baseUrl = window.location.href + "api";
 baseUrl = baseUrl.replace("?", "").replace("#", "");
 var endpoint;
 var endpointDataSplt;
-var headers = "'Content-Type': 'application/json'";
+var headers = {'Content-Type': 'application/json'};
 
 async function getData(endpoint=""){
     let response;
@@ -12,7 +12,6 @@ async function getData(endpoint=""){
         endpoint = "/" + endpoint
     }
 
-    try{
         response = await fetch(baseUrl + endpoint);
         jsonResult = await response.json();
 
@@ -51,9 +50,6 @@ async function getData(endpoint=""){
                 document.getElementById("saveBtn").className = "hideBtn";
             }
         }
-    } catch(TypeError){
-        document.getElementById("jsonRes").innerHTML = "Invalid endpoint!";
-    }
 }
 
 function showEdit(){
@@ -76,6 +72,9 @@ function showEdit(){
             }
             else if(index == 8){
                     replaceText = splitBr[index].split(":")[1].split("\"")[1];
+                    if(!isNaN(replaceText)){
+                        replaceText = "\"" + replaceText + "\"";
+                    }
                     textBoxHTML = '<input type="text" id="gender" placeholder='+ replaceText +'></input>';
                     jsonResult = jsonResult.replace(replaceText, textBoxHTML);
             }
@@ -111,43 +110,37 @@ function showEdit(){
     document.getElementById("saveBtn").className = "showBtn";
 }
 
-function editRecord(){
-    request.open('PUT', baseUrl + "/" + endpointDataSplt[0], true)
-    request.setRequestHeader('Content-type','application/json; charset=utf-8');
+async function editRecord(){
+
     let data = {};
     data.id = parseInt(endpointDataSplt[1]);
-    data.name = document.getElementById("name").value;
-    data.desc = document.getElementById("desc").value;
+    data.name = document.getElementById("name").value.toLowerCase();
+    data.desc = document.getElementById("desc").value.toLowerCase();
 
     if(endpoint == "people"){
-        data.status = document.getElementById("status").value;
-        data.gender = document.getElementById("gender").value;
+        data.status = document.getElementById("status").value.toLowerCase();
+        data.gender = document.getElementById("gender").value.toLowerCase();
 
     } else if(endpoint == "locations"){
         data.population = document.getElementById("population").value;
         data.systemId = document.getElementById("systemsId").value;
+
     } else if(endpoint == "systems"){
         data.planets = document.getElementById("planets").value;
+
     }
 
+    let options = {method: 'PUT', headers: headers, body: json};
     let json = JSON.stringify(data);
+    let response = await fetch(baseUrl + "/" + endpoint, options);
+    let jsonResult = await response.json();
 
-    request.onload = function(){
-        if(request.status == 200){
-            let jsonRes = JSON.parse(this.response);
-            if(jsonRes['code'] == 200){
-                document.getElementById("jsonRes").innerHTML = JSON.stringify(JSON.parse(this.response),null,2);
-                document.getElementById("saveBtn").className = "hideBtn";
-            } else{
-                document.getElementById("errMess").innerHTML = jsonRes['message'];
-            }
-        }
+    if(jsonResult['code'] == 200){
+        document.getElementById("jsonRes").innerHTML = JSON.stringify(jsonResult,null,2);
+        document.getElementById("saveBtn").className = "hideBtn";
+    } else{
+        document.getElementById("errMess").innerHTML = jsonResult['message'];
     }
-    request.send(json);
-
-/*     document.getElementById("saveBtn").className = "hideBtn";
-    document.getElementById("jsonRes").innerHTML = "Saved!" */
-
 }
 
 function deleteRecord(){
