@@ -130,8 +130,8 @@ async function editRecord(){
 
     }
 
-    let options = {method: 'PUT', headers: headers, body: json};
     let json = JSON.stringify(data);
+    let options = {method: 'PUT', headers: headers, body: json};
     let response = await fetch(baseUrl + "/" + endpoint, options);
     let jsonResult = await response.json();
 
