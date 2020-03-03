@@ -1,59 +1,60 @@
-var request = new XMLHttpRequest();
 var baseUrl = window.location.href + "api";
+baseUrl = baseUrl.replace("?", "").replace("#", "");
 var endpoint;
 var endpointDataSplt;
+var headers = "'Content-Type': 'application/json'";
 
-baseUrl = baseUrl.replace("?", "").replace("#", "");
+async function getData(endpoint=""){
+    let response;
+    let jsonResult;
 
-function getData(endpoint=""){
     if (endpoint != ""){
         endpoint = "/" + endpoint
     }
 
-    request.open('GET', baseUrl + endpoint, true)
+    try{
+        response = await fetch(baseUrl + endpoint);
+        jsonResult = await response.json();
 
-    request.onload = function(){
+    /* Check if single record, then show buttons */
+    /* https://stackoverflow.com/questions/4810841/pretty-print-json-using-javascript */
+    document.getElementById("jsonRes").innerText = JSON.stringify(jsonResult,null,2);
 
-        if(request.status == 200){
-            /* Check if single record, then show buttons */
-            let results = JSON.parse(this.response);
+        if(jsonResult['results'] == 1){
+            if(document.getElementById("addBtn").offsetLeft > 0 ||
+                document.getElementById("saveBtn").offsetLeft > 0){
+                document.getElementById("addBtn").className = "hideBtn";
+                document.getElementById("saveBtn").className = "hideBtn";
+            }
 
-            /* https://stackoverflow.com/questions/4810841/pretty-print-json-using-javascript */
-            document.getElementById("jsonRes").innerText = JSON.stringify(results,null,2);
+            document.getElementById("editBtn").className = "showBtn";
+            document.getElementById("deleteBtn").className = "showBtn";
 
-            if(results['results'] == 1){
-                if(document.getElementById("addBtn").offsetLeft > 0){
-                    document.getElementById("addBtn").className = "hideBtn";
-                }
-                if(document.getElementById("saveBtn").offsetLeft > 0){
-                    document.getElementById("saveBtn").className = "hideBtn";
-                }
-                document.getElementById("editBtn").className = "showBtn";
-                document.getElementById("deleteBtn").className = "showBtn";
-            } else if (results['results'] > 1){
-                document.getElementById("addBtn").className = "showBtn";
+        } else if (jsonResult['results'] > 1){
+            document.getElementById("addBtn").className = "showBtn";
+
+            if(document.getElementById("editBtn").offsetLeft > 0 || 
+            document.getElementById("deleteBtn").offsetLeft > 0 ||
+            document.getElementById("saveBtn").offsetLeft > 0){
+                document.getElementById("editBtn").className = "hideBtn";
+                document.getElementById("deleteBtn").className = "hideBtn"; 
+                document.getElementById("saveBtn").className = "hideBtn";
+            }
+        }else{
+            if(document.getElementById("addBtn").offsetLeft > 0 || 
+            document.getElementById("editBtn").offsetLeft > 0 || 
+            document.getElementById("deleteBtn").offsetLeft > 0 ||
+            document.getElementById("saveBtn").offsetLeft > 0){
+                document.getElementById("addBtn").className = "hideBtn";  
+                document.getElementById("editBtn").className = "hideBtn";
+                document.getElementById("deleteBtn").className = "hideBtn"; 
+                document.getElementById("saveBtn").className = "hideBtn";
             }
         }
+    } catch(TypeError){
+        document.getElementById("jsonRes").innerHTML = "Invalid endpoint!";
     }
-
-    request.send();
 }
-/* https://stackoverflow.com/questions/8866053/stop-reloading-page-with-enter-key */
-document.getElementById("apiSearchForm").addEventListener("submit", function(e){
-
-    let endpointData = document.getElementById("apiSearch").value;
-
-    /* validate input */
-    endpointDataSplt = endpointData.split("/");
-    endpoint = endpointDataSplt[0];
-
-    if(endpoint != "people" && endpoint != "systems" && endpoint != "locations"){
-        endpoint = ""
-    }
-
-    getData(endpointData);
-    e.preventDefault();
-}, false);
 
 function showEdit(){
     let jsonResult = document.getElementById("jsonRes").innerHTML;
@@ -150,14 +151,27 @@ function editRecord(){
 }
 
 function deleteRecord(){
-    request.open('DELETE', baseUrl + "/" + endpointDataSplt[0], true)
-    request.setRequestHeader('Content-type','application/json; charset=utf-8');
+
+/*     request.open('DELETE', baseUrl + "/" + endpointDataSplt[0], true)
+    request.setRequestHeader('Content-type','application/json; charset=utf-8'); */
 
     let data = {};
     data.id = parseInt(endpointDataSplt[1]);
     let json = JSON.stringify(data);
 
-    request.onload = function(){
+    let response = fetch(baseUrl + "/" + endpoint, {method: 'DELETE', json});
+    let jsonResult = response.json();
+
+    if(jsonResult['code'] == 200){
+        document.getElementById("jsonRes").innerHTML = JSON.stringify(jsonResult,null,2);
+        document.getElementById("editBtn").className = "hideBtn";
+        document.getElementById("deleteBtn").className = "hideBtn";
+    } else{
+        console.log(jsonResult);
+        document.getElementById("errMess").innerHTML = "There was an issue deleting the record"
+    }
+
+/*     request.onload = function(){
         if(request.status == 200){
             let jsonRes = JSON.parse(this.response);
             if(jsonRes['code'] == 200){
@@ -169,21 +183,95 @@ function deleteRecord(){
             }
         }
     }
-    request.send(json);
+    request.send(json); */
+}
+
+async function getSystemNames() {
+
+    let response = await fetch(baseUrl + "/systems");
+    let tempsysNames = await response.json();
+    
+    return tempsysNames['data'];
+}
+
+async function addRecord(){
+    if(endpoint == "people"){
+
+        form = {
+            "name": "<input type=" + "text" + " id=" + "name" + "></input>",
+            "status": "<input type=" + "text" + " id=" + "status" + "></input>",
+            "gender": "<input type=" + "text" + " id=" + "gender" + "></input>",
+            "desc": "<textArea rows=" + "4" + " cols=" + "50" + " id=" + "desc" + "></textArea>"
+        }
+
+    } else if(endpoint == "locations"){
+        let systems = await getSystemNames();
+        let dropdown = "";
+
+        systems.forEach(element => {
+            dropdown += "<option value=" + element['name'] + ">" + element['name'] + "</option>";
+        });
+
+        form = {
+            "name": "<input type=" + "text" + " id=" + "name" + "></input>",
+            "population": "<input type=" + "text" + " id=" + "pop" + "></input>",
+            "system": "<select id=" + "system" + ">" + dropdown + "</select>",
+            "desc": "<textArea rows=" + "4" + " cols=" + "50" + " id=" + "desc" + "></textArea>"
+        }
+
+    } else if(endpoint == "systems"){
+        form = {
+            "name": "<input type=\"text\" id=\"name\"></input>",
+            "planets": "<input type=\"text\" id=\"planets\"></input>",
+            "desc": "<textArea rows=\"4\" cols=\"50\" id=\"desc\"></textArea>",
+        }
+
+    }
+
+    document.getElementById("jsonRes").innerHTML = JSON.stringify(form, null, 2);
 }
 
 /* Button event Listeners */
+/* https://stackoverflow.com/questions/8866053/stop-reloading-page-with-enter-key */
+document.getElementById("apiSearchForm").addEventListener("submit", function(e){
+
+    let endpointData = document.getElementById("apiSearch").value;
+
+    /* validate input */
+    endpointDataSplt = endpointData.split("/");
+    endpoint = endpointDataSplt[0];
+
+    if(endpoint != "people" && endpoint != "systems" && endpoint != "locations"){
+        endpoint = ""
+    }
+
+    getData(endpointData);
+    e.preventDefault();
+}, false);
+
 document.getElementById("editBtn").addEventListener("click", function(){
     showEdit();
+});
+
+document.getElementById("addBtn").addEventListener("click", function(){
+    addRecord();
+    document.getElementById("saveBtn").className = "showBtn";
+    document.getElementById("addBtn").className = "hideBtn";
 });
 
 document.getElementById("saveBtn").addEventListener("click", function(){
     if(document.getElementById("errMess").innerText != undefined){
         document.getElementById("errMess").innerText = "";
     }
-    
-    if(confirm("Are you sure you want to edit this record?")){
-        editRecord();
+
+    if(endpointDataSplt[1] == undefined){
+        if(confirm("Are you sure you want to add this record?")){
+            "editRecord();"
+        }
+    }else{
+        if(confirm("Are you sure you want to edit this record?")){
+            editRecord();
+        }
     }
 });
 

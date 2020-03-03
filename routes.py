@@ -2,7 +2,8 @@ import os
 import json
 from flask import Flask, request, render_template, current_app
 from validation import (get_data, get_data_filtered,
-                        add_data, edit_data, delete_data)
+                        add_data, edit_data, delete_data,
+                        response_code)
 
 
 app = Flask(__name__)
@@ -123,6 +124,18 @@ def api_locations(id=None):
             return get_data_filtered("locations", request.args)
         else:
             return get_data("locations", id)
+
+
+@app.errorhandler(404)
+def invalid_route(e):
+    """ https://codehandbook.org/handle-404-error-python-flask/ """
+    if "api/" in request.url:
+        return response_code(
+            "404",
+            "Invalid URI"
+            )
+    else:
+        return render_template("404.html")
 
 
 if __name__ == '__main__':
