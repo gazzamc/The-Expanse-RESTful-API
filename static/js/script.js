@@ -2,22 +2,32 @@ var baseUrl = window.location.href + "api";
 baseUrl = baseUrl.replace("?", "").replace("#", "");
 var endpoint;
 var endpointDataSplt;
-var headers = {'Content-Type': 'application/json'};
 
-async function getData(endpoint=""){
+async function apiCall(endpoint="", method='GET', data=null){
     let response;
     let jsonResult;
+    let headers;
+    let options;
 
     if (endpoint != ""){
         endpoint = "/" + endpoint
     }
 
-        response = await fetch(baseUrl + endpoint);
-        jsonResult = await response.json();
+    headers = {'Content-Type': 'application/json'};
+    options = {method: method, headers: headers, body: data};
+    response = await fetch(baseUrl + endpoint, options);
+    jsonResult = await response.json();
+
+    return jsonResult;
+}
+
+async function getData(endpoint=""){
+
+    let jsonResult = await apiCall(endpoint);
 
     /* Check if single record, then show buttons */
     /* https://stackoverflow.com/questions/4810841/pretty-print-json-using-javascript */
-    document.getElementById("jsonRes").innerText = JSON.stringify(jsonResult,null,2);
+    document.getElementById("jsonRes").innerText = JSON.stringify(jsonResult, null, 2);
 
         if(jsonResult['results'] == 1){
             if(document.getElementById("addBtn").offsetLeft > 0 ||
@@ -52,11 +62,23 @@ async function getData(endpoint=""){
         }
 }
 
-function showEdit(){
+async function showEdit(){
     let jsonResult = document.getElementById("jsonRes").innerHTML;
     let splitBr = jsonResult.split("<br>");
     let replaceText;
     let textBoxHTML;
+    let systems;
+    let dropdown;
+
+    /* get system names before loop */
+    if(endpoint == "locations"){
+        systems = await getSystemNames();
+        dropdown = "";
+
+        systems.forEach(element => {
+            dropdown += "<option value=" + element['name'] + ">" + element['name'] + "</option>";
+        });
+    }
 
     splitBr.forEach((value, index) => {
         if(endpoint == "people"){
@@ -101,7 +123,30 @@ function showEdit(){
                     textBoxHTML = '<input type="text" id="planets" placeholder="'+ replaceText +'"></input>';
                     jsonResult = jsonResult.replace(replaceText, textBoxHTML);
             }
+        } else if(endpoint == "locations"){
+            if(index == 6){
+                    replaceText = splitBr[index].split(":")[1].split("\"")[1];
+                    textBoxHTML = '<input type="text" id="name" placeholder="'+ replaceText +'"></input>';
+                    jsonResult = jsonResult.replace(replaceText, textBoxHTML);
+            }
+            if(index == 7){
+                    replaceText = splitBr[index].split(":")[1].split("\"")[1];
+                    textBoxHTML = '<input type="text" id="population" placeholder="'+ replaceText +'"></input>';
+                    jsonResult = jsonResult.replace(replaceText, textBoxHTML);
+            }
+            else if(index == 8){
+                    replaceText = splitBr[index].split(":")[1].replace(",", "");
+                    textBoxHTML = '<select id="system">" '+ dropdown +' "</select>';
+                    jsonResult = jsonResult.replace(replaceText, textBoxHTML);
+            }
+            else if(index == 9){
+                    replaceText = splitBr[index].split(":")[1].split("\"")[1];
+                    replaceText.replace('"', '');
+                    textBoxHTML = '<textArea rows="4" cols="50" id="desc" placeholder="'+ replaceText +'"></textArea>';
+                    jsonResult = jsonResult.replace(replaceText, textBoxHTML);
+            }
         }
+        
     });
 
     document.getElementById("jsonRes").innerHTML = jsonResult;
@@ -110,10 +155,17 @@ function showEdit(){
     document.getElementById("saveBtn").className = "showBtn";
 }
 
-async function editRecord(){
+async function editRecord(newRec=false){
 
     let data = {};
-    data.id = parseInt(endpointDataSplt[1]);
+    let method = 'PUT';
+    
+    if(!newRec){
+        data.id = parseInt(endpointDataSplt[1]);
+    }else{
+        method = 'POST';
+    }
+
     data.name = document.getElementById("name").value.toLowerCase();
     data.desc = document.getElementById("desc").value.toLowerCase();
 
@@ -122,20 +174,18 @@ async function editRecord(){
         data.gender = document.getElementById("gender").value.toLowerCase();
 
     } else if(endpoint == "locations"){
-        data.population = document.getElementById("population").value;
-        data.systemId = document.getElementById("systemsId").value;
+        data.population = document.getElementById("pop").value;
+        data.system = document.getElementById("system").value;
 
     } else if(endpoint == "systems"){
-        data.planets = document.getElementById("planets").value;
+        data.planets = parseInt(document.getElementById("planets").value);
 
     }
 
     let json = JSON.stringify(data);
-    let options = {method: 'PUT', headers: headers, body: json};
-    let response = await fetch(baseUrl + "/" + endpoint, options);
-    let jsonResult = await response.json();
+    let jsonResult = await apiCall(endpoint, method, json);
 
-    if(jsonResult['code'] == 200){
+    if(jsonResult['code'] == 200 || jsonResult['code'] == 201){
         document.getElementById("jsonRes").innerHTML = JSON.stringify(jsonResult,null,2);
         document.getElementById("saveBtn").className = "hideBtn";
     } else{
@@ -143,40 +193,20 @@ async function editRecord(){
     }
 }
 
-function deleteRecord(){
-
-/*     request.open('DELETE', baseUrl + "/" + endpointDataSplt[0], true)
-    request.setRequestHeader('Content-type','application/json; charset=utf-8'); */
+async function deleteRecord(){
 
     let data = {};
     data.id = parseInt(endpointDataSplt[1]);
     let json = JSON.stringify(data);
-
-    let response = fetch(baseUrl + "/" + endpoint, {method: 'DELETE', json});
-    let jsonResult = response.json();
+    let jsonResult = await apiCall(endpoint, 'DELETE', json);
 
     if(jsonResult['code'] == 200){
         document.getElementById("jsonRes").innerHTML = JSON.stringify(jsonResult,null,2);
         document.getElementById("editBtn").className = "hideBtn";
         document.getElementById("deleteBtn").className = "hideBtn";
     } else{
-        console.log(jsonResult);
         document.getElementById("errMess").innerHTML = "There was an issue deleting the record"
     }
-
-/*     request.onload = function(){
-        if(request.status == 200){
-            let jsonRes = JSON.parse(this.response);
-            if(jsonRes['code'] == 200){
-                document.getElementById("jsonRes").innerHTML = JSON.stringify(JSON.parse(this.response),null,2);
-                document.getElementById("editBtn").className = "hideBtn";
-            	document.getElementById("deleteBtn").className = "hideBtn";
-            } else{
-                document.getElementById("errMess").innerHTML = "There was an issue deleting the record"
-            }
-        }
-    }
-    request.send(json); */
 }
 
 async function getSystemNames() {
@@ -187,7 +217,7 @@ async function getSystemNames() {
     return tempsysNames['data'];
 }
 
-async function addRecord(){
+async function showAddRecord(){
     if(endpoint == "people"){
 
         form = {
@@ -214,9 +244,9 @@ async function addRecord(){
 
     } else if(endpoint == "systems"){
         form = {
-            "name": "<input type=\"text\" id=\"name\"></input>",
-            "planets": "<input type=\"text\" id=\"planets\"></input>",
-            "desc": "<textArea rows=\"4\" cols=\"50\" id=\"desc\"></textArea>",
+            "name": "<input type=" + "text" + " id=" + "name" + "></input>",
+            "planets": "<input type=" + "text" + " id=" + "planets" + "></input>",
+            "desc": "<textArea rows=" + "4" + " cols=" + "50" + " id=" + "desc" + "></textArea>"
         }
 
     }
@@ -247,7 +277,7 @@ document.getElementById("editBtn").addEventListener("click", function(){
 });
 
 document.getElementById("addBtn").addEventListener("click", function(){
-    addRecord();
+    showAddRecord();
     document.getElementById("saveBtn").className = "showBtn";
     document.getElementById("addBtn").className = "hideBtn";
 });
@@ -259,7 +289,7 @@ document.getElementById("saveBtn").addEventListener("click", function(){
 
     if(endpointDataSplt[1] == undefined){
         if(confirm("Are you sure you want to add this record?")){
-            "editRecord();"
+            editRecord(true);
         }
     }else{
         if(confirm("Are you sure you want to edit this record?")){
