@@ -1,5 +1,5 @@
 import pymysql.cursors
-from database import connect_to_db
+from database.database import connect_to_db
 
 
 def get_people_query(id=None, offset=0):

@@ -1,7 +1,7 @@
 from validation import is_add_valid, response_code
-from people import add_people_query
-from system import add_system_query
-from location import add_location_query
+from database.people import add_people_query
+from database.system import add_system_query
+from database.location import add_location_query
 
 
 def add_data(table, data):

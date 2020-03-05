@@ -1,7 +1,7 @@
 from validation import is_edit_valid, response_code
-from people import edit_people_query
-from system import edit_system_query
-from location import edit_location_query
+from database.people import edit_people_query
+from database.system import edit_system_query
+from database.location import edit_location_query
 
 
 def edit_data(table, data):

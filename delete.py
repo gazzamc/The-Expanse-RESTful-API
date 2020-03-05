@@ -1,7 +1,7 @@
 from validation import response_code
-from people import delete_people_query
-from system import delete_system_query
-from location import delete_location_query
+from database.people import delete_people_query
+from database.system import delete_system_query
+from database.location import delete_location_query
 
 
 def delete_data(table, data):
