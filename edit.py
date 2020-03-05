@@ -1,18 +1,18 @@
-from validation import is_add_valid, response_code
-from people_queries import add_people_query
-from system_queries import add_system_query
-from location_queries import add_location_query
+from validation import is_edit_valid, response_code
+from people import edit_people_query
+from system import edit_system_query
+from location import edit_location_query
 
 
-def add_data(table, data):
+def edit_data(table, data):
     if data is None:
         return response_code(
             400,
             'Bad Request. Data must be in JSON format'
         )
-
     else:
         try:
+            id = data['id']
             name = data['name']
             desc = data['desc']
 
@@ -20,8 +20,9 @@ def add_data(table, data):
                 gender = data['gender']
                 status = data['status']
 
-                is_valid = is_add_valid(
+                is_valid = is_edit_valid(
                         "people",
+                        id,
                         name,
                         desc,
                         gender,
@@ -30,8 +31,9 @@ def add_data(table, data):
             elif table == "systems":
                 planets = data['planets']
 
-                is_valid = is_add_valid(
+                is_valid = is_edit_valid(
                         "systems",
+                        id,
                         name,
                         desc,
                         planets)
@@ -40,8 +42,9 @@ def add_data(table, data):
                 population = data['population']
                 system = data['system']
 
-                is_valid = is_add_valid(
+                is_valid = is_edit_valid(
                         "locations",
+                        id,
                         name,
                         desc,
                         population,
@@ -51,28 +54,31 @@ def add_data(table, data):
                 return response_code()
             else:
                 if table == "people":
-                    added = add_people_query(name, status, gender, desc)
+                    edited = edit_people_query(id, name, status, gender, desc)
                 elif table == "systems":
-                    added = add_system_query(name, planets, desc)
+                    edited = edit_system_query(id, name, planets, desc)
                 elif table == "locations":
-                    added = add_location_query(name, population, system, desc)
+                    edited = edit_location_query(id, name, population, system, desc)
 
-                if added == 'no connection':
+                if edited == 'no connection':
                     return response_code(
                         503,
                         'Cannot connect to database'
                     )
-                elif added == "duplicate":
+                elif edited == "no record":
+                    return response_code(
+                        404,
+                        'Record does not exist'
+                    )
+                elif edited == "failed":
                     return response_code(
                         403,
-                        'Duplicate, Record was not created in database'
+                        'Record was not altered'
                     )
-                elif added == "system incorrect":
-                    return response_code()
                 else:
                     return response_code(
-                        201,
-                        'Record created in database'
+                        200,
+                        'Record was successfully altered'
                     )
 
         except KeyError:

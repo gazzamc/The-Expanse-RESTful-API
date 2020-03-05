@@ -1,9 +1,9 @@
 import json
 from flask import current_app
 from validation import response_code
-from people_queries import get_people_query, get_people_query_filtered
-from system_queries import get_systems_query, get_system_query_filtered
-from location_queries import get_locations_query, get_location_query_filtered
+from people import get_people_query, get_people_query_filtered
+from system import get_systems_query, get_system_query_filtered
+from location import get_locations_query, get_location_query_filtered
 
 
 def get_data(table, id=None, offset=0):
