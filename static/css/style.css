@@ -1,8 +1,13 @@
 /* global */
-
 body{
     background-color: rgba(0,0,0, 0.8);
     color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+.container.content{
+    min-height: 40vh;
 }
 
 /* jumbotron */
@@ -21,24 +26,19 @@ body{
 
 /* JSON result */
 .outerJson{
-    position: relative;
     background-color: #fff;
-    width: 100%;
-    overflow: scroll;
-    padding: 2% 5% 5% 5%;
-    min-height: 27vh;
-    max-height: 50vh;
+    padding: 2% 0% 5% 2%;
+    min-height: 10vh;
+    max-height: 40vh;
+    overflow: auto;
 }
 
 #jsonRes{
-    position: absolute;
-    height: inherit;
     color: #ff0000;
     white-space: pre-wrap;
 }
 
 /* Edit Buttons */
-
 #editRecord{
     margin: 1%;
 }
@@ -49,4 +49,21 @@ body{
 
 .showBtn{
     display: initial;
+}
+
+#errMsg{
+    padding-top: 10%;
+    text-align: center;
+}
+
+/* footer */
+#footer{
+    position: relative;
+    bottom: 0vh;
+}
+
+#footer i {
+    padding-top: 5vh;
+    font-size: 1.5em;
+    height: 10vh;
 }
