@@ -4,27 +4,38 @@
 <!-- Local Imports-->
 <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
+{% block nav %}
+    <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/documentation">Documentation</a>
+</li>
+{% endblock %}
 {% block content %}
 <!-- API Search / JSON result -->
 <div class="container content">
     <section>
 		<div class="row">
-			<div class="col-10 offset-1">
+			<div class="col-12">
 				<form class="form-inline" id="apiSearchForm">
-					<label class="" type="">{{request.url}}api/</label>
-					<input class="form-control mr-sm-2" placeholder="people/1" id="apiSearch" aria-label="Search">
-					<button class="btn btn-outline-success my-2 my-sm-0" id="apiBtn" type="submit">request</button>
+					<label class="btn btn-secondary col-3 col-sm-2" id="apiAddr">api/</label>
+					<input class="form-control col-4 col-sm-7 col-md-7 mr-2" placeholder="people/1" id="apiSearch" aria-label="Search">
+					<button class="btn btn-outline-success my-2 my-sm-0 col-4 col-sm-2" id="apiBtn" type="submit">Request</button>
 				</form>
 			</div>
-			<div class="col-12 outerJson">
+			<div class="col-10 col-sm-12 col-md-12 offset-1 offset-sm-0 offset-md-0 mt-5 outerJson">
 				<pre id="jsonRes"></pre>
 			</div>
-            <div class="col-3" id="editRecord">
+            <div class="col-8 offset-2 text-center">
                 <p id="errMess"></p>
-                <button class="hideBtn" id="addBtn">Add Record</button>
-                <button class="hideBtn" id="editBtn">Edit</button>
-                <button class="hideBtn" id="deleteBtn">Delete</button>
-                <button class="hideBtn" id="saveBtn">Save</button>
+            </div>
+            <div class="col-sm-4 col-md-4 offset-sm-8 offset-md-8 offset-lg-9 mb-5 text-center" id="editRecord">
+                <button class="btn btn-primary hideBtn" id="addBtn">Add Record</button>
+                <button class="btn btn-warning hideBtn" id="editBtn">Edit</button>
+                <button class="btn btn-danger hideBtn" id="deleteBtn">Delete</button>
+                <button class="btn btn-primary hideBtn" id="saveBtn">Save</button>
+                <button class="btn btn-danger hideBtn" id="cancelBtn">Cancel</button>
             </div>
 		</div>
     </section>

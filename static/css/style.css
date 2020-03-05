@@ -39,9 +39,6 @@ body{
 }
 
 /* Edit Buttons */
-#editRecord{
-    margin: 1%;
-}
 
 .hideBtn{
     display: none;
@@ -54,6 +51,18 @@ body{
 #errMsg{
     padding-top: 10%;
     text-align: center;
+}
+
+/* search bar */
+#apiAddr{
+    background-color: rgba(0,0,0, 0.5);
+    width: 20%;
+    font-size: 1.2em;
+    border: none;
+}
+
+#apiAddr.btn-secondary:hover{
+    background-color: rgba(0,0,0, 0.5);
 }
 
 /* footer */

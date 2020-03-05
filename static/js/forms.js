@@ -86,9 +86,10 @@ async function showEdit(){
     });
 
     document.getElementById("jsonRes").innerHTML = jsonResult;
-    document.getElementById("editBtn").className = "hideBtn";
-    document.getElementById("deleteBtn").className = "hideBtn";
-    document.getElementById("saveBtn").className = "showBtn";
+    toggleBtn(editBtn, "hide");
+    toggleBtn(deleteBtn, "hide");
+    toggleBtn(saveBtn, "show");
+    toggleBtn(cancelBtn, "show");
 }
 
 async function showAddRecord(){
@@ -126,4 +127,15 @@ async function showAddRecord(){
     }
 
     document.getElementById("jsonRes").innerHTML = JSON.stringify(form, null, 2);
+}
+
+function toggleBtn(button, toggle){
+
+    if(toggle == "show"){
+       button.classList.remove("hideBtn");
+       button.classList.add("showBtn");
+    } else{
+       button.classList.remove("showBtn");
+       button.classList.add("hideBtn");
+    }
 }

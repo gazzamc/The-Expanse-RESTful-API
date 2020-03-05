@@ -25,34 +25,33 @@ async function getData(endpoint=""){
     document.getElementById("jsonRes").innerText = JSON.stringify(jsonResult, null, 2);
 
         if(jsonResult['results'] == 1){
-            if(document.getElementById("addBtn").offsetLeft > 0 ||
-                document.getElementById("saveBtn").offsetLeft > 0){
-                document.getElementById("addBtn").className = "hideBtn";
-                document.getElementById("saveBtn").className = "hideBtn";
+            if(addBtn.offsetLeft > 0 || saveBtn.offsetLeft > 0 ||
+                cancelBtn.offsetLeft > 0){
+                toggleBtn(addBtn, "hide");
+                toggleBtn(saveBtn, "hide");
+                toggleBtn(cancelBtn, "hide");
             }
 
-            document.getElementById("editBtn").className = "showBtn";
-            document.getElementById("deleteBtn").className = "showBtn";
+            toggleBtn(editBtn, "show");
+            toggleBtn(deleteBtn, "show");
 
         } else if (jsonResult['results'] > 1){
-            document.getElementById("addBtn").className = "showBtn";
+            toggleBtn(addBtn, "show");
 
-            if(document.getElementById("editBtn").offsetLeft > 0 || 
-            document.getElementById("deleteBtn").offsetLeft > 0 ||
-            document.getElementById("saveBtn").offsetLeft > 0){
-                document.getElementById("editBtn").className = "hideBtn";
-                document.getElementById("deleteBtn").className = "hideBtn"; 
-                document.getElementById("saveBtn").className = "hideBtn";
+            if(editBtn.offsetLeft > 0 || deleteBtn.offsetLeft > 0 ||
+            saveBtn.offsetLeft > 0 || cancelBtn.offsetLeft > 0){
+                toggleBtn(editBtn, "hide");
+                toggleBtn(saveBtn, "hide");
+                toggleBtn(deleteBtn, "hide");
+                toggleBtn(cancelBtn, "hide");
             }
         }else{
-            if(document.getElementById("addBtn").offsetLeft > 0 || 
-            document.getElementById("editBtn").offsetLeft > 0 || 
-            document.getElementById("deleteBtn").offsetLeft > 0 ||
-            document.getElementById("saveBtn").offsetLeft > 0){
-                document.getElementById("addBtn").className = "hideBtn";  
-                document.getElementById("editBtn").className = "hideBtn";
-                document.getElementById("deleteBtn").className = "hideBtn"; 
-                document.getElementById("saveBtn").className = "hideBtn";
+            if(addBtn.offsetLeft > 0 || editBtn.offsetLeft > 0 || 
+            deleteBtn.offsetLeft > 0 || saveBtn.offsetLeft > 0){
+                toggleBtn(addBtn, "hide");
+                toggleBtn(editBtn, "hide");
+                toggleBtn(saveBtn, "hide");
+                toggleBtn(deleteBtn, "hide");
             }
         }
 }

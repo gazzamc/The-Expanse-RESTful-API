@@ -22,8 +22,9 @@ document.getElementById("editBtn").addEventListener("click", function(){
 
 document.getElementById("addBtn").addEventListener("click", function(){
     showAddRecord();
-    document.getElementById("saveBtn").className = "showBtn";
-    document.getElementById("addBtn").className = "hideBtn";
+    toggleBtn(saveBtn, "show");
+    toggleBtn(cancelBtn, "show");
+    toggleBtn(addBtn, "hide");
 });
 
 document.getElementById("saveBtn").addEventListener("click", function(){
@@ -46,4 +47,16 @@ document.getElementById("deleteBtn").addEventListener("click", function(){
     if(confirm("Are you sure you want to delete this record?")){
         deleteRecord();
     }
+});
+
+document.getElementById("cancelBtn").addEventListener("click", function(){
+    let endpointData;
+
+    if(endpointDataSplt[1] == undefined){
+        endpointData = endpointDataSplt[0];
+    }else{
+        endpointData = endpointDataSplt[0] + "/" + endpointDataSplt[1];
+    }
+
+    getData(endpointData);
 });
