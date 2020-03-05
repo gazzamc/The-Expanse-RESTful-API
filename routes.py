@@ -1,9 +1,11 @@
 import os
 import json
+from add_data import add_data
+from edit_data import edit_data
+from get_data import get_data
+from delete_data import delete_data
 from flask import Flask, request, render_template, current_app
-from validation import (get_data, get_data_filtered,
-                        add_data, edit_data, delete_data,
-                        response_code)
+from validation import response_code
 
 
 app = Flask(__name__)
