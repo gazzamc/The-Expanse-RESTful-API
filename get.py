@@ -7,7 +7,18 @@ from database.location import get_locations_query, get_location_query_filtered
 
 
 def get_data(table, id=None, offset=0):
+    '''
+    Takes in endpoint/table name, JSON data and
+    returns JSON response.
 
+            Parameters:
+                    table (str): endpoint/table
+                    id (int, Optional): id of record
+                    offset (int, Optional): offset for pagination
+
+            Returns:
+                    JSON Object: JSON response
+    '''
     try:
         if id is not None:
             id = int(id)
@@ -66,7 +77,17 @@ def get_data(table, id=None, offset=0):
 
 
 def get_data_filtered(table, filter):
+    '''
+    Takes in endpoint/table name, JSON data and
+    returns JSON response.
 
+            Parameters:
+                    table (str): endpoint/table
+                    filter (str): filter to search for
+
+            Returns:
+                    JSON Object: JSON response
+    '''
     for key in filter:
         if key == 'offset':
             if table == "people":

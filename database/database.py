@@ -3,6 +3,15 @@ import os
 
 
 def connect_to_db():
+    '''
+    Makes a connection with database, returns string if failed.
+
+            Parameters:
+                    None
+
+            Returns:
+                str: returns 'no connection' if failed
+    '''
     # Get credentials
     uri = os.environ.get('CLEARDB_DATABASE_URL')
 

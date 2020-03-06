@@ -3,6 +3,17 @@ from database.database import connect_to_db
 
 
 def get_locations_query(id=None, offset=0):
+    '''
+    Takes in record id, offset and
+    returns an Array.
+
+            Parameters:
+                    id (int, Optional): id of specific record
+                    offset (int, Optional): offset for pagination
+
+            Returns:
+                    Array: returns array of database result, count of records
+    '''
     connection = connect_to_db()
 
     if connection != "no connection":
@@ -18,6 +29,9 @@ def get_locations_query(id=None, offset=0):
                     count = cursor.fetchone()
                     count = count['COUNT(*)']
 
+                    """ https://stackoverflow.com/questions/42050765/
+                    sql-how-to-replace-foreign-key-column-with-data\
+                    -from-referenced-table """
                     sql = "SELECT l.LocationID as id, l.name, l.population, s.name as system, l.desc \
                            FROM locations l \
                            JOIN systems s \
@@ -49,6 +63,17 @@ def get_locations_query(id=None, offset=0):
 
 
 def get_location_query_filtered(filter, param):
+    '''
+    Takes in filter, param and
+    returns list of database result.
+
+            Parameters:
+                    filter (str): filter name
+                    param (str): paramater to search for
+
+            Returns:
+                    list: returns list of database results
+    '''
     connection = connect_to_db()
 
     if connection != "no connection":
@@ -88,6 +113,18 @@ def get_location_query_filtered(filter, param):
 
 
 def add_location_query(name, population, system, desc):
+    '''
+    Takes in name, status, gender, desc and returns string.
+
+            Parameters:
+                    name (str): name value
+                    population (str): population value
+                    system (str): system value
+                    desc (str): desc value
+
+            Returns:
+                str: returns string on success or failure
+    '''
     connection = connect_to_db()
 
     if connection != "no connection":
@@ -102,8 +139,8 @@ def add_location_query(name, population, system, desc):
                     # Get system id
                     with connection.cursor() as cursor:
                         sql = "SELECT systemid \
-                                FROM `systems` \
-                                WHERE `name` = %s;"
+                               FROM `systems` \
+                               WHERE `name` = %s;"
                         cursor.execute(sql, (system))
                         result = cursor.fetchone()
 
@@ -131,6 +168,19 @@ def add_location_query(name, population, system, desc):
 
 
 def edit_location_query(id, name="", population="", system="", desc=""):
+    '''
+    Takes in id, name, status, gender, desc and returns string.
+
+            Parameters:
+                    id (int): id of record
+                    name (str, Optional): name value
+                    population (str, Optional): population value
+                    system (str, Optional): system value
+                    desc (str, Optional): desc value
+
+            Returns:
+                str: returns string on success or failure
+    '''
     connection = connect_to_db()
 
     if connection != "no connection":
@@ -183,20 +233,29 @@ def edit_location_query(id, name="", population="", system="", desc=""):
 
 
 def delete_location_query(id):
+    '''
+    Takes in id of a record and returns string.
+
+            Parameters:
+                    id (int): id of record
+
+            Returns:
+                    str: returns string on success or failure
+    '''
     connection = connect_to_db()
     if connection != "no connection":
         try:
             # check if record exists first
             with connection.cursor() as cursor:
-                sql = "SELECT * FROM `locations` WHERE `locationid` = %s;"
+                sql = "SELECT * FROM `locations` \
+                       WHERE `locationid` = %s;"
                 cursor.execute(sql, (id))
                 result = cursor.fetchone()
 
                 if result is not None:
                     with connection.cursor() as cursor:
-                        sql = "\
-                        \
-                        DELETE FROM `locations` WHERE `locationid` = %s;"
+                        sql = "DELETE FROM `locations` \
+                               WHERE `locationid` = %s;"
                         cursor.execute(sql, (id))
                         connection.commit()
                 else:

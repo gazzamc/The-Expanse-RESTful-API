@@ -5,6 +5,17 @@ from database.location import delete_location_query
 
 
 def delete_data(table, data):
+    '''
+    Takes in endpoint/table name, JSON data and
+    returns JSON response.
+
+            Parameters:
+                    table (str): endpoint/table
+                    data (JSON Object): JSON data
+
+            Returns:
+                    JSON Object: JSON response
+    '''
     if data is None:
         return response_code(
             400,

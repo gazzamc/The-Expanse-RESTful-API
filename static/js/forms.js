@@ -1,3 +1,10 @@
+/***
+ * forms.js
+ * This contains all the functions that
+ * transforms the JSON data into a form
+ * when a user edits/adds new data.
+ */
+
 async function showEdit(){
     let jsonResult = document.getElementById("jsonRes").innerHTML;
     let splitBr = jsonResult.split("<br>");
@@ -49,14 +56,14 @@ async function showEdit(){
                     jsonResult = jsonResult.replace(replaceText, textBoxHTML);
             }
             else if(index == 7){
-                    replaceText = splitBr[index].split(":")[1].split("\"")[1];
-                    replaceText.replace('"', '');
-                    textBoxHTML = '<textArea rows="4" cols="50" id="desc" placeholder="'+ replaceText +'"></textArea>';
+                    replaceText = splitBr[index].split(":")[1].replace(",", "");
+                    textBoxHTML = '<input type="text" id="planets" placeholder="'+ replaceText +'"></input>';
                     jsonResult = jsonResult.replace(replaceText, textBoxHTML);
             }
             else if(index == 8){
-                    replaceText = splitBr[index].split(":")[1].replace(",", "");
-                    textBoxHTML = '<input type="text" id="planets" placeholder="'+ replaceText +'"></input>';
+                    replaceText = splitBr[index].split(":")[1].split("\"")[1];
+                    replaceText.replace('"', '');
+                    textBoxHTML = '<textArea rows="4" cols="50" id="desc" placeholder="'+ replaceText +'"></textArea>';
                     jsonResult = jsonResult.replace(replaceText, textBoxHTML);
             }
         } else if(endpoint == "locations"){
@@ -127,15 +134,4 @@ async function showAddRecord(){
     }
 
     document.getElementById("jsonRes").innerHTML = JSON.stringify(form, null, 2);
-}
-
-function toggleBtn(button, toggle){
-
-    if(toggle == "show"){
-       button.classList.remove("hideBtn");
-       button.classList.add("showBtn");
-    } else{
-       button.classList.remove("showBtn");
-       button.classList.add("hideBtn");
-    }
 }

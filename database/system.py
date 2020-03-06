@@ -3,6 +3,17 @@ from database.database import connect_to_db
 
 
 def get_systems_query(id=None, offset=0):
+    '''
+    Takes in record id, offset and
+    returns an Array.
+
+            Parameters:
+                    id (int, Optional): id of specific record
+                    offset (int, Optional): offset for pagination
+
+            Returns:
+                    Array: returns array of database result, count of records
+    '''
     connection = connect_to_db()
 
     if connection != "no connection":
@@ -12,16 +23,22 @@ def get_systems_query(id=None, offset=0):
             with connection.cursor() as cursor:
                 if id is None:
                     """ Get Count of Rows """
-                    sql = "SELECT COUNT(*) FROM `systems`;"
+                    sql = "SELECT COUNT(*) \
+                           FROM `systems`;"
                     cursor.execute(sql)
                     count = cursor.fetchone()
                     count = count['COUNT(*)']
 
-                    sql = "SELECT * FROM `systems` LIMIT 25 OFFSET %s;"
+                    sql = "SELECT systemid as id, `name`, `planets`, `desc` \
+                           FROM `systems` \
+                           LIMIT 25 \
+                           OFFSET %s;"
                     cursor.execute(sql, (int(offset)))
                     result = cursor.fetchall()
                 else:
-                    sql = "SELECT * FROM `systems` WHERE `systemid` = %s;"
+                    sql = "SELECT systemid as id, `name`, `planets`, `desc` \
+                           FROM `systems` \
+                           WHERE `systemid` = %s;"
                     cursor.execute(sql, (id))
                     result = cursor.fetchone()
                     count = 1
@@ -39,6 +56,17 @@ def get_systems_query(id=None, offset=0):
 
 
 def get_system_query_filtered(filter, param):
+    '''
+    Takes in filter, param and
+    returns list of database result.
+
+            Parameters:
+                    filter (str): filter name
+                    param (str): paramater to search for
+
+            Returns:
+                    list: returns list of database results
+    '''
     connection = connect_to_db()
 
     if connection != "no connection":
@@ -48,13 +76,20 @@ def get_system_query_filtered(filter, param):
             with connection.cursor() as cursor:
 
                 if filter == "name":
-                    sql = "SELECT systems.systemid as id, name FROM `systems` WHERE `name` LIKE %s;"
+                    sql = "SELECT systems.systemid as id, name \
+                           FROM `systems` \
+                           WHERE `name` \
+                           LIKE %s;"
                     query = (param + '%')
                 elif filter == "status":
-                    sql = "SELECT systemid, name, status FROM `systems` WHERE `status` = %s;"
+                    sql = "SELECT systemid, name, status \
+                           FROM `systems` \
+                           WHERE `status` = %s;"
                     query = param
                 else:
-                    sql = "SELECT systemid, name, gender FROM `systems` WHERE `gender` = %s;"
+                    sql = "SELECT systemid, name, gender \
+                           FROM `systems` \
+                           WHERE `gender` = %s;"
                     query = param
 
                 cursor.execute(sql, (query))
@@ -73,21 +108,33 @@ def get_system_query_filtered(filter, param):
 
 
 def add_system_query(name, planets, desc):
+    '''
+    Takes in name, planets, desc and returns string.
+
+            Parameters:
+                    name (str): name value
+                    planets (str): planets value
+                    desc (str): desc value
+
+            Returns:
+                str: returns string on success or failure
+    '''
     connection = connect_to_db()
 
     if connection != "no connection":
         try:
             # check if record exists first
             with connection.cursor() as cursor:
-                sql = "SELECT * FROM `systems` WHERE `name` = %s;"
+                sql = "SELECT * \
+                       FROM `systems` \
+                       WHERE `name` = %s;"
                 cursor.execute(sql, (name))
                 result = cursor.fetchone()
 
                 if result is None:
                     with connection.cursor() as cursor:
-                        sql = "\
-                        \
-                        INSERT INTO `systems` (`name`, `planets`, `desc`) VALUES(%s, %s, %s);"
+                        sql = "INSERT INTO `systems` (`name`, `planets`, `desc`) \
+                               VALUES(%s, %s, %s);"
                         cursor.execute(sql, (name, planets, desc))
                         connection.commit()
                 else:
@@ -101,13 +148,27 @@ def add_system_query(name, planets, desc):
 
 
 def edit_system_query(id, name="", planets="", desc=""):
+    '''
+    Takes in id, name, planets, desc and returns string.
+
+            Parameters:
+                    id (int): id of record
+                    name (str, Optional): name value
+                    planets (str, Optional): planets value
+                    desc (str, Optional): desc value
+
+            Returns:
+                str: returns string on success or failure
+    '''
     connection = connect_to_db()
 
     if connection != "no connection":
         try:
             # check if record exists first
             with connection.cursor() as cursor:
-                sql = "SELECT * FROM `systems` WHERE `systemid` = %s;"
+                sql = "SELECT * \
+                       FROM `systems` \
+                       WHERE `systemid` = %s;"
                 cursor.execute(sql, (id))
                 result = cursor.fetchone()
 
@@ -121,9 +182,9 @@ def edit_system_query(id, name="", planets="", desc=""):
                         desc = result['desc']
 
                     with connection.cursor() as cursor:
-                        sql = "\
-                        \
-                        UPDATE `systems` SET `name` = %s, `planets` = %s, `desc` = %s WHERE `systemid` = %s;"
+                        sql = "UPDATE `systems` \
+                               SET `name` = %s, `planets` = %s, `desc` = %s \
+                               WHERE `systemid` = %s;"
                         cursor.execute(sql, (name, planets, desc, id))
                         connection.commit()
                 else:
@@ -137,20 +198,30 @@ def edit_system_query(id, name="", planets="", desc=""):
 
 
 def delete_system_query(id):
+    '''
+    Takes in id of a record and returns string.
+
+            Parameters:
+                    id (int): id of record
+
+            Returns:
+                    str: returns string on success or failure
+    '''
     connection = connect_to_db()
     if connection != "no connection":
         try:
             # check if record exists first
             with connection.cursor() as cursor:
-                sql = "SELECT * FROM `systems` WHERE `systemid` = %s;"
+                sql = "SELECT * \
+                       FROM `systems` \
+                       WHERE `systemid` = %s;"
                 cursor.execute(sql, (id))
                 result = cursor.fetchone()
 
                 if result is not None:
                     with connection.cursor() as cursor:
-                        sql = "\
-                        \
-                        DELETE FROM `systems` WHERE `systemid` = %s;"
+                        sql = "DELETE FROM `systems` \
+                               WHERE `systemid` = %s;"
                         cursor.execute(sql, (id))
                         connection.commit()
                 else:
