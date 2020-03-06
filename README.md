@@ -117,4 +117,6 @@ python3 routes.py
 - The hero image of the earth in the jumbotron was sourced from [unsplash.com](https://unsplash.com/photos/Q1p7bh3SHj8).
 
 ### Acknowledgements
-The website was deployed and hosted on **Heroku**, the following is the process in which I took to deploy it.
+- Using [this](https://clubmate.fi/javascript-adding-and-removing-class-names-from-elements/) example I was able to add/remove classes in Javascript with less hassle.
+- [This](https://clubmate.fi/javascript-adding-and-removing-class-names-from-elements/) article about filtering for restful APIs was very informative and helped me implement a form of filtering in this project.
+- Using the example from [this](https://codehandbook.org/handle-404-error-python-flask/) article I was able to implement the 404 page in my flask application when a user visited an invalid endpoint.
