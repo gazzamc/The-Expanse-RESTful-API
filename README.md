@@ -25,7 +25,7 @@ edit or delete records.
 #### Surface
 I went with very neutral colours to make it look easy on the eye, as this is a simple
 testing site for the API i didnt think it needed a lot to standout. The buttons are coloured
-appropriatly for what they do. Edit being yellow as a warning, delete being red etc. As
+appropriately for what they do. Edit being yellow as a warning, delete being red etc. As
 bootstrap had these built-in styles I didn't do anything custom in the CSS.
 
 ## Features
@@ -93,7 +93,7 @@ Expected Result:
 <img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/apiTest.png" alt="API Tests">
 </p>
 
-I only tested the API enpoints using the **GET** method. As i was connected to my live
+I only tested the API endpoints using the **GET** method. As i was connected to my live
 database i didnt want to automate tests that would alter or delete records. Unfortunately I couldn't find a way to setup a temporary database for testing my **CRUD** functionality. The
 closest thing i found for database testing was a **Mock** module which didn't suit my needs. 
 It only mocked the database connection, 

@@ -105,6 +105,8 @@ def get_data_filtered(table, filter):
                     400,
                     'Bad Request. Gender must be male, female or unknown'
                 )
+        elif key == 'system':
+            query = get_location_query_filtered("system", filter[key])
         else:
             return response_code(
                 400,
@@ -119,7 +121,12 @@ def get_data_filtered(table, filter):
                 'No records found for query \'' + filter[key] + '\''
             )
 
-        if query != "failed":
+        if query == 'no connection':
+            return response_code(
+                503,
+                'Cannot connect to database'
+            )
+        else:
             return current_app.response_class(
                                 json.dumps(
                                             {
@@ -131,10 +138,3 @@ def get_data_filtered(table, filter):
                                             sort_keys=False,
                                             ensure_ascii=False
                                             ), mimetype="application/json")
-        elif query == "no connection":
-            return response_code(
-                503,
-                'Cannot connect to database'
-            )
-        else:
-            return response_code()

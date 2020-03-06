@@ -12,16 +12,26 @@ def get_locations_query(id=None, offset=0):
             with connection.cursor() as cursor:
                 if id is None:
                     """ Get Count of Rows """
-                    sql = "SELECT COUNT(*) FROM `locations`;"
+                    sql = "SELECT COUNT(*) \
+                           FROM `locations`;"
                     cursor.execute(sql)
                     count = cursor.fetchone()
                     count = count['COUNT(*)']
 
-                    sql = "SELECT * FROM `locations` LIMIT 25 OFFSET %s;"
+                    sql = "SELECT l.LocationID as id, l.name, l.population, s.name as system, l.desc \
+                           FROM locations l \
+                           JOIN systems s \
+                           ON l.SystemID = s.SystemID \
+                           LIMIT 25 \
+                           OFFSET %s;"
                     cursor.execute(sql, (int(offset)))
                     result = cursor.fetchall()
                 else:
-                    sql = "SELECT * FROM `locations` WHERE `locationid` = %s;"
+                    sql = "SELECT l.LocationID as id, l.name, l.population, s.name as system, l.desc \
+                           FROM locations l \
+                           JOIN systems s \
+                           ON l.SystemID = s.SystemID \
+                           WHERE l.LocationID = %s"
                     cursor.execute(sql, (id))
                     result = cursor.fetchone()
                     count = 1
@@ -48,13 +58,18 @@ def get_location_query_filtered(filter, param):
             with connection.cursor() as cursor:
 
                 if filter == "name":
-                    sql = "SELECT locations.locationid as id, name FROM `locations` WHERE `name` LIKE %s;"
+                    sql = "SELECT LocationID as id, name\
+                           FROM `locations`\
+                           WHERE `name` \
+                           LIKE %s;"
                     query = (param + '%')
-                elif filter == "status":
-                    sql = "SELECT systemid, name, status FROM `systems` WHERE `status` = %s;"
-                    query = param
-                else:
-                    sql = "SELECT systemid, name, gender FROM `systems` WHERE `gender` = %s;"
+                elif filter == "system":
+                    sql = "SELECT l.LocationID as id, l.name, s.name as system\
+                           FROM `locations` l\
+                           JOIN systems s \
+                           ON l.SystemID = s.SystemID \
+                           WHERE s.name \
+                           LIKE %s;"
                     query = param
 
                 cursor.execute(sql, (query))
