@@ -134,7 +134,7 @@ def invalid_route(e):
     if "api/" in request.url:
         return response_code(
             "404",
-            "Invalid URI"
+            "Invalid EndPoint"
             )
     else:
         return render_template("404.html")

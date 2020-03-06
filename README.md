@@ -12,6 +12,9 @@ You can try the live version of the API [Here](https://expanse-api.herokuapp.com
 #### User Stories
 
 #### Strategy
+I wanted to create a RESTful API using python3, flask and mySQL. To showcase this I also
+wanted to created a simple website that would allow you to test the endpoints and add,
+edit or delete records.
 
 #### Scope
 
@@ -20,6 +23,10 @@ You can try the live version of the API [Here](https://expanse-api.herokuapp.com
 #### Skeleton
 
 #### Surface
+I went with very neutral colours to make it look easy on the eye, as this is a simple
+testing site for the API i didnt think it needed a lot to standout. The buttons are coloured
+appropriatly for what they do. Edit being yellow as a warning, delete being red etc. As
+bootstrap had these built-in styles I didn't do anything custom in the CSS.
 
 ## Features
 - Users can filter the data using *query strings*, such as by *name*, status, *gender* etc.
@@ -60,7 +67,37 @@ limit queries.
 
 
 ## Testing
+The website was tested in chrome, firefox and edge for responsiveness. 
+The majority of my testing consisted of using the developer tools in chrome while working on the website design. 
+As for testing the API endpoints I used the [**Postman Chrome Extension**](https://www.postman.com/), 
+this allowed me to test all the different methods (GET, PUT, POST, DELETE) 
+and check that i got the appropriate response back.
 
+### Manual Testing
+
+### Automated Testing
+I did do some basic unit testing using pythons *unittest* and *nose* modules.
+These tests can be found in the `api_test.py` file. In order to run these tests 
+you will need to connect to a working database to get the appropiate response that
+I've set, otherwise it will return `No database connected` and fail.
+
+To run these tests with an appropriate database connected use the following command:
+```
+nosetests -v
+```
+
+The nose module will auto discover the file with `_test.py` in the name.
+
+Expected Result:
+<p align="center">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/apiTest.png" alt="API Tests">
+</p>
+
+I only tested the API enpoints using the **GET** method. As i was connected to my live
+database i didnt want to automate tests that would alter or delete records. Unfortunately I couldn't find a way to setup a temporary database for testing my **CRUD** functionality. The
+closest thing i found for database testing was a **Mock** module which didn't suit my needs. 
+It only mocked the database connection, 
+and this wouldn't return the appropriate response the unit tests were expecting.
 ## Deployment
 
 #### Heroku Dashboard
