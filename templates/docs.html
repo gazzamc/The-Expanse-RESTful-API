@@ -1,16 +1,236 @@
 {% extends 'base.html' %}
 {% block header %}
 <h1>{% block title %}Documentation{% endblock %}</h1>
+    {% block css %}
+        <link href="{{ url_for('static', filename='css/docs.css') }}" rel="stylesheet" type="text/css">
+    {% endblock %}
 {% endblock %}
 {% block nav %}
-    <li class="nav-item">
-        <a class="nav-link" href="/">Home</a>
-    </li>
-    <li class="nav-item active">
-        <a class="nav-link" href="/documentation">Documentation <span class="sr-only">(current)</span></a>
+<li class="nav-item">
+	<a class="nav-link" href="/">Home</a>
+</li>
+<li class="nav-item active">
+	<a class="nav-link" href="/documentation">Documentation <span class="sr-only">(current)</span></a>
 </li>
 {% endblock %}
 {% block content %}
 <div class="container content">
+	<div class="row">
+		<!-- Menu List -->
+        <div class="col-3">
+            <h6>Getting Started</h6>
+            <div class="list-group text-center" id="docList">
+                <a href="#intro" type="button" class="list-group-item list-group-item-action">Introduction</a>
+                <a href="#start" type="button" class="list-group-item list-group-item-action">Getting Started</a>
+                <a href="#error" type="button" class="list-group-item list-group-item-action">Error Codes</a>
+                <a href="#limit" type="button" class="list-group-item list-group-item-action">Rate Limiting</a>
+                <a href="#auth" type="button" class="list-group-item list-group-item-action">Authentication</a>
+                <a href="#strings" type="button" class="list-group-item list-group-item-action">Query Strings</a>
+                <a href="#json" type="button" class="list-group-item list-group-item-action">JSON schema</a> 
+            </div>
+            <h6 class="mt-4">Resources</h6>
+            <div class="list-group text-center" id="docList">
+                <a href="#intro" type="button" class="list-group-item list-group-item-action">People</a>
+                <a href="#start" type="button" class="list-group-item list-group-item-action">Locations</a>
+                <a href="#error" type="button" class="list-group-item list-group-item-action">Systems</a>
+            </div>
+            <h6 class="mt-4">Examples</h6>
+            <div class="list-group text-center" id="docList">
+                <a href="#intro" type="button" class="list-group-item list-group-item-action">Javascript</a>
+                <a href="#start" type="button" class="list-group-item list-group-item-action">Python</a>
+            </div>
+		</div>
+		<!-- Content -->
+		<div class="col-9" id="docContent">
+			<h1>Documentation</h1>
+            <hr>
+            <!-- Intro -->
+            <div class="col-12 mb-5">
+                <h4 id="intro">Introduction</h4>
+                <p>This documentation will hopefully give you a better understandong on ho to connect to The Expanse API.
+                    It will walk you through the different options you can use to query information from the API.</p>
+            </div>
+            <!-- Getting started -->
+            <div class="col-12 mb-5">
+                <h4 id="start">Getting Started</h4>
+                <p>Using your preferred method of fetching API resources or even via our own website, visit the base url below.</p>
+                <p class="codeExamp">
+                    {{ request.url.replace("documentation", "api") }}
+                </p>
+                <p>By visiting the base url you will get back a JSON object containing all the endpoints and their individual filters.</p>
+                <p>Result:</p>
+                <p class="codeExamp">
+                    {
+                        "base_url": "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api",
+                        "endpoints": [
+                            {
+                                "people": [
+                                    "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/people",
+                                    "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/people?offset={offset}",
+                                    "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/people/{id}",
+                                    {
+                                        "filter": [
+                                            "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/people?name={name}",
+                                            "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/people?status={status}",
+                                            "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/people?gender={gender}"
+                                        ]
+                                    }
+                                ],
+                                "systems": [
+                                    "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/systems"
+                                ],
+                                "locations": [
+                                    "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/locations"
+                                ]
+                            }
+                        ]
+                    }
+                </p>
+                <p>This result is the current response for time of writing this, but it may be subject to change.</p>
+            </div>
+            <!-- Error Codes -->
+            <div class="col-12 mb-5">
+                <h4 id="error">Error Codes</h4>
+                <p>While using our API you will recieve response codes depending on your action.
+                    Below is the list of codes and their corresponding message. Some of the codes
+                    will have different messages which will be explained a bit more below.</p>
+
+                <table class="table table-sm table-dark text-left">
+                    <thead>
+                        <tr>
+                            <th scope="col">HTTP code</th>
+                            <th scope="col">Message(s)</th>
+                            <th scope="col">Further Info</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">200</th>
+                            <td>N/A (Data shown)</td>
+                            <td>Request Successful.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>Record successfully deleted</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>Record was successfully altered</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">201</th>
+                            <td>Record created in database</td>
+                            <td>Resource Created Successfully</td>
+                        </tr>
+                        <tr>
+                        <tr>
+                            <th scope="row">204</th>
+                            <td>Cannot delete record as it does not exist</td>
+                            <td>No Content Found.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">400</th>
+                            <td>Bad Request. One or more fields not supplied or invalid</td>
+                            <td>Client error, Usually input related.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>Bad Request. Data must be in JSON format</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>Bad Request. Status must be alive, deceased or unknown</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>Bad Request. Gender must be male, female or unknown</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>Bad Request. Query string unrecognised</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">403</th>
+                            <td>Duplicate, Record was not created in database</td>
+                            <td>Request Forbidden</td>
+                        </tr>
+                        <tr>
+                        <tr>
+                            <th scope="row">404</th>
+                            <td>Invalid EndPoint</td>
+                            <td>Resource Not Found</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>Record does not exist</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>Page does not exist</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>No records found for query {query}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">503</th>
+                            <td>Cannot connect to database</td>
+                            <td>Server-Side Error</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Rate Limiting -->
+            <div class="col-12 mb-5">
+                <h4 id="limit">Rate Limiting</h4>
+                <p>There is currently no rate limiting implemented for this API in the current version. 
+                    This may change in the future if response time slows down.</p>
+            </div>
+            <!-- Authenication -->
+            <div class="col-12 mb-5">
+                <h4 id="auth">Authentication</h4>
+                <p>Right now this API does not require any authentication for users to send requests. Everyone can Add,
+                 Edit, Delete and view the resources in the current version of this API. However, there is validation
+                 in place to keep the resources consistant. This will change in a future version, the plan is to implement
+                a key and token system.</p>
+            </div>
+            <!-- Query Strings -->
+            <div class="col-12 mb-5">
+                <h4 id="strings">Query Strings</h4>
+                <p>There are a few options implemented to allow the user to filter results based on certain criteria.
+                You can see the different options under the resource headings <a href="#resource">here</a>. If you happen to misspell or use an
+                incorrect query string you will get a JSON response like the one below:</p>
+                <p class="codeExamp">
+                    {
+                        "code": 400,
+                        "message": "Bad Request. Query string unrecognised"
+                    }
+                </p>
+            </div>
+            <!-- JSON Schema -->
+            <div class="col-12 mb-5">
+                <h4 id="json">JSON Schema</h4>
+                <p>All requests to the API must be in JSON format (barring GET requests). Any results recieved will also be returned to the end user in JSON format.
+                If you send a request in anything other than JSON then you will recieve the following error:</p>
+                <p class="codeExamp">
+                    {
+                        "code": 400,
+                        "message": "Bad Request. Data must be in JSON format"
+                    }
+                </p>
+            </div>
+		</div>
+	</div>
 </div>
+<!-- back to top button -->
+<a href="#top" class="btn btn-primary" id="backToTop">Back To Top</a>
 {% endblock %}

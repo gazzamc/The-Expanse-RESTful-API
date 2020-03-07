@@ -16,11 +16,12 @@
 
     <!-- Local Imports-->
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css">
+    {% block css %}{% endblock %}
 </head>
 
 <body>
     <!-- NavBar-->
-    <header>
+    <header id="top">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="/">TEAPI</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,13 +45,13 @@
         <div class="container">
             <div class="row mx-auto text-center">
                 <div class="col-4">
-                    <i class="fab fa-github-alt"></i>
+                    <a href="https://github.com/gazzamc" title="Github" target="_blank"><i class="fab fa-github-alt"></i></a>
                 </div>
                 <div class="col-4">
-                    <i class="fab fa-linkedin-in"></i>
+                    <a href="https://www.linkedin.com/in/gary-mcgovern-84a72616/" title="Linkedin" target="_blank"><i class="fab fa-linkedin-in"></i></a>
                 </div>
                 <div class="col-4">
-                    <i class="fas fa-code-branch"></i>
+                    <a href="https://github.com/gazzamc/Milestone-Project-Three" title="Github branch" target="_blank"><i class="fas fa-code-branch"></i></a>
                 </div>
             </div>
         </div>

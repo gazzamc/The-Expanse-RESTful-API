@@ -1,0 +1,35 @@
+html {
+     scroll-behavior: smooth;
+}
+
+/* Docs */
+
+#docList a{
+    background-color: rgba(0,0,0, 0.3);
+}
+
+#docContent{
+    background-color: rgba(0,0,0, 0.1);
+}
+
+.list-group-item-action{
+    color: #fff;
+}
+
+.list-group-item-action:hover{
+    color: green;
+}
+
+.codeExamp{
+    font-size: 0.7em;
+    background-color: #fff;
+    color: #000;
+    white-space: pre-wrap;
+}
+
+#backToTop{
+    position: fixed;
+    left: 90%;
+    bottom: 2%;
+    z-index: 10;
+}

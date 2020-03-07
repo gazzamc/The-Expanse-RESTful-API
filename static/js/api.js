@@ -24,36 +24,41 @@ async function getData(endpoint=""){
     /* https://stackoverflow.com/questions/4810841/pretty-print-json-using-javascript */
     document.getElementById("jsonRes").innerText = JSON.stringify(jsonResult, null, 2);
 
-        if(jsonResult['results'] == 1){
-            if(addBtn.offsetLeft > 0 || saveBtn.offsetLeft > 0 ||
-                cancelBtn.offsetLeft > 0){
-                toggleBtn(addBtn, "hide");
-                toggleBtn(saveBtn, "hide");
-                toggleBtn(cancelBtn, "hide");
-            }
-
-            toggleBtn(editBtn, "show");
-            toggleBtn(deleteBtn, "show");
-
-        } else if (jsonResult['results'] > 1){
-            toggleBtn(addBtn, "show");
-
-            if(editBtn.offsetLeft > 0 || deleteBtn.offsetLeft > 0 ||
-            saveBtn.offsetLeft > 0 || cancelBtn.offsetLeft > 0){
-                toggleBtn(editBtn, "hide");
-                toggleBtn(saveBtn, "hide");
-                toggleBtn(deleteBtn, "hide");
-                toggleBtn(cancelBtn, "hide");
-            }
-        }else{
-            if(addBtn.offsetLeft > 0 || editBtn.offsetLeft > 0 || 
-            deleteBtn.offsetLeft > 0 || saveBtn.offsetLeft > 0){
-                toggleBtn(addBtn, "hide");
-                toggleBtn(editBtn, "hide");
-                toggleBtn(saveBtn, "hide");
-                toggleBtn(deleteBtn, "hide");
-            }
+    if(jsonResult['results'] == 1){
+        if(addBtn.offsetLeft > 0 || saveBtn.offsetLeft > 0 ||
+            cancelBtn.offsetLeft > 0){
+            toggleBtn(addBtn, "hide");
+            toggleBtn(saveBtn, "hide");
+            toggleBtn(cancelBtn, "hide");
         }
+
+        toggleBtn(editBtn, "show");
+        toggleBtn(deleteBtn, "show");
+
+    } else if (jsonResult['results'] > 1){
+        toggleBtn(addBtn, "show");
+
+        if(editBtn.offsetLeft > 0 || deleteBtn.offsetLeft > 0 ||
+        saveBtn.offsetLeft > 0 || cancelBtn.offsetLeft > 0){
+            toggleBtn(editBtn, "hide");
+            toggleBtn(saveBtn, "hide");
+            toggleBtn(deleteBtn, "hide");
+            toggleBtn(cancelBtn, "hide");
+        }
+    }else{
+        if(addBtn.offsetLeft > 0 || editBtn.offsetLeft > 0 || 
+        deleteBtn.offsetLeft > 0 || saveBtn.offsetLeft > 0){
+            toggleBtn(addBtn, "hide");
+            toggleBtn(editBtn, "hide");
+            toggleBtn(saveBtn, "hide");
+            toggleBtn(deleteBtn, "hide");
+        }
+    }
+
+    /* Remove error message if still showing */
+    if(document.getElementById("errMess").innerText != undefined){
+        document.getElementById("errMess").innerText = "";
+    }
 }
 
 async function editRecord(newRec=false){
