@@ -1,12 +1,18 @@
-import os
-import json
-from add import add_data
-from edit import edit_data
-from get import get_data, get_data_filtered
-from delete import delete_data
-from flask import Flask, request, render_template, current_app
-from validation import response_code
+"""
+    Main application file,
+    consists of the endpoints and starts the
+    application.
+"""
 
+import os
+from utils.add import add_data
+from utils.edit import edit_data
+from utils.get import get_data, get_data_filtered
+from utils.delete import delete_data
+from flask import Flask, request, render_template
+from utils.validation import response_code
+from utils.endpoints import endpoint_dir
+METHODS = ['GET', 'POST', 'PUT', 'DELETE']
 
 app = Flask(__name__)
 
@@ -23,42 +29,10 @@ def docs():
 
 @app.route('/api')
 def api_base():
-    response = {
-        "base_url": request.base_url,
-        "endpoints": [
-            {
-                "people": [
-                    request.base_url + "/people",
-                    request.base_url + "/people?offset={offset}",
-                    request.base_url + "/people/{id}",
-                    {
-                        "filter": [
-                            request.base_url + "/people?name={name}",
-                            request.base_url + "/people?status={status}",
-                            request.base_url + "/people?gender={gender}"
-                        ]
-                    }
-                ],
-                "systems":[
-                    request.base_url + "/systems",
-                ],
-                "locations":[
-                    request.base_url + "/locations",
-                ]
-            }
-        ]
-    }
-
-    return current_app.response_class(
-                json.dumps(
-                    response,
-                    indent=4,
-                    sort_keys=False
-                    ), mimetype="application/json")
+    return endpoint_dir()
 
 
-methods = ['GET', 'POST', 'PUT', 'DELETE']
-@app.route('/api/people', methods=methods)
+@app.route('/api/people', methods=METHODS)
 @app.route('/api/people/<id>', methods=['GET'])
 def api_people(id=None):
 
@@ -82,7 +56,7 @@ def api_people(id=None):
             return get_data("people", id)
 
 
-@app.route('/api/systems', methods=methods)
+@app.route('/api/systems', methods=METHODS)
 @app.route('/api/systems/<id>', methods=['GET'])
 def api_systems(id=None):
     if request.method == "POST":
@@ -105,7 +79,7 @@ def api_systems(id=None):
             return get_data("systems", id)
 
 
-@app.route('/api/locations', methods=methods)
+@app.route('/api/locations', methods=METHODS)
 @app.route('/api/locations/<id>', methods=['GET'])
 def api_locations(id=None):
     if request.method == "POST":

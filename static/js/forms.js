@@ -26,7 +26,7 @@ async function showEdit(){
         dropdown = "";
 
         systems.forEach(element => {
-            dropdown += "<option value=" + element['name'] + ">" + element['name'] + "</option>";
+            dropdown += "<option value=" + element.name + ">" + element.name + "</option>";
         });
     }
 
@@ -50,7 +50,7 @@ async function showEdit(){
                         }else{
                             id = "population";
                         }
-                        replaceText = replaceText.split("\"")[1]
+                        replaceText = replaceText.split("\"")[1];
                     }
                     else if(endpoint == "systems"){
                         id = "planets";
@@ -63,7 +63,7 @@ async function showEdit(){
             else if(index == 8){
                     if(endpoint == "people"){
                         id = "gender";
-                        replaceText = replaceText.split("\"")[1]
+                        replaceText = replaceText.split("\"")[1];
                     }
                     else if(endpoint == "systems"){
                         id = "desc";
@@ -123,14 +123,14 @@ async function showAddRecord(){
             "status": "<input type=" + "text" + " id=" + "status" + "></input>",
             "gender": "<input type=" + "text" + " id=" + "gender" + "></input>",
             "desc": "<textArea rows=" + "4" + " cols=" + "50" + " id=" + "desc" + "></textArea>"
-        }
+        };
 
     } else if(endpoint == "locations"){
         let systems = await getSystemNames();
         let dropdown = "";
 
         systems.forEach(element => {
-            dropdown += "<option value=" + element['name'] + ">" + element['name'] + "</option>";
+            dropdown += "<option value=" + element.name + ">" + element.name + "</option>";
         });
 
         form = {
@@ -138,16 +138,15 @@ async function showAddRecord(){
             "population": "<input type=" + "text" + " id=" + "pop" + "></input>",
             "system": "<select id=" + "system" + ">" + dropdown + "</select>",
             "desc": "<textArea rows=" + "4" + " cols=" + "50" + " id=" + "desc" + "></textArea>"
-        }
+        };
 
     } else if(endpoint == "systems"){
         form = {
             "name": "<input type=" + "text" + " id=" + "name" + "></input>",
             "planets": "<input type=" + "text" + " id=" + "planets" + "></input>",
             "desc": "<textArea rows=" + "4" + " cols=" + "50" + " id=" + "desc" + "></textArea>"
-        }
+        };
 
     }
-
     document.getElementById("jsonRes").innerHTML = JSON.stringify(form, null, 2);
 }

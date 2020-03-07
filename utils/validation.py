@@ -1,3 +1,8 @@
+"""
+    Validates inputs received when
+    editing or adding new resources.
+"""
+
 import json
 from flask import current_app
 

@@ -1,4 +1,10 @@
-from validation import response_code
+"""
+    Determines what the data received is for,
+    then calls the corresonding database query
+    to delete it.
+"""
+
+from utils.validation import response_code
 from database.people import delete_people_query
 from database.system import delete_system_query
 from database.location import delete_location_query

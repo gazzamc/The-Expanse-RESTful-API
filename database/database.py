@@ -1,3 +1,8 @@
+"""
+    Contains the function to create a
+    connection to the database.
+"""
+
 import pymysql.cursors
 import os
 

@@ -1,3 +1,7 @@
+"""
+    Contains all the different database
+    queries for the people endpoint/table.
+"""
 import pymysql.cursors
 from database.database import connect_to_db
 

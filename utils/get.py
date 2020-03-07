@@ -1,6 +1,12 @@
+"""
+    Determines what the data received is for,
+    then calls the corresonding database query
+    to get the data requested.
+"""
+
 import json
 from flask import current_app
-from validation import response_code
+from utils.validation import response_code
 from database.people import get_people_query, get_people_query_filtered
 from database.system import get_systems_query, get_system_query_filtered
 from database.location import get_locations_query, get_location_query_filtered
@@ -54,9 +60,11 @@ def get_data(table, id=None, offset=0):
                 pages = 1
 
             """
-            https://stackoverflow.com/questions/16908943/display-json-returned-from-flask-in-a-neat-way
+            https://stackoverflow.com/questions/16908943/display-json-returned-/
+            from-flask-in-a-neat-way
             https://www.programiz.com/python-programming/json
-            https://stackoverflow.com/questions/37255313/what-is-a-right-way-for-rest-api-response """
+            https://stackoverflow.com/questions/37255313/what-is-a-right-way-/
+            for-rest-api-response """
             return current_app.response_class(
                     json.dumps(
                                 {

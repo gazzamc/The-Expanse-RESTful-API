@@ -65,24 +65,39 @@
                         "base_url": "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api",
                         "endpoints": [
                             {
-                                "people": [
-                                    "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/people",
+                            "people": [
+                                "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/people",
+                                "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/people/{id}",
+                                {
+                                "filters": [
                                     "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/people?offset={offset}",
-                                    "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/people/{id}",
-                                    {
-                                        "filter": [
-                                            "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/people?name={name}",
-                                            "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/people?status={status}",
-                                            "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/people?gender={gender}"
-                                        ]
-                                    }
-                                ],
-                                "systems": [
-                                    "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/systems"
-                                ],
-                                "locations": [
-                                    "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/locations"
+                                    "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/people?name={name}",
+                                    "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/people?status={status}",
+                                    "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/people?gender={gender}"
                                 ]
+                                }
+                            ],
+                            "systems": [
+                                "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/systems",
+                                "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/systems/{id}",
+                                {
+                                "filters": [
+                                    "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/systems?offset={offset}",
+                                    "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/systems?name={name}"
+                                ]
+                                }
+                            ],
+                            "locations": [
+                                "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/locations",
+                                "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/locations/{id}",
+                                {
+                                "filters": [
+                                    "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/people?offset={offset}",
+                                    "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/people?name={name}",
+                                    "http://8080-a33b8b63-0e2e-4354-8ba2-ab17d2c1ce1a.ws-eu01.gitpod.io/api/people?system={system}"
+                                ]
+                                }
+                            ]
                             }
                         ]
                     }

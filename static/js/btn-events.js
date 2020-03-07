@@ -35,7 +35,7 @@ document.getElementById("apiSearchForm").addEventListener("submit", function(e){
     endpoint = endpointDataSplt[0];
 
     if(endpoint != "people" && endpoint != "systems" && endpoint != "locations"){
-        endpoint = ""
+        endpoint = "";
     }
 
     getData(endpointData);
