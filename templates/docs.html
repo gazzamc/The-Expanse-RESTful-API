@@ -17,8 +17,8 @@
 <div class="container content">
 	<div class="row">
 		<!-- Menu List -->
-        <div class="col-12 col-md-3">
-            <h6>Getting Started</h6>
+        <div class="col-12 col-md-3 menu">
+            <h6 class="mb-3">Getting Started</h6>
             <div class="list-group text-center" id="docList">
                 <a href="#intro" type="button" class="list-group-item list-group-item-action">Introduction</a>
                 <a href="#start" type="button" class="list-group-item list-group-item-action">Getting Started</a>
@@ -28,16 +28,17 @@
                 <a href="#strings" type="button" class="list-group-item list-group-item-action">Query Strings</a>
                 <a href="#json" type="button" class="list-group-item list-group-item-action">JSON schema</a> 
             </div>
-            <h6 class="mt-4">Resources</h6>
+            <h6 class="mt-4 mb-3">Resources</h6>
             <div class="list-group text-center" id="docList">
-                <a href="#intro" type="button" class="list-group-item list-group-item-action">People</a>
-                <a href="#start" type="button" class="list-group-item list-group-item-action">Locations</a>
-                <a href="#error" type="button" class="list-group-item list-group-item-action">Systems</a>
+                <a href="#people" type="button" class="list-group-item list-group-item-action">People</a>
+                <a href="#locations" type="button" class="list-group-item list-group-item-action">Locations</a>
+                <a href="#systems" type="button" class="list-group-item list-group-item-action">Systems</a>
+                <a href="#filters" type="button" class="list-group-item list-group-item-action">Filters</a>
             </div>
-            <h6 class="mt-4">Examples</h6>
+            <h6 class="mt-4 mb-3">Examples</h6>
             <div class="list-group text-center mb-3" id="docList">
-                <a href="#intro" type="button" class="list-group-item list-group-item-action">Javascript</a>
-                <a href="#start" type="button" class="list-group-item list-group-item-action">Python</a>
+                <a href="#javascript" type="button" class="list-group-item list-group-item-action">Javascript</a>
+                <a href="#python" type="button" class="list-group-item list-group-item-action">Python</a>
             </div>
 		</div>
 		<!-- Content -->
@@ -47,12 +48,12 @@
             <!-- Intro -->
             <div class="col-12 mb-5">
                 <h4 id="intro">Introduction</h4>
-                <p>This documentation will hopefully give you a better understandong on how to connect to The Expanse API.
-                    It will walk you through the different options you can use to query information from the API.</p>
+                <p>This documentation will hopefully give you a better understanding on how to connect to The Expanse API.
+                    It will walk you through the different options you can use to query resources from the API.</p>
             </div>
             <!-- Getting started -->
             <div class="col-12 mb-5">
-                <h4 id="start">Getting Started</h4>
+                <h3 id="start">Getting Started</h3>
                 <p>Using your preferred method of fetching API resources or even via our own website, visit the base url below.</p>
                 <p class="codeExamp">
                     {{ request.url.replace("documentation", "api") }}
@@ -91,7 +92,7 @@
             <!-- Error Codes -->
             <div class="col-12 mb-5">
                 <h4 id="error">Error Codes</h4>
-                <p>While using our API you will recieve response codes depending on your action.
+                <p>While using our API you will receive response codes depending on your action.
                     Below is the list of codes and their corresponding message. Some of the codes
                     will have different messages which will be explained a bit more below.</p>
 
@@ -198,9 +199,9 @@
             <!-- Authenication -->
             <div class="col-12 mb-5">
                 <h4 id="auth">Authentication</h4>
-                <p>Right now this API does not require any authentication for users to send requests. Everyone can Add,
+                <p>This API does not require any authentication for users to send requests. Everyone can Add,
                  Edit, Delete and view the resources in the current version of this API. However, there is validation
-                 in place to keep the resources consistant. This will change in a future version, the plan is to implement
+                 in place to keep the resources consistent. This will change in a future version, the plan is to implement
                 a key and token system.</p>
             </div>
             <!-- Query Strings -->
@@ -219,14 +220,269 @@
             <!-- JSON Schema -->
             <div class="col-12 mb-5">
                 <h4 id="json">JSON Schema</h4>
-                <p>All requests to the API must be in JSON format (barring GET requests). Any results recieved will also be returned to the end user in JSON format.
-                If you send a request in anything other than JSON then you will recieve the following error:</p>
+                <p>All requests to the API must be in JSON format (barring GET requests). Any results received will also be returned to the end user in JSON format.
+                If you send a request in anything other than JSON then you will receive the following error:</p>
                 <p class="codeExamp">
                     {
                         "code": 400,
                         "message": "Bad Request. Data must be in JSON format"
                     }
                 </p>
+            </div>
+            <!-- Resources -->
+            <div class="col-12 mb-5">
+                <h3 id="resource">Resources</h3>
+                <p>At the moment the API only has three separate endpoints. 
+                You can view them below and see the individual filters corresponding to each one.</p>
+            </div>
+            <!-- People -->
+            <div class="col-12 mb-5">
+                <h5 id="people">People</h5>
+                <p>When retrieving a resource from the <span class="highlight">'people'</span> endpoint you will get a JSON object like the one below:</p>
+                <p class="codeExamp">
+                    {
+                    "code": 200,
+                    "results": 1,
+                    "pages": "1 of 1",
+                    "data": {
+                        <span class="highlight">"id"</span>: 1521,
+                        <span class="highlight">"name"</span>: "James Holden",
+                        <span class="highlight">"status"</span>: "Alive",
+                        <span class="highlight">"gender"</span>: "Male",
+                        <span class="highlight">"desc"</span>: "James \"Jim\" Holden is the captain of the Rocinante. 
+                            Born between 30 BXT and 21 BXT in Montana on Earth, Holden joined the United Nations Navy, 
+                            being dishonourably discharged after seven years of continuous duty. Following the destruction of the Canterbury, 
+                            Holden, along with Shed Garvey, Naomi Nagata, Amos Burton, and Alex Kamal, he went on a quest to uncover the true culprit."
+                    }
+                    }
+                </p>
+                <p>Everthing other than whats inside the data tree will be the same for all resources.
+                    A resource in <span class="highlight">'people'</span> will consist of the 
+                    <span class="highlight">'id'</span> of the record, 
+                    the <span class="highlight">'name'</span> of the person, 
+                    the <span class="highlight">'gender'</span> of the person, 
+                    the <span class="highlight">'status'</span> of the person 
+                    and a short <span class="highlight">'description'</span>.</p>
+                <h6>Adding Resource:</h6>
+                <p class="codeExamp">
+                    {
+                        "name": <span class="highlight">string</span>,
+                        "status": <span class="highlight">string</span>,
+                        "gender": <span class="highlight">string</span>,
+                        "desc": <span class="highlight">string</span>
+                    }
+                </p>
+                <p>Status value must be <span class="highlight">alive</span>, 
+                <span class="highlight">deceased</span> or 
+                <span class="highlight">unknown</span><br/>
+                    Gender value must be <span class="highlight">male</span>, 
+                    <span class="highlight">female</span> or 
+                    <span class="highlight">unknown</span></p>
+                <h6>Editing Resource:</h6>
+                <p class="codeExamp">
+                    {
+                        "id": <span class="highlight">integer</span>,
+                        "name": <span class="highlight">string</span>,
+                        "status": <span class="highlight">string</span>,
+                        "gender": <span class="highlight">string</span>,
+                        "desc": <span class="highlight">string</span>
+                    }
+                </p>
+                <h6>Deleting Resource:</h6>
+                <p class="codeExamp">
+                    {
+                        "id": <span class="highlight">integer</span>,
+                    }
+                </p>
+            </div>
+            <!-- Locations -->
+            <div class="col-12 mb-5">
+                <h5 id="locations">Locations</h5>
+                <p>When retrieving a resource from the <span class="highlight">'locations'</span> endpoint you will get a JSON object like the one below:</p>
+                <p class="codeExamp">
+                    {
+                        "code": 200,
+                        "results": 1,
+                        "pages": "1 of 1",
+                        "data": {
+                            <span class="highlight">"id"</span>: 1521,
+                            <span class="highlight">"name"</span>: "earth",
+                            <span class="highlight">"population"</span>: "15,000,000,000",
+                            <span class="highlight">"system"</span>: "sol",
+                            <span class="highlight">"desc"</span>: "Earth, also known as Terra or Sol Ⅲ, 
+                                is the third planet of the Sol system, and one of its four terrestrial worlds. 
+                                Home-world of humanity, Earth is the greatest hub of human politics and, technically, 
+                                still the capital planet and the dominant superpower, with it's governing body the United Nations. 
+                                It has always been at the forefront of human history."
+                        }
+                    }
+                </p>
+                <p>
+                    A resource in <span class="highlight">'locations'</span> will consist of the 
+                    <span class="highlight">'id'</span> of the record, 
+                    the <span class="highlight">'name'</span> of the location, 
+                    the <span class="highlight">'population'</span> of the location, 
+                    the <span class="highlight">'system'</span> of the location 
+                    and a short <span class="highlight">'description'</span>.
+                </p>
+                <h6>Adding Resource:</h6>
+                <p class="codeExamp">
+                    {
+                        "name": <span class="highlight">string</span>,
+                        "population": <span class="highlight">string</span>,
+                        "system": <span class="highlight">string</span>,
+                        "desc": <span class="highlight">string</span>
+                    }
+                </p>
+                <h6>Editing Resource:</h6>
+                <p class="codeExamp">
+                    {
+                        "id": <span class="highlight">integer</span>,
+                        "name": <span class="highlight">string</span>,
+                        "population": <span class="highlight">string</span>,
+                        "system": <span class="highlight">string</span>,
+                        "desc": <span class="highlight">string</span>
+                    }
+                </p>
+                <h6>Deleting Resource:</h6>
+                <p class="codeExamp">
+                    {
+                        "id": <span class="highlight">integer</span>,
+                    }
+                </p>
+                <p>
+                    <span class="highlight">'population'</span> must be the a string, it can be empty. 
+                    This string allows for greater or less than signs(eg. <1000)<br/>
+                    <span class="highlight">'system'</span> must be a string of the system name not the id
+                </p>
+            </div>
+            <!-- Systems -->
+            <div class="col-12 mb-5">
+                <h5 id="systems">Systems</h5>
+                <p>When retrieving a resource from the <span class="highlight">'systems'</span> endpoint you will get a JSON object like the one below:</p>
+                <p class="codeExamp">
+                    {
+                        "code": 200,
+                        "results": 1,
+                        "pages": "1 of 1",
+                        "data": {
+                            <span class="highlight">"id"</span>: 1,
+                            <span class="highlight">"name"</span>: "sol",
+                            <span class="highlight">"planets"</span>: 8,
+                            <span class="highlight">"desc"</span>: "Sol is a gravitationally-bound system comprised of eight primary planets, 
+                            numerous dwarf planets, and various other natural satellites orbiting a 
+                            G-type main-sequence star more commonly referred to as the Sun."
+                        }
+                    }
+                </p>
+                <p>
+                    A resource in <span class="highlight">'systems'</span> will consist of the 
+                    <span class="highlight">'id'</span> of the record, 
+                    the <span class="highlight">'name'</span> of the system, 
+                    the <span class="highlight">'planets'</span> of the system 
+                    and a short <span class="highlight">'description'</span>.
+                </p>
+                <h6>Adding Resource:</h6>
+                <p class="codeExamp">
+                    {
+                        "name": <span class="highlight">string</span>,
+                        "planets": <span class="highlight">integer</span>,
+                        "desc": <span class="highlight">string</span>
+                    }
+                </p>
+                <p>
+                    <span class="highlight">'planets'</span> must an integer.
+                </p>
+                <h6>Editing Resource:</h6>
+                <p class="codeExamp">
+                    {
+                        "id": <span class="highlight">integer</span>,
+                        "name": <span class="highlight">string</span>,
+                        "planets": <span class="highlight">integer</span>,
+                        "desc": <span class="highlight">string</span>
+                    }
+                </p>
+                <h6>Deleting Resource:</h6>
+                <p class="codeExamp">
+                    {
+                        "id": <span class="highlight">integer</span>,
+                    }
+                </p>
+                <p>In order to Add, Edit or Delete a resource in any of the endpoints 
+                you must send the above keys in JSON format to the API. Failing the validation for one 
+                of the values may send back a JSON response with an error code and message.</p>
+                <p>When editing any of the resources, leaving the value as an empty string will not overwrite the current value in that resource.</p>
+            </div>
+            <!-- Filters -->
+            <div class="col-12 mb-5">
+                <h4 class="mt-5" id="filters">Filters:</h4>
+                <p>There are some filters built-in to allow you to search for more specific records.</p>
+                <h5 id="filters">People:</h5>
+                <p><span class="highlight">Offset:</span><br />
+                By default only 25 resources are shown at a time, 
+                using the offset filter will allow you to get the resources beyond this point.</p>
+                <p class="codeExamp">
+                    {{ request.url.replace("documentation", "api") }}/people<span class="highlight">?offset={query}</span>
+                </p>
+                <p><span class="highlight">Name:</span><br />
+                You can search a resource by name using the example below.</p>
+                <p class="codeExamp">
+                    {{ request.url.replace("documentation", "api") }}/people<span class="highlight">?name={query}</span>
+                </p>
+                <p><span class="highlight">Status:</span><br />
+                You can search a resource by status using the example below.</p>   
+                <p class="codeExamp">
+                    {{ request.url.replace("documentation", "api") }}/people<span class="highlight">?status={query}</span>
+                </p>
+                <p><span class="highlight">Gender:</span><br />
+                You can search a resource by gender using the example below.</p>
+                <p class="codeExamp">
+                    {{ request.url.replace("documentation", "api") }}/people<span class="highlight">?gender={query}</span>
+                </p>
+
+                <h5 class="mt-5" id="filters">Locations:</h5>
+                <p><span class="highlight">Offset:</span></p>
+                <p class="codeExamp">
+                    {{ request.url.replace("documentation", "api") }}/locations<span class="highlight">?offset={query}</span>
+                </p>
+                <p><span class="highlight">Name:</span></p>
+                <p class="codeExamp">
+                    {{ request.url.replace("documentation", "api") }}/locations<span class="highlight">?name={query}</span>
+                </p>
+                <p><span class="highlight">System:</span><br />
+                You can search a resource by system using the example below.</p>   
+                <p class="codeExamp">
+                    {{ request.url.replace("documentation", "api") }}/locations<span class="highlight">?system={query}</span>
+                </p>
+
+                <h5 class="mt-5" id="filters">Systems:</h5>
+                <p><span class="highlight">Offset:</span></p>
+                <p class="codeExamp">
+                    {{ request.url.replace("documentation", "api") }}/systems<span class="highlight">?offset={query}</span>
+                </p>
+                <p><span class="highlight">Name:</span></p>
+                <p class="codeExamp">
+                    {{ request.url.replace("documentation", "api") }}/systems<span class="highlight">?name={query}</span>
+                </p>
+                <p><span class="highlight">Result:</span><br />
+                Here's an example of the JSON result you would receive:</p>
+                <p class="codeExamp">
+                    {{ request.url.replace("documentation", "api") }}/people<span class="highlight">?name=james</span>
+                </p>
+                <p class="codeExamp">
+                    {
+                        "code": 200,
+                        "count": 1,
+                        "data": [
+                            {
+                            "id": 1521,
+                            "name": "James Holden"
+                            }
+                        ]
+                    }
+                </p>
+                <p><span class="note">Note:</span> There is no limit on filtered results, so offset will not be needed. 
+                As of right now you cannot chain filters. eg. <span class="highlight">people?name=james&offset=5</span> would be invalid.</p>
             </div>
 		</div>
 	</div>

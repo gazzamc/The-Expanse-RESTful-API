@@ -1,3 +1,8 @@
+/* global */
+h1, h3, h4, .menu h6 {
+    text-align: center;
+}
+
 html {
      scroll-behavior: smooth;
 }
@@ -34,6 +39,14 @@ html {
     left: 60%;
     bottom: 7%;
     z-index: 10;
+}
+
+.highlight{
+    color: #FFA500;
+}
+
+.note{
+    color:#FF0000;
 }
 
 @media (min-width: 576px) { 
