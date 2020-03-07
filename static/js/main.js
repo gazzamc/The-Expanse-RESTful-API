@@ -1,3 +1,9 @@
+/**
+ * main.js
+ * This holds all the global variables and calls
+ * the api on window load.
+ */
+
 var baseUrl = window.location.href + "api";
 baseUrl = baseUrl.replace("?", "").replace("#", "");
 var endpoint;
