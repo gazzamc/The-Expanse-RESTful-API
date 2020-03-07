@@ -85,16 +85,6 @@ def get_system_query_filtered(filter, param):
                            WHERE `name` \
                            LIKE %s;"
                     query = (param + '%')
-                elif filter == "status":
-                    sql = "SELECT systemid, name, status \
-                           FROM `systems` \
-                           WHERE `status` = %s;"
-                    query = param
-                else:
-                    sql = "SELECT systemid, name, gender \
-                           FROM `systems` \
-                           WHERE `gender` = %s;"
-                    query = param
 
                 cursor.execute(sql, (query))
                 result = cursor.fetchall()

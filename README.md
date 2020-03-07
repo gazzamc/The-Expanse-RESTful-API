@@ -10,6 +10,31 @@ You can try the live version of the API [Here](https://expanse-api.herokuapp.com
 ## UX
 
 #### User Stories
+- As a user I should be able test the API from the website.
+- As a user I should be able to view a resource.
+- As a user I should be able to edit a resource.
+- As a user I should be able to delete a resource.
+- As a user I should be able to add a resource.
+<p align="center">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/addRecord.gif" alt="Add Resource">
+</p>
+- As a user I should be able to filter a resource.
+<p align="center">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/filter.png" alt="404 error">
+</p>
+- As a user I should get appropriate error/response responses.
+<p align="center">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/404.png" alt="404 error">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/404_2.png" alt="another 404 error">
+</p>
+- As a user I should have easy access to the API endpoints/filters.
+<p align="center">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/endpoints.png" alt="API endpoints" width="40%">
+</p>
+- As a user I should have relevent information available to me about the API.
+<p align="center">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/docs.png" alt="Documents Page" width="40%">
+</p>
 
 #### Strategy
 I wanted to create a RESTful API using python3, flask and mySQL. To showcase this I also
@@ -29,13 +54,15 @@ appropriately for what they do. Edit being yellow as a warning, delete being red
 bootstrap had these built-in styles I didn't do anything custom in the CSS.
 
 ## Features
-- Users can filter the data using *query strings*, such as by *name*, status, *gender* etc.
+- Users can filter the data using *query strings*, such as by *name*, *status*, *gender* etc.
 - Users can retrieve single records using the ID of said record in the URI.
 - Users can Add, Edit and Delete records from the database.
 - The API has input validation to prevent users from entering the wrong type of data.
 - If there is an error processing the request the API will display an error code with an appropiate error message.
 - Users can interact with the API via the website or directly using **Curl**, **Postman** or a language of their choosing.
 - The website allows the user to enter new data directly into the *JSON* result instead of a traditional form.
+- Querying the base url of the API will return all the endpoints and their filters.
+- The website has a documentation page for all relevant information on using the API.
 
 
 ### Features left to Implement
@@ -47,22 +74,25 @@ limit queries.
 
 ## Technologies Used
 
-- [Python3]()
+- [Python3](https://www.python.org/)
     - **Python3** was used for validation and querying the database as well as parsing the data from the wiki.
 
-- [MySQL/ClearDB]()
-    - **MySQL/ClearDB** was used to store the tables and columes of data for the API.
+- [MySQL](https://www.mysql.com/)
+    - **MySQL** was used to store the tables and columes of data for the API.
 
-- [Flask]()
+- [Flask](https://palletsprojects.com/p/flask/)
     - **Flask** was used to create the endpoints, handle 404 pages and output the API data.
 
-- [Javascript]()
+- [Javascript](https://www.javascript.com/)
     - **Javascript** was used to retrieve and send data to the API and hide/show elements.
 
 - [CSS3](https://en.wikipedia.org/wiki/Cascading_Style_Sheets)
     - **CSS3** was used to add custom styles and positioning of the HTML elements.
 
 - [HTML5](https://en.wikipedia.org/wiki/HTML5)
+    - **HTML5** was used to layout the basic structure of the website.
+
+- [Bootstrap](https://getbootstrap.com/)
     - **HTML5** was used to layout the basic structure of the website.
 
 
