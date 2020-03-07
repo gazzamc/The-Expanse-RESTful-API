@@ -16,24 +16,24 @@ You can try the live version of the API [Here](https://expanse-api.herokuapp.com
 - As a user I should be able to delete a resource.
 - As a user I should be able to add a resource.
 <p align="center">
-<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/addRecord.gif" alt="Add Resource">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/addRecord.gif" alt="Add Resource" width="80%">
 </p>
 - As a user I should be able to filter a resource.
 <p align="center">
-<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/filter.png" alt="404 error">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/filter.png" alt="Filter resource" width="80%">
 </p>
 - As a user I should get appropriate error/response responses.
 <p align="center">
-<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/404.png" alt="404 error">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/404.png" alt="404 error"><br />
 <img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/404_2.png" alt="another 404 error">
 </p>
 - As a user I should have easy access to the API endpoints/filters.
 <p align="center">
-<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/endpoints.png" alt="API endpoints" width="40%">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/endpoints.png" alt="API endpoints" width="60%">
 </p>
 - As a user I should have relevent information available to me about the API.
 <p align="center">
-<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/docs.png" alt="Documents Page" width="40%">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/docs.png" alt="Documents Page" width="60%">
 </p>
 
 #### Strategy
