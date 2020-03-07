@@ -21,7 +21,7 @@ html {
 }
 
 .codeExamp{
-    font-size: 0.7em;
+    font-size: 0.4em;
     background-color: #fff;
     color: #000;
     white-space: pre-wrap;
@@ -29,7 +29,41 @@ html {
 
 #backToTop{
     position: fixed;
-    left: 90%;
+    display: inline-block;
+    text-align: center;
+    left: 60%;
     bottom: 2%;
     z-index: 10;
+}
+
+@media (min-width: 576px) { 
+    #backToTop{
+        text-align: center;
+        left: 75%;
+    }
+}
+
+@media (min-width: 768px) { 
+    #backToTop{
+        text-align: center;
+        left: 80%;
+    }
+
+    .codeExamp{
+    font-size: 0.5em;
+    }
+}
+
+@media (min-width: 992px) { 
+    #backToTop{
+        text-align: center;
+        left: 85%;
+    }
+
+    .codeExamp{
+    font-size: 0.7em;
+    }
+}
+
+@media (min-width: 1200px) { 
 }

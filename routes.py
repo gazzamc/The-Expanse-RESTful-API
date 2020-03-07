@@ -29,13 +29,13 @@ def api_base():
             {
                 "people": [
                     request.base_url + "/people",
-                    request.base_url + "/people?offset=<offset>",
-                    request.base_url + "/people/<id>",
+                    request.base_url + "/people?offset={offset}",
+                    request.base_url + "/people/{id}",
                     {
                         "filter": [
-                            request.base_url + "/people?name=<name>",
-                            request.base_url + "/people?status=<status>",
-                            request.base_url + "/people?gender=<gender>"
+                            request.base_url + "/people?name={name}",
+                            request.base_url + "/people?status={status}",
+                            request.base_url + "/people?gender={gender}"
                         ]
                     }
                 ],
