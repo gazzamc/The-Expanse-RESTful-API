@@ -1,6 +1,10 @@
 # The Expanse - RESTful API
 Data Centric Development Milestone Project - Code Institute
 
+This is an API based off the TV Show *"The Expanse"* built using `Flask`, `Python` and `MySQL`. To accompany the API
+I also built a simple website "TEAPI" using `Bootstrap`, `Javascript` and `Custom CSS`. The user can test the API
+by retreiving, adding, editing and deleting the resources.
+
 ## Table Of Contents:
 - [Demo](#demo)<br>
 - [UX](#ux)<br>
