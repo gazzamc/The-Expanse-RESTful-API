@@ -157,7 +157,7 @@ add more.
 
     ##### Directly
     When a user wants to Add, Edit or Delete a resource using a direct path to the API. They simply need to send the keys/values
-    in JSON format with the appropiate request method. Below I will give examples of what the request would look like for each
+    in JSON format with the appropriate request method. Below I will give examples of what the request would look like for each
     method.
 
     - GET 
@@ -278,7 +278,7 @@ application. This is just a note to explain the high count of ID's on the resour
 - Users can retrieve single records using the ID of said record in the URI.
 - Users can Add, Edit and Delete records from the database.
 - The API has input validation to prevent users from entering the wrong type of data.
-- If there is an error processing the request the API will display an error code with an appropiate error message.
+- If there is an error processing the request the API will display an error code with an appropriate error message.
 - Users can interact with the API via the website or directly using **Curl**, **Postman** or a language of their choosing.
 - The website allows the user to enter new data directly into the *JSON* result instead of a traditional form.
 - Querying the base url of the API will return all the endpoints and their filters.
@@ -331,20 +331,20 @@ search for any of the endpoints I get back the appropriate JSON data. This also 
 the bottom right of the results box (middle in smaller devices).
 
 ##### EndPoints
-- Searching an invalid endpoint returns a `404` message in the results `"Invalid EndPoint"`.
+- Searching an invalid endpoint returns a `404` and a message in the results `"Invalid EndPoint"`.
 - When searching a valid endpoint an *Add Resource* button will appear under the results.
     - Clicking this button will replace the JSON result with a form (With the same JSON layout, a drop down of `systems` appears when adding `location`).
         - A *Save* and *Cancel* button will appear below the results section.
             - Clicking the save button will bring up a modal to confirm the new resource.
-                - If you fail to enter anything but `desc` an appropiate error message will appear below the results section.
+                - If you fail to enter anything but `desc` an appropriate error message will appear below the results section.
                 - If you fail to enter anything but `alive`, `deceased` or `unknown` in the `status` fields (`people`), 
-                    an appropiate error message will appear below the results section.
+                    an appropriate error message will appear below the results section.
                 - If you fail to enter anything but `male`, `female` or `unknown` in the `gender` fields (`people`), 
-                    an appropiate error message will appear below the results section.
+                    an appropriate error message will appear below the results section.
                 - If you fail to enter an `integer` in the `planets` field (`systems`), 
-                    an appropiate error message will appear below the results section.
+                    an appropriate error message will appear below the results section.
                 - If you fail to enter a `string` containing a digit (first character is ignored incase of `<` `>` signs) in the `population` field (`locations`), 
-                    an appropiate error message will appear below the results section.
+                    an appropriate error message will appear below the results section.
                 - If you successfully enter all necessary fields a success message `"Record created in database"` will appear in the results box.
     - Clicking the *Cancel* button will refresh the results and bring you back to the original endpoint results.
 - When searching a specific resource using the `id` eg. `people/1`, Edit and Delete buttons will appear below the result.
@@ -354,9 +354,9 @@ the bottom right of the results box (middle in smaller devices).
     - If you click the *Edit* button, the JSON result will be replaced with a form but keeping the same structure. 
         The two previous buttons will disappear and a *Cancel* and *Save* button now appears below the result box.
         - If you click save without entering any information a modal will appear once again.
-            - Clicking *YES* will make the modal disappear and an appropiate error message will appear below the results box.
+            - Clicking *YES* will make the modal disappear and an appropriate error message will appear below the results box.
         - If you click save and enter invalid data.
-            - Clicking *YES* will make the modal disappear and an appropiate error message will appear below the results box.
+            - Clicking *YES* will make the modal disappear and an appropriate error message will appear below the results box.
         - If you click save and enter only one of the fields.
             - Clicking *YES* will make the modal disappear and successful message will appear in the results box in JSON format.
             - Any fields not entered wont be overwritten.
@@ -367,7 +367,7 @@ the bottom right of the results box (middle in smaller devices).
 - Searching an endpoint with an invalid filter will return a `400` message `"Bad Request. Query string unrecognised"`.
 - If the query you used for the filter can't find a record it will return a `404` message `"No records found for query '{query}'"`.
 - If you use the pagination filter `offset` and go out of range of the results you will get a `404` error message `"Page does not exist"`.
-- If your filter search is successful you will get a `count` of the resources matching your query. The `id` and the `name` of the query in JSON.
+- If your filter search is successful you will get a `count` of the resources matching your query. The `id` and the `name` of the query in JSON (`status`, `gender` and `system` will also be included when searched).
     - Except for the `offset` filter, this will simply show you the next 25 results after your set offset. So it will return like a normal endpoint search.
 
 ##### Site functionality
@@ -383,7 +383,7 @@ the bottom right of the results box (middle in smaller devices).
 ### Automated Testing
 I did do some basic unit testing using pythons *unittest* and *nose* modules.
 These tests can be found in the `api_test.py` file. In order to run these tests 
-you will need to connect to a working database to get the appropiate response that
+you will need to connect to a working database to get the appropriate response that
 I've set, otherwise it will return `No database connected` and fail.
 
 To run these tests with an appropriate database connected use the following command:
