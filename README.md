@@ -206,9 +206,9 @@ add more.
     Otherwise an error message will be sent back with details of what went wrong.
 
 #### Skeleton
-[Index Wireframe](https://github.com/gazzamc/Milestone-Project-Two/blob/master/wireframes/index.pdf)<br>
-[docs Wireframe](https://github.com/gazzamc/Milestone-Project-Two/blob/master/wireframes/docs.pdf)<br>
-[404 Wireframe](https://github.com/gazzamc/Milestone-Project-Two/blob/master/wireframes/404.pdf)<br>
+[Index Wireframe](https://github.com/gazzamc/Milestone-Project-Three/blob/master/wireframes/index.pdf)<br>
+[docs Wireframe](https://github.com/gazzamc/Milestone-Project-Three/blob/master/wireframes/docs.pdf)<br>
+[404 Wireframe](https://github.com/gazzamc/Milestone-Project-Three/blob/master/wireframes/404.pdf)<br>
 
 #### Surface
 I went with very neutral colours to make it look easy on the eye, as this is a simple
