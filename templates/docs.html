@@ -468,7 +468,7 @@
                     {{ request.url.replace("documentation", "api") }}/locations<span class="highlight">?system={query}</span>
                 </p>
 
-                <h5 class="mt-5">Systems:</h5>
+                <h5 class="mt-5">Systems</h5>
                 <p><span class="highlight">Offset</span></p>
                 <p class="codeExamp">
                     {{ request.url.replace("documentation", "api") }}/systems<span class="highlight">?offset={query}</span>
@@ -497,9 +497,91 @@
                 <p><span class="note">Note:</span> There is no limit on filtered results, so offset will not be needed. 
                 As of right now you cannot chain filters. eg. <span class="highlight">people?name=james&offset=5</span> would be invalid.</p>
             </div>
+            <!-- Examples -->
+            <div class="col-12 mb-5">
+                <h4 class="mt-5" id="examples">Examples</h4>
+                <p>Below I'll give an example of how to call the API using Javascript and Python</p>
+                <h5 class="mt-5" id="javascript">Javascript</h5>
+                <p>Using <span class="highlight">fetch()</span> to call the API</p>
+                <p class="codeExampSyn">
+                    <span class="comments">// declare baseUrl variable</span>
+                    <span class="function">let</span> <span class="param">baseUrl</span> =  <span class="string">"{{ request.url.replace("documentation", "api") }}"</span>;
+
+                    <span class="comments">// Function that takes in the endpoint, method (default=GET) and JSON data.</span>
+                    <span class="function">async function</span> <span class="method">apiCall</span>(<span class="param">endpoint</span>=<span class="string">""</span>, <span class="param">method</span>=<span class="string">'GET'</span>, <span class="param">data</span>=<span class="function">null</span>){
+                            <span class="comments">// declare local variables</span>
+                            <span class="function">let</span> <span class="param">response</span>;
+                            <span class="function">let</span> <span class="param">jsonResult</span>;
+                            <span class="function">let</span> <span class="param">headers</span>;
+                            <span class="function">let</span> <span class="param">options</span>;
+
+                            <span class="comments">// Add trailing slash if endpoint is not empty</span>
+                            <span class="keyword">if</span> (<span class="param">endpoint</span> != <span class="string">""</span>){
+                                <span class="param">endpoint</span> = <span class="string">"/"</span> + <span class="param">endpoint</span>;
+                            }
+
+                            <span class="comments">// set content type to JSON</span>
+                            <span class="param">headers</span> = {<span class="string">'Content-Type'</span> <span class="string">'application/json'</span>};
+                            <span class="comments">//Set options for request</span>
+                            <span class="param">options</span> = {<span class="param">method</span> <span class="param">method</span>, <span class="param">headers</span> <span class="param">headers</span>, <span class="param">body</span> <span class="param">data</span>};
+                            <span class="comments">// fetch results, add await to wait for results to return</span>
+                            <span class="param">response</span> = <span class="keyword">await</span> <span class="method">fetch</span>(<span class="param">baseUrl</span> + <span class="param">endpoint</span>, <span class="param">options</span>);
+                            <span class="comments">// Unpack JSON result</span>
+                            <span class="param">jsonResult</span> = <span class="keyword">await</span> <span class="param">response</span>.<span class="method">json</span>();
+
+                            <span class="comments">// Return JSON result</span>
+                            <span class="keyword">return</span> <span class="param">jsonResult</span>;
+                    }
+
+                    <span class="comments">// call function and print to console</span>
+                    <span class="comments">// since its a GET request theres no need for the last two params</span>
+                    <span class="function">async function</span> <span class="method">getFirstPerson</span>(){
+                        <span class="function">let</span> <span class="param">people</span> =  <span class="keyword">await</span> <span class="method">apiCall</span>(<span class="string">"people"</span>");
+
+                        <span class="comments">//print to console and format with JSON.stringify()</span>
+                        <span class="comments">console</span>.<span class="method">log</span>(<span class="comments">JSON</span>.<span class="method">stringify</span>(<span class="param">people</span>.<span class="param">data</span>[<span class="comments">0</span>]));
+                    }
+
+                    <span class="method">getFirstPerson</span>();
+                </p>
+                <p>This example doesnt show any error handling, so please bare that in mind. All TEAPI responses are accompanied with a HTTP status code for you to use.</p>
+                <h5 class="mt-5" id="python">Python</h5>
+                <p class="codeExampSyn">
+                    <span class="keyword">import</span> requests
+
+                    base_url = <span class="string">"{{ request.url.replace("documentation", "api") }}"</span>
+
+
+                    <span class="function">def</span> <span class="method">apiCall</span>(<span class="param">endpoint</span>=<span class="string">""</span>):
+
+                        <span class="keyword">if</span> endpoint != <span class="string">""</span>
+                            endpoint = <span class="string">"/"</span> + endpoint
+
+                        headers = {<span class="string">'Content-Type'</span> <span class="string">'application/json'</span>}
+                        result = requests.get(base_url + endpoint, <span class="param">headers</span>=headers)
+
+                        <span class="keyword">return</span> result.json()
+
+
+                    <span class="method">print</span>(apiCall(<span class="string">"people"</span>)[<span class="string">'data'</span>][<span class="comments">1</span>])
+                </p>
+                <p>Result:</p>
+                <p class="codeExamp">
+                    {
+                        id: 1, 
+                        name: "Captain McDowell", 
+                        status: "alive", 
+                        gender: "Male", 
+                        desc: "Captain McDowell has been commissioned by the Pur'n'Kleen Water Company as the commanding officer of the Canterbury"
+                    }
+                </p>
+            </div>
 		</div>
 	</div>
 </div>
 <!-- back to top button -->
 <a href="#top" class="btn btn-primary" id="backToTop">Back To Top</a>
+{% endblock %}
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/test.js') }}"></script>
 {% endblock %}

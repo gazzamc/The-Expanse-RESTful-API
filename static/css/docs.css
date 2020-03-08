@@ -29,11 +29,16 @@ html {
     color: green;
 }
 
-.codeExamp{
+.codeExamp, .codeExampSyn{
     font-size: 0.4em;
     background-color: #fff;
     color: #000;
     white-space: pre-wrap;
+}
+
+.codeExampSyn{
+    background-color: rgba(0,0,0, 0.3);
+    color: #fff;
 }
 
 #backToTop{
@@ -53,6 +58,32 @@ html {
     color:#FF0000;
 }
 
+/* syntax colours */
+
+.string{
+    color: rgb(155, 79, 16);
+}
+
+.function{
+    color:blue;
+}
+
+.method{
+    color: #ffff00;
+}
+
+.keyword {
+    color: purple;
+}
+
+.comments{
+    color: green;
+}
+
+.param{
+    color: #5873FF;
+}
+
 @media (min-width: 576px) { 
     #backToTop{
         text-align: center;
@@ -66,7 +97,7 @@ html {
         left: 80%;
     }
 
-    .codeExamp{
+    .codeExamp, .codeExampSyn{
         font-size: 0.5em;
     }
 }
@@ -77,7 +108,7 @@ html {
         left: 85%;
     }
 
-    .codeExamp{
+    .codeExamp, .codeExampSyn{
         font-size: 0.7em;
     }
 }
