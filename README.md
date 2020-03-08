@@ -58,31 +58,31 @@ You can try the live version of the API [Here](https://expanse-api.herokuapp.com
 <img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/endpoints.png" alt="API endpoints" width="60%">
 </p>
 
-- As a user I should have relevent information available to me about the API.
+- As a user I should have relevant information available to me about the API.
 <p align="center">
 <img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/docs.png" alt="Documents Page" width="60%">
 </p>
 
 #### Strategy
-I wanted to create a RESTful API using python3, flask and mySQL. To showcase this I also
+I wanted to create a RESTful API using python3, flask and MySQL. To showcase this I also
 wanted to created a simple website that would allow you to test the endpoints and add,
 edit or delete records.
 
 #### Scope
 I wanted users to be able to test out the API without writing any code or using a development tool such as **Postman**.
 And if when they were ready to start using the API that there was an informative documentation available for the API.
-The website is simple in design, you can search for the resource, add a new resource or edit/delete an existing resouce.
+The website is simple in design, you can search for the resource, add a new resource or edit/delete an existing resource.
 
 As for the API itself, I wanted it to be as easy to use as possible, if a users input was invalid in anyway I wanted to 
 send back a response that would be user friendly and point them in the right direction on what went wrong in their request.
-I was originally aiming for another two endpoints that would add more relational data, and make use of the retalation database. 
+I was originally aiming for another two endpoints that would add more relational data, and make use of the relational database. 
 Unfortunately as the data I extracted from the wiki was 'dirty data' and needed to be validated. I then scrapped a few fields that
 would have utilized the relational database. I still feel as though there is enough there to showcase the API and sets a foundation 
 add more.
 
 #### Structure
 - ##### Website
-    For the index page of the website i wanted to keep it simple and straight to the point.
+    For the index page of the website I wanted to keep it simple and straight to the point.
 
     At the top of the page is the navigation bar with the two pages linked, this changes into a hamburger
     button on smaller screens. Then I have a hero image with a jumbotron containing the sites name.
@@ -202,7 +202,7 @@ add more.
         These keys will vary, please check the corresponding documentation for each endpoint [here](https://expanse-api.herokuapp.com/documentation#resource)
     <br /><br />
 
-    If these requests are successful you will recieve a JSON response back with a code and message. 
+    If these requests are successful you will receive a JSON response back with a code and message. 
     Otherwise an error message will be sent back with details of what went wrong.
 
 #### Skeleton
@@ -212,7 +212,7 @@ add more.
 
 #### Surface
 I went with very neutral colours to make it look easy on the eye, as this is a simple
-testing site for the API i didnt think it needed a lot to standout. The buttons are coloured
+testing site for the API I didn't think it needed a lot to standout. The buttons are coloured
 appropriately for what they do. Edit being yellow as a warning, delete being red etc. As
 bootstrap had these built-in styles I didn't do anything custom in the CSS.
 
@@ -270,7 +270,7 @@ Below you can find the schema of each table along with the datatypes for each fi
 | planets 	| int(3) unsigned 	|         	|                	|
 
 As I'm using ClearDB on Heroku the auto_increment increases by '10', Unfortunately this
-cannot be changed with the permissions I have to the database. But it doesnt affect the
+cannot be changed with the permissions I have to the database. But it doesn't affect the
 application. This is just a note to explain the high count of ID's on the resources.
 
 ## Features
@@ -298,7 +298,7 @@ limit queries.
     - **Python3** was used for validation and querying the database as well as parsing the data from the wiki.
 
 - [MySQL](https://www.mysql.com/)
-    - **MySQL** was used to store the tables and columes of data for the API.
+    - **MySQL** was used to store the tables and columns of data for the API.
 
 - [Flask](https://palletsprojects.com/p/flask/)
     - **Flask** was used to create the endpoints, handle 404 pages and output the API data.
@@ -318,11 +318,11 @@ The website was tested in chrome, firefox and edge for responsiveness.
 The majority of my testing consisted of using the developer tools in chrome while working on the website design. 
 As for testing the API endpoints I used the [**Postman Chrome Extension**](https://www.postman.com/), 
 this allowed me to test all the different methods (GET, PUT, POST, DELETE) 
-and check that i got the appropriate response back.
+and check that I got the appropriate response back.
 
 ### Manual Testing
 As I was building the website for the API I was able to extensively test it. Since I was connecting
-to my API with javascript and retrieving the data as an end-user would. I was able to find some bugs that I
+to my API with JavaScript and retrieving the data as an end-user would. I was able to find some bugs that I
 later patched and returned an appropriate responds code/message.
 
 #### Website
@@ -347,7 +347,7 @@ the bottom right of the results box (middle in smaller devices).
                     an appropriate error message will appear below the results section.
                 - If you successfully enter all necessary fields a success message `"Record created in database"` will appear in the results box.
     - Clicking the *Cancel* button will refresh the results and bring you back to the original endpoint results.
-- When searching a specific resource using the `id` eg. `people/1`, Edit and Delete buttons will appear below the result.
+- When searching a specific resource using the `id` e.g.. `people/1`, Edit and Delete buttons will appear below the result.
     - When clicking the delete button a modal will appear to confirm the deletion of the resource.
         - If you click *YES* the modal will close and the resource will be deleted. A JSON message confirming that will appear in the results box.
         - If you click *NO* the modal will close.
@@ -375,7 +375,7 @@ the bottom right of the results box (middle in smaller devices).
 - All menu links on the documentation page scroll to the appropriate content.
 - All elements are responsive when changing resolutions in chrome dev tools.
 - Example code/JSON scales with resolution on documentation page.
-- Back to top button works as intended and doesnt block content.
+- Back to top button works as intended and doesn't block content.
 - No elements/content overlaps when changing resolutions.
 
 #### API
@@ -398,9 +398,9 @@ Expected Result:
 <img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/apiTest.png" alt="API Tests">
 </p>
 
-I only tested the API endpoints using the **GET** method. As i was connected to my live
-database i didnt want to automate tests that would alter or delete records. Unfortunately I couldn't find a way to setup a temporary database for testing my **CRUD** functionality. The
-closest thing i found for database testing was a **Mock** module which didn't suit my needs. 
+I only tested the API endpoints using the **GET** method. As I was connected to my live
+database I didn't want to automate tests that would alter or delete records. Unfortunately I couldn't find a way to setup a temporary database for testing my **CRUD** functionality. The
+closest thing I found for database testing was a **Mock** module which didn't suit my needs. 
 It only mocked the database connection, 
 and this wouldn't return the appropriate response the unit tests were expecting.
 ## Deployment
