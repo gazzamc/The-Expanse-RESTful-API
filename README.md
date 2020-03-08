@@ -489,3 +489,9 @@ python3 routes.py
 - Using [this](https://clubmate.fi/javascript-adding-and-removing-class-names-from-elements/) example I was able to add/remove classes in Javascript with less hassle.
 - [This](https://clubmate.fi/javascript-adding-and-removing-class-names-from-elements/) article about filtering for restful APIs was very informative and helped me implement a form of filtering in this project.
 - Using the example from [this](https://codehandbook.org/handle-404-error-python-flask/) article I was able to implement the 404 page in my flask application when a user visited an invalid endpoint.
+- [This](http://www.blog.pythonlibrary.org/2016/07/07/python-3-testing-an-intro-to-unittest/) article helped me understant the unittest module and allowed me to do my own tests.
+- [This](https://stackoverflow.com/questions/4810841/pretty-print-json-using-javascript) exampled helped me prettify the JSON data when outputting it to the end user.
+- [This](https://stackoverflow.com/questions/8866053/stop-reloading-page-with-enter-key) example helped me stop the page from reloading when the user pressed the enter key in the search bar.
+- [This](https://stackoverflow.com/questions/42050765/sql-how-to-replace-foreign-key-column-with-data-from-referenced-table) example helped me with joining data between tables
+- [This](https://stackoverflow.com/questions/37255313/what-is-a-right-way-for-rest-api-response) helped me when trying to figure out the right way to respond to certain requests.
+- [This](https://stackoverflow.com/questions/16908943/display-json-returned-from-flask-in-a-neat-way) helped when trying to return the JSON with the correct indentation in the flask response
