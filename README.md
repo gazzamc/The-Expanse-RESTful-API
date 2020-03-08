@@ -433,6 +433,8 @@ validation and strip most of the data. This was the main reason why i dropped a 
 
 I also had an issue keeping the footer in place, particularly when the `404 page` is shown. To fixed this I needed to add a min-height to 404.html template.
 
+All CSS, HTML, Python and Javascript files have been validated using their corresponding validators.
+
 ### Automated Testing
 I did do some basic unit testing using pythons *unittest* and *nose* modules.
 These tests can be found in the `api_test.py` file. In order to run these tests 
