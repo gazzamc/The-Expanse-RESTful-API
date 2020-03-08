@@ -2,6 +2,28 @@
 Data Centric Development Milestone Project - Code Institute
 
 ## Table Of Contents:
+- [Demo](#demo)<br>
+- [UX](#ux)<br>
+    * [User Stories](#user-stories)<br>
+    * [Strategy](#strategy)<br>
+    * [Scope](#scope)<br>
+    * [Structure](#structure)<br>
+    * [Skeleton](#skeleton)<br>
+    * [Surface](#surface)<br>
+- [Error Codes](#error-codes)<br>
+- [Database Schema](#database-schema)<br>
+- [Features](#features)<br>
+- [Features left to Implement](#features-left-to-implement)<br>
+- [Technologies Used](#technologies-used)<br>
+- [Testing](#testing)<br>
+    * [Manual Testing](#manual-testing)<br>
+    * [Automated Testing](#automated-testing)<br>
+    * [Known Bugs](#known-bugs)<br>
+- [Deployment](#deployment)<br>
+- [Credits](#credits)<br>
+    * [Content](#content)<br>
+    * [Media](#media)<br>
+    * [Acknowledgements](#acknowledgements)<br>
 
 ## Demo
 You can try the live version of the API [Here](https://expanse-api.herokuapp.com/)<br><br>
