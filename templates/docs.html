@@ -48,7 +48,7 @@
             <!-- Intro -->
             <div class="col-12 mb-5">
                 <h4 id="intro">Introduction</h4>
-                <p>This documentation will hopefully give you a better understanding on how to connect to The Expanse API.
+                <p>This documentation will give you a better understanding on how to connect to The Expanse API.
                     It will walk you through the different options you can use to query resources from the API.</p>
             </div>
             <!-- Getting started -->
@@ -102,7 +102,7 @@
                         ]
                     }
                 </p>
-                <p>This result is the current response for time of writing this, but it may be subject to change.</p>
+                <p>This result is the current response at time of writing this, but it may be subject to change.</p>
             </div>
             <!-- Error Codes -->
             <div class="col-12 mb-5">
@@ -428,56 +428,56 @@
             </div>
             <!-- Filters -->
             <div class="col-12 mb-5">
-                <h4 class="mt-5" id="filters">Filters:</h4>
+                <h4 class="mt-5" id="filters">Filters</h4>
                 <p>There are some filters built-in to allow you to search for more specific records.</p>
-                <h5>People:</h5>
-                <p><span class="highlight">Offset:</span><br />
+                <h5>People</h5>
+                <p><span class="highlight">Offset</span><br />
                 By default only 25 resources are shown at a time, 
                 using the offset filter will allow you to get the resources beyond this point.</p>
                 <p class="codeExamp">
                     {{ request.url.replace("documentation", "api") }}/people<span class="highlight">?offset={query}</span>
                 </p>
-                <p><span class="highlight">Name:</span><br />
+                <p><span class="highlight">Name</span><br />
                 You can search a resource by name using the example below.</p>
                 <p class="codeExamp">
                     {{ request.url.replace("documentation", "api") }}/people<span class="highlight">?name={query}</span>
                 </p>
-                <p><span class="highlight">Status:</span><br />
+                <p><span class="highlight">Status</span><br />
                 You can search a resource by status using the example below.</p>   
                 <p class="codeExamp">
                     {{ request.url.replace("documentation", "api") }}/people<span class="highlight">?status={query}</span>
                 </p>
-                <p><span class="highlight">Gender:</span><br />
+                <p><span class="highlight">Gender</span><br />
                 You can search a resource by gender using the example below.</p>
                 <p class="codeExamp">
                     {{ request.url.replace("documentation", "api") }}/people<span class="highlight">?gender={query}</span>
                 </p>
 
-                <h5 class="mt-5">Locations:</h5>
-                <p><span class="highlight">Offset:</span></p>
+                <h5 class="mt-5">Locations</h5>
+                <p><span class="highlight">Offset</span></p>
                 <p class="codeExamp">
                     {{ request.url.replace("documentation", "api") }}/locations<span class="highlight">?offset={query}</span>
                 </p>
-                <p><span class="highlight">Name:</span></p>
+                <p><span class="highlight">Name</span></p>
                 <p class="codeExamp">
                     {{ request.url.replace("documentation", "api") }}/locations<span class="highlight">?name={query}</span>
                 </p>
-                <p><span class="highlight">System:</span><br />
+                <p><span class="highlight">System</span><br />
                 You can search a resource by system using the example below.</p>   
                 <p class="codeExamp">
                     {{ request.url.replace("documentation", "api") }}/locations<span class="highlight">?system={query}</span>
                 </p>
 
                 <h5 class="mt-5">Systems:</h5>
-                <p><span class="highlight">Offset:</span></p>
+                <p><span class="highlight">Offset</span></p>
                 <p class="codeExamp">
                     {{ request.url.replace("documentation", "api") }}/systems<span class="highlight">?offset={query}</span>
                 </p>
-                <p><span class="highlight">Name:</span></p>
+                <p><span class="highlight">Name</span></p>
                 <p class="codeExamp">
                     {{ request.url.replace("documentation", "api") }}/systems<span class="highlight">?name={query}</span>
                 </p>
-                <h5 class="mt-5">Filter result:</h5>
+                <h5 class="mt-5">Filter result</h5>
                 <p>Here's an example of the JSON result you would receive:</p>
                 <p class="codeExamp">
                     {{ request.url.replace("documentation", "api") }}/people<span class="highlight">?name=james</span>

@@ -336,6 +336,9 @@ limit queries.
 - [Bootstrap](https://getbootstrap.com/)
     - **Bootstrap** was used to layout the basic structure of the website.
 
+- [Font Awesome](https://fontawesome.com/)
+    - **Font Awesome** is used for the logo icons.
+
 
 ## Testing
 The website was tested in chrome, firefox and edge for responsiveness. 
