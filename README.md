@@ -11,38 +11,49 @@ You can try the live version of the API [Here](https://expanse-api.herokuapp.com
 
 #### User Stories
 - As a user I should be able test the API from the website.
+<p align="center">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/testAPI.png" alt="Test API" width="80%">
+</p>
+
 - As a user I should be able to view a resource.
 <p align="center">
 <img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/viewResource.png" alt="View Resource" width="80%">
 </p>
+
 - As a user I should be warned before altering or deleting a resource.
 <p align="center">
 <img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/addModal.png" alt="Add Resource Warning">
 <img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/editModal.png" alt="Edit Resource Warning">
 <img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/deleteModal.png" alt="Delete Resource Warning">
 </p>
+
 - As a user I should be able to edit a resource.
 <p align="center">
 <img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/editResource.gif" alt="Edit Resource" width="80%">
 </p>
+
 - As a user I should be able to delete a resource.
 - As a user I should be able to add a resource.
 <p align="center">
 <img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/addResource.gif" alt="Add Resource" width="80%">
 </p>
+
 - As a user I should be able to filter a resource.
 <p align="center">
 <img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/filter.png" alt="Filter Resource" width="80%">
 </p>
+
 - As a user I should get appropriate error/response responses.
 <p align="center">
 <img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/404.png" alt="404 error"><br />
 <img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/404_2.png" alt="another 404 error">
 </p>
+
 - As a user I should have easy access to the API endpoints/filters.
 <p align="center">
 <img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/endpoints.png" alt="API endpoints" width="60%">
 </p>
+
 - As a user I should have relevent information available to me about the API.
 <p align="center">
 <img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/docs.png" alt="Documents Page" width="60%">
