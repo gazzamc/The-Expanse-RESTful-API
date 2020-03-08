@@ -12,15 +12,27 @@ You can try the live version of the API [Here](https://expanse-api.herokuapp.com
 #### User Stories
 - As a user I should be able test the API from the website.
 - As a user I should be able to view a resource.
+<p align="center">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/viewResource.gif" alt="View Resource" width="80%">
+</p>
+- As a user I should be warned before altering or deleting a resource.
+<p align="center">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/addModal.gif" alt="Add Resource Warning">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/editModal.gif" alt="Edit Resource Warning">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/deleteModal.gif" alt="Delete Resource Warning">
+</p>
 - As a user I should be able to edit a resource.
+<p align="center">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/editResource.gif" alt="Edit Resource" width="80%">
+</p>
 - As a user I should be able to delete a resource.
 - As a user I should be able to add a resource.
 <p align="center">
-<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/addRecord.gif" alt="Add Resource" width="80%">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/addResource.gif" alt="Add Resource" width="80%">
 </p>
 - As a user I should be able to filter a resource.
 <p align="center">
-<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/filter.png" alt="Filter resource" width="80%">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/filter.png" alt="Filter Resource" width="80%">
 </p>
 - As a user I should get appropriate error/response responses.
 <p align="center">

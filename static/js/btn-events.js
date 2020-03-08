@@ -62,21 +62,24 @@ saveBtn.addEventListener("click", function(){
     }
 
     if(endpointDataSplt[1] == undefined){
-        if(confirm("Are you sure you want to add this record?")){
-            editRecord(true);
-        }
+        /* Change modal content */
+        document.getElementById("modalTitle").innerText = "Add Resource";
+        document.getElementById("modalBody").innerText = "Are you sure you want to add this resource?";
+        document.getElementById("modal").style.display = "inherit";
     }else{
-        if(confirm("Are you sure you want to edit this record?")){
-            editRecord();
-        }
+        /* Change modal content */
+        document.getElementById("modalTitle").innerText = "Edit Resource";
+        document.getElementById("modalBody").innerText = "Are you sure you want to edit this resource?";
+        document.getElementById("modal").style.display = "inherit";
     }
 });
 
 /* Delete Btn */
 deleteBtn.addEventListener("click", function(){
-    if(confirm("Are you sure you want to delete this record?")){
-        deleteRecord();
-    }
+    /* Change modal content */
+    document.getElementById("modalTitle").innerText = "Delete Resource";
+    document.getElementById("modalBody").innerText = "Are you sure you want to delete this resource?";
+    document.getElementById("modal").style.display = "inherit";
 });
 
 /* Cancel Btn */
@@ -90,4 +93,28 @@ cancelBtn.addEventListener("click", function(){
     }
 
     getData(endpointData);
+});
+
+/* Modal buttons */
+/* Yes */
+document.getElementById("modalYes").addEventListener("click", function(){
+    document.getElementById("modal").style.display = "none";
+
+    if(endpointDataSplt[1] == undefined){
+        editRecord(true);
+    }else{
+        if(editBtn.offsetLeft > 0){
+            deleteRecord();
+        }else{
+            editRecord();
+        }
+    }
+});
+/* No */
+document.getElementById("modalNo").addEventListener("click", function(){
+    document.getElementById("modal").style.display = "none";
+});
+/* Close */
+document.getElementById("modalClose").addEventListener("click", function(){
+    document.getElementById("modal").style.display = "none";
 });

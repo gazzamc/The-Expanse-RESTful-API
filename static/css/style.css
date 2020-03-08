@@ -84,6 +84,17 @@ body{
     height: 10vh;
 }
 
+/* modal */
+.modal-footer, .modal-body, .modal-header {
+    color: #fff;
+    background-color: rgba(0,0,0, 0.8);
+}
+
+.close{
+    color: #fff;
+    opacity: 1;
+}
+
 @media (min-width: 768px) { 
     #jsonRes{
         font-size: 0.5em;
