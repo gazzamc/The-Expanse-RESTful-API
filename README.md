@@ -331,12 +331,21 @@ search for any of the endpoints I get back the appropriate JSON data. This also 
 the bottom right of the results box (middle in smaller devices).
 
 ##### EndPoints
-- Searching an invalid endpoint returns a 404 message in the results.
+- Searching an invalid endpoint returns a `404` message in the results `"Invalid EndPoint"`.
 - When searching a valid endpoint an *Add Resource* button will appear under the results.
-    - Clicking this button will replace the JSON result with a form (With the same JSON layout).
+    - Clicking this button will replace the JSON result with a form (With the same JSON layout, a drop down of `systems` appears when adding `location`).
         - A *Save* and *Cancel* button will appear below the results section.
             - Clicking the save button will bring up a modal to confirm the new resource.
                 - If you fail to enter anything but `desc` an appropiate error message will appear below the results section.
+                - If you fail to enter anything but `alive`, `deceased` or `unknown` in the `status` fields (`people`), 
+                    an appropiate error message will appear below the results section.
+                - If you fail to enter anything but `male`, `female` or `unknown` in the `gender` fields (`people`), 
+                    an appropiate error message will appear below the results section.
+                - If you fail to enter an `integer` in the `planets` field (`systems`), 
+                    an appropiate error message will appear below the results section.
+                - If you fail to enter a `string` containing a digit (first character is ignored incase of `<` `>` signs) in the `population` field (`locations`), 
+                    an appropiate error message will appear below the results section.
+                - If you successfully enter all necessary fields a success message `"Record created in database"` will appear in the results box.
     - Clicking the *Cancel* button will refresh the results and bring you back to the original endpoint results.
 - When searching a specific resource using the `id` eg. `people/1`, Edit and Delete buttons will appear below the result.
     - When clicking the delete button a modal will appear to confirm the deletion of the resource.
@@ -360,6 +369,14 @@ the bottom right of the results box (middle in smaller devices).
 - If you use the pagination filter `offset` and go out of range of the results you will get a `404` error message `"Page does not exist"`.
 - If your filter search is successful you will get a `count` of the resources matching your query. The `id` and the `name` of the query in JSON.
     - Except for the `offset` filter, this will simply show you the next 25 results after your set offset. So it will return like a normal endpoint search.
+
+##### Site functionality
+- All links were tested and they work as intended, all external links have `target="_blank"` and open a separate tab.
+- All menu links on the documentation page scroll to the appropriate content.
+- All elements are responsive when changing resolutions in chrome dev tools.
+- Example code/JSON scales with resolution on documentation page.
+- Back to top button works as intended and doesnt block content.
+- No elements/content overlaps when changing resolutions.
 
 #### API
 
