@@ -13,6 +13,10 @@ html {
     background-color: rgba(0,0,0, 0.3);
 }
 
+.docList a, .docList a:hover{
+    background-color: rgba(0,0,0, 0.3);
+}
+
 #docContent{
     background-color: rgba(0,0,0, 0.1);
 }

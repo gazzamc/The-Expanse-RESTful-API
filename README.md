@@ -75,7 +75,7 @@ edit or delete records.
     For the index page of the website i wanted to keep it simple and straight to the point.
 
     At the top of the page is the navigation bar with the two pages linked, this changes into a hamburger
-    button on smaller screens. Then have a hero image with a jumbotron containing the sites name.
+    button on smaller screens. Then I have a hero image with a jumbotron containing the sites name.
 
     The user is then presented with a search bar under the hero image. Right below that is the results 
     box which is pre-filled on the first load with the API's base url's resource. This is a directory
@@ -88,11 +88,11 @@ edit or delete records.
     On the documentation pages, the User is presented with a menu on the left and the main content on the right.
     The User can select any of the menu items and the page will scroll to the corresponding section.
 
-    Finally in the footer we have social links to Github, Linkedin and the github branch of this project.
+    Finally in the footer we have social links to Github, Linkedin and the Github branch of this project.
 
 - ##### API
 
-    On a GET request of any of the endpoints resources the user will be presented a JSON object, like the one below:
+    On a GET request of any of the endpoints resources the user will be presented with a JSON object, like the one below:
     ```
     {
         "code": 200,
@@ -113,7 +113,7 @@ edit or delete records.
     The locations resource will consist of the resource `id`, `name`, `population`, `system` and `desc`.<br />
     The systems resource will consist of the resource `id`, `name`, `planets` and `desc`.<br />
 
-    Each endpoint has certain filters than the user can use to query specific resources.
+    Each endpoint has certain filters that the user can use to query specific resources.
 
     ##### Filters:
     ###### people:
@@ -122,15 +122,15 @@ edit or delete records.
     - name:<br />
         Searches resources by its `name`, if blank will return all. If no match is found error message is returned.<br /><br />
     - status:<br />
-        Searches resources by `status`, if input is not `alive`, `deceased` or `unknown` and error message will be returned.<br /><br />
+        Searches resources by `status`, if input is not `alive`, `deceased` or `unknown` an error message will be returned.<br /><br />
     - gender:<br />
-        Searches resources by `gender`, if input is not `male`, `female` or `unknown` and error message will be returned.<br />
+        Searches resources by `gender`, if input is not `male`, `female` or `unknown` an error message will be returned.<br />
     
     ###### locations:
     - offset:<br /><br />
     - name:<br /><br />
     - systems:<br />
-        Searches resources by `gender`, if input is not `male`, `female` or `unknown` and error message will be returned.<br />
+        Searches resources by `system`, works similar to the `name` filter.<br />
 
     ###### systems:
     - offset:<br /><br />
@@ -140,7 +140,7 @@ edit or delete records.
 
     #### CRUD Functionality:
     ##### Website
-    There is two ways to manipulate the data in the API, you can do directly by sending HTTP requests to the API or
+    There is two ways to manipulate the data in the API, you can do it directly by sending HTTP requests to the API or
     you can use the website as an interface. On the website when the user goes to add or edit a resource they will be 
     provided with a form within the JSON result. I find this to be the easiest way for the user to understand what data
     needs to go where. To delete a resource the user simply has to search for the resource using the `id` and click delete.
@@ -193,7 +193,7 @@ edit or delete records.
     <br /><br />
 
     If these requests are successful you will recieve a JSON response back with a code and message. 
-    Otherwise an error message will be send back with details of what went wrong.
+    Otherwise an error message will be sent back with details of what went wrong.
 
 #### Skeleton
 
@@ -202,6 +202,59 @@ I went with very neutral colours to make it look easy on the eye, as this is a s
 testing site for the API i didnt think it needed a lot to standout. The buttons are coloured
 appropriately for what they do. Edit being yellow as a warning, delete being red etc. As
 bootstrap had these built-in styles I didn't do anything custom in the CSS.
+
+## Error Codes
+Below is the full list of error codes used throughout the API.
+
+| HTTP code 	| Message(s)                                              	| Further Info                         	|
+|-----------	|---------------------------------------------------------	|--------------------------------------	|
+| 200       	| N/A (Data shown)                                        	| Request Successful.                  	|
+|           	| Record successfully deleted                             	|                                      	|
+|           	| Record was successfully altered                         	|                                      	|
+| 201       	| Record created in database                              	| Resource Created Successfully.       	|
+| 204       	| Cannot delete record as it does not exist               	| No Content Found.                    	|
+| 400       	| Bad Request. One or more fields not supplied or invalid 	| Client error, Usually input related. 	|
+|           	| Bad Request. Data must be in JSON format                	|                                      	|
+|           	| Bad Request. Status must be alive, deceased or unknown  	|                                      	|
+|           	| Bad Request. Gender must be male, female or unknown     	|                                      	|
+|           	| Bad Request. Query string unrecognised                  	|                                      	|
+| 403       	| Duplicate, Record was not created in database           	| Request Forbidden.                   	|
+| 404       	| Invalid EndPoint                                        	| Resource Not Found.                  	|
+|           	| Record does not exist                                   	|                                      	|
+|           	| Page does not exist                                     	|                                      	|
+|           	| No records found for query {query}                      	|                                      	|
+| 503       	| Cannot connect to database                              	| Server-Side Error                    	|
+
+## Database schema
+Below you can find the schema of each table along with the datatypes for each field.
+
+|        	|      **people**      	|         	|                	|
+|--------	|:----------------:	|---------	|----------------	|
+| *Fields* 	|       *Type*       	|   *Key*   	|      *Extra*     	|
+| id     	| int(11) unsigned 	| primary 	| auto_increment 	|
+| name   	| varchar(50)      	|         	|                	|
+| status 	| varchar(9)       	|         	|                	|
+| gender 	| varchar(7)       	|         	|                	|
+| desc   	| text             	|         	|                	|
+<br />
+
+|        	|      **locations**      	|         	|                	|
+|--------	|:----------------:	|---------	|----------------	|
+| *Fields* 	|       *Type*       	|   *Key*   	|      *Extra*     	|
+| LocationID  | int(11) unsigned 	| primary 	| auto_increment 	|
+| name   	| varchar(50)      	|         	|                	|
+| population 	| varchar(20)       	|         	|                	|
+| SystemID 	| int(11) unsigned 	|  Foreign	|                	|
+| desc   	| text             	|         	|                	|
+<br />
+
+|        	|      **systems**      	|         	|                	|
+|--------	|:----------------:	|---------	|----------------	|
+| *Fields* 	|       *Type*       	|   *Key*   	|      *Extra*     	|
+| SystemID     	| int(11) unsigned 	| primary 	| auto_increment 	|
+| name   	| varchar(50)      	|         	|                	|
+| desc   	| text             	|         	|                	|
+| planets 	| int(3) unsigned 	|         	|                	|
 
 ## Features
 - Users can filter the data using *query strings*, such as by *name*, *status*, *gender* etc.

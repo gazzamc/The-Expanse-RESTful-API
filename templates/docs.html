@@ -19,26 +19,26 @@
 		<!-- Menu List -->
         <div class="col-12 col-md-3 menu">
             <h6 class="mb-3">Getting Started</h6>
-            <div class="list-group text-center" id="docList">
-                <a href="#intro" type="button" class="list-group-item list-group-item-action">Introduction</a>
-                <a href="#start" type="button" class="list-group-item list-group-item-action">Getting Started</a>
-                <a href="#error" type="button" class="list-group-item list-group-item-action">Error Codes</a>
-                <a href="#limit" type="button" class="list-group-item list-group-item-action">Rate Limiting</a>
-                <a href="#auth" type="button" class="list-group-item list-group-item-action">Authentication</a>
-                <a href="#strings" type="button" class="list-group-item list-group-item-action">Query Strings</a>
-                <a href="#json" type="button" class="list-group-item list-group-item-action">JSON schema</a> 
+            <div class="list-group text-center docList">
+                <a href="#intro" class="list-group-item list-group-item-action">Introduction</a>
+                <a href="#start" class="list-group-item list-group-item-action">Getting Started</a>
+                <a href="#error" class="list-group-item list-group-item-action">Error Codes</a>
+                <a href="#limit" class="list-group-item list-group-item-action">Rate Limiting</a>
+                <a href="#auth" class="list-group-item list-group-item-action">Authentication</a>
+                <a href="#strings" class="list-group-item list-group-item-action">Query Strings</a>
+                <a href="#json" class="list-group-item list-group-item-action">JSON schema</a> 
             </div>
             <h6 class="mt-4 mb-3">Resources</h6>
-            <div class="list-group text-center" id="docList">
-                <a href="#people" type="button" class="list-group-item list-group-item-action">People</a>
-                <a href="#locations" type="button" class="list-group-item list-group-item-action">Locations</a>
-                <a href="#systems" type="button" class="list-group-item list-group-item-action">Systems</a>
-                <a href="#filters" type="button" class="list-group-item list-group-item-action">Filters</a>
+            <div class="list-group text-center docList">
+                <a href="#people" class="list-group-item list-group-item-action">People</a>
+                <a href="#locations" class="list-group-item list-group-item-action">Locations</a>
+                <a href="#systems" class="list-group-item list-group-item-action">Systems</a>
+                <a href="#filters" class="list-group-item list-group-item-action">Filters</a>
             </div>
             <h6 class="mt-4 mb-3">Examples</h6>
-            <div class="list-group text-center mb-3" id="docList">
-                <a href="#javascript" type="button" class="list-group-item list-group-item-action">Javascript</a>
-                <a href="#python" type="button" class="list-group-item list-group-item-action">Python</a>
+            <div class="list-group text-center mb-3 docList">
+                <a href="#javascript" class="list-group-item list-group-item-action">Javascript</a>
+                <a href="#python" class="list-group-item list-group-item-action">Python</a>
             </div>
 		</div>
 		<!-- Content -->
@@ -141,7 +141,6 @@
                             <td>Resource Created Successfully</td>
                         </tr>
                         <tr>
-                        <tr>
                             <th scope="row">204</th>
                             <td>Cannot delete record as it does not exist</td>
                             <td>No Content Found.</td>
@@ -176,7 +175,6 @@
                             <td>Duplicate, Record was not created in database</td>
                             <td>Request Forbidden</td>
                         </tr>
-                        <tr>
                         <tr>
                             <th scope="row">404</th>
                             <td>Invalid EndPoint</td>
@@ -366,7 +364,7 @@
                     }
                 </p>
                 <p>
-                    <span class="highlight">'population'</span> must be the a string, it can be empty. 
+                    <span class="highlight">'population'</span> must be a string, it can be empty. 
                     This string allows for greater or less than signs(eg. <1000)<br/>
                     <span class="highlight">'system'</span> must be a string of the system name not the id
                 </p>
@@ -432,7 +430,7 @@
             <div class="col-12 mb-5">
                 <h4 class="mt-5" id="filters">Filters:</h4>
                 <p>There are some filters built-in to allow you to search for more specific records.</p>
-                <h5 id="filters">People:</h5>
+                <h5>People:</h5>
                 <p><span class="highlight">Offset:</span><br />
                 By default only 25 resources are shown at a time, 
                 using the offset filter will allow you to get the resources beyond this point.</p>
@@ -455,7 +453,7 @@
                     {{ request.url.replace("documentation", "api") }}/people<span class="highlight">?gender={query}</span>
                 </p>
 
-                <h5 class="mt-5" id="filters">Locations:</h5>
+                <h5 class="mt-5">Locations:</h5>
                 <p><span class="highlight">Offset:</span></p>
                 <p class="codeExamp">
                     {{ request.url.replace("documentation", "api") }}/locations<span class="highlight">?offset={query}</span>
@@ -470,7 +468,7 @@
                     {{ request.url.replace("documentation", "api") }}/locations<span class="highlight">?system={query}</span>
                 </p>
 
-                <h5 class="mt-5" id="filters">Systems:</h5>
+                <h5 class="mt-5">Systems:</h5>
                 <p><span class="highlight">Offset:</span></p>
                 <p class="codeExamp">
                     {{ request.url.replace("documentation", "api") }}/systems<span class="highlight">?offset={query}</span>
