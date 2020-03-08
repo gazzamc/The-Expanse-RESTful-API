@@ -315,6 +315,7 @@ I would like to add a key/token to verify users for data manipulation and
 limit queries.
 - I would like to add more query string filters to search for more specific records.
 - I would like to add more endpoints such as organisations and ships.
+- If I had enough time I woukd have added a `500` error handler in flask.
 
 ## Technologies Used
 
