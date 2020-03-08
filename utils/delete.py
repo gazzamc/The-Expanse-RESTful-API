@@ -44,7 +44,7 @@ def delete_data(table, data):
                 )
             elif delete_rec == 'no record':
                 return response_code(
-                    204,
+                    404,
                     'Cannot delete record as it does not exist'
                 )
             else:

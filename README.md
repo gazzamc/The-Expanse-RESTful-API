@@ -404,11 +404,34 @@ the bottom right of the results box (middle in smaller devices).
 - Example code/JSON scales with resolution on documentation page.
 - Back to top button works as intended and doesn't block content.
 - No elements/content overlaps when changing resolutions.
+- If the user enters an unknown endpoint/page they will be shown a 404 page with a link to the homepage.
 
 #### API
+A lot of these tests have already using the website as a interface.
+
+- If the user sends a request (POST, PUT, DELETE) without declaring the content type as JSON they will recieve a code of `400` 
+and a message of `Bad Request. Data must be in JSON format`.
+- If the user sends an invalid endpoint they will get a `404` and a message `Invalid EndPoint`.
+- If the user sends the wrong query string they will get `400` and a message `Bad Request. Query string unrecognised`.
+- when adding a new resource all entries must be supplied apart from desc on all endpoint. If the user fails to do so they will get an error response.
+- Some of the endpoints have checks for specific strings and data types, such as people. Which checks for status and gender.
+- When successfully adding a resource the user will get back a `201` status and a message `Record created in database`.
+- When successfully deleting a resource the user will get back a `200` status and a message `Record successfully deleted`.
+- When successfully editing/updating a resource the user will get back a `200` status and a message `Record was successfully altered`.
+- If user tried to add a resource that already exists (`name` is used to determine this) then the user will get a `403` and a message `Duplicate, Record was not created in database`.
+- If the user tries to edit, delete or retrive a resource that doesnt exist they will get a `404` and a varying message depending on the request method.
+- If the user tries to delete a record without sending a the `id` as an `integer` they will get a `400` status and a message `Bad Request. One or more fields not supplied or invalid`
 
 #### Bugs
 - In the lowest breakpoint in the chrome dev tools the search bar is misaligned.
+
+The biggest issue I had was trying to retreive the system names before switching to the `fetch()` method. 
+It would return an empty array when called, using `fetch()` I was able to use `await` to wait for the results to populate the array before returning the result.
+
+Obtaining the data from the wiki using the script in `parse_people.py` was also very challenging. Since the wiki was not consistant i had to add a lot of
+validation and strip most of the data. This was the main reason why i dropped a few column that i had planned to use. Such as the persons ship, home planet and organisation.
+
+I also had an issue keeping the footer in place, particularly when the `404 page` is shown. To fixed this I needed to add a min-height to 404.html template.
 
 ### Automated Testing
 I did do some basic unit testing using pythons *unittest* and *nose* modules.
