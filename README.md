@@ -407,7 +407,7 @@ the bottom right of the results box (middle in smaller devices).
 - If the user enters an unknown endpoint/page they will be shown a 404 page with a link to the homepage.
 
 #### API
-A lot of these tests have already using the website as a interface.
+A lot of these tests have already been done using the website as a interface.
 
 - If the user sends a request (POST, PUT, DELETE) without declaring the content type as JSON they will recieve a code of `400` 
 and a message of `Bad Request. Data must be in JSON format`.
@@ -418,9 +418,9 @@ and a message of `Bad Request. Data must be in JSON format`.
 - When successfully adding a resource the user will get back a `201` status and a message `Record created in database`.
 - When successfully deleting a resource the user will get back a `200` status and a message `Record successfully deleted`.
 - When successfully editing/updating a resource the user will get back a `200` status and a message `Record was successfully altered`.
-- If user tried to add a resource that already exists (`name` is used to determine this) then the user will get a `403` and a message `Duplicate, Record was not created in database`.
-- If the user tries to edit, delete or retrive a resource that doesnt exist they will get a `404` and a varying message depending on the request method.
-- If the user tries to delete a record without sending a the `id` as an `integer` they will get a `400` status and a message `Bad Request. One or more fields not supplied or invalid`
+- If user tries to add a resource that already exists (`name` is used to determine this) then the user will get a `403` and a message `Duplicate, Record was not created in database`.
+- If the user tries to edit, delete or retrieve a resource that doesnt exist they will get a `404` and a varying message depending on the request method.
+- If the user tries to delete a record without sending the `id` as an `integer` they will get a `400` status and a message `Bad Request. One or more fields not supplied or invalid`
 
 #### Bugs
 - In the lowest breakpoint in the chrome dev tools the search bar is misaligned.
@@ -428,10 +428,10 @@ and a message of `Bad Request. Data must be in JSON format`.
 The biggest issue I had was trying to retreive the system names before switching to the `fetch()` method. 
 It would return an empty array when called, using `fetch()` I was able to use `await` to wait for the results to populate the array before returning the result.
 
-Obtaining the data from the wiki using the script in `parse_people.py` was also very challenging. Since the wiki was not consistant i had to add a lot of
+Obtaining the data from the wiki using the script in `parse_people.py` was also very challenging. Since the wiki was not consistent i had to add a lot of
 validation and strip most of the data. This was the main reason why i dropped a few column that i had planned to use. Such as the persons ship, home planet and organisation.
 
-I also had an issue keeping the footer in place, particularly when the `404 page` is shown. To fixed this I needed to add a min-height to 404.html template.
+I also had an issue keeping the footer in place, particularly when the `404 page` is shown. To fix this I needed to add a min-height to 404.html template content using CSS.
 
 All CSS, HTML, Python and Javascript files have been validated using their corresponding validators.
 
@@ -517,10 +517,10 @@ python3 routes.py
 - Using [this](https://clubmate.fi/javascript-adding-and-removing-class-names-from-elements/) example I was able to add/remove classes in Javascript with less hassle.
 - [This](https://clubmate.fi/javascript-adding-and-removing-class-names-from-elements/) article about filtering for restful APIs was very informative and helped me implement a form of filtering in this project.
 - Using the example from [this](https://codehandbook.org/handle-404-error-python-flask/) article I was able to implement the 404 page in my flask application when a user visited an invalid endpoint.
-- [This](http://www.blog.pythonlibrary.org/2016/07/07/python-3-testing-an-intro-to-unittest/) article helped me understant the unittest module and allowed me to do my own tests.
-- [This](https://stackoverflow.com/questions/4810841/pretty-print-json-using-javascript) exampled helped me prettify the JSON data when outputting it to the end user.
+- [This](http://www.blog.pythonlibrary.org/2016/07/07/python-3-testing-an-intro-to-unittest/) article helped me understand the `unittest` module and allowed me to do my own tests.
+- [This](https://stackoverflow.com/questions/4810841/pretty-print-json-using-javascript) example helped me prettify the JSON data when outputting it to the end user.
 - [This](https://stackoverflow.com/questions/8866053/stop-reloading-page-with-enter-key) example helped me stop the page from reloading when the user pressed the enter key in the search bar.
-- [This](https://stackoverflow.com/questions/42050765/sql-how-to-replace-foreign-key-column-with-data-from-referenced-table) example helped me with joining data between tables
-- [This](https://stackoverflow.com/questions/37255313/what-is-a-right-way-for-rest-api-response) helped me when trying to figure out the right way to respond to certain requests.
-- [This](https://stackoverflow.com/questions/16908943/display-json-returned-from-flask-in-a-neat-way) helped when trying to return the JSON with the correct indentation in the flask response
-- I would also like to thank my Mentor Aaron Sinnott for letting me know about the fetch() function when calling the API.
+- [This](https://stackoverflow.com/questions/42050765/sql-how-to-replace-foreign-key-column-with-data-from-referenced-table) example helped me with joining data between tables using the `JOIN` keyword.
+- [This](https://stackoverflow.com/questions/37255313/what-is-a-right-way-for-rest-api-response) helped me when trying to figure out the right way to respond to certain user requests.
+- [This](https://stackoverflow.com/questions/16908943/display-json-returned-from-flask-in-a-neat-way) helped when trying to return the JSON with the correct indentation in the flask response.
+- I would also like to thank my Mentor Aaron Sinnott for letting me know about the `fetch()` function when calling the API.
