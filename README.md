@@ -69,6 +69,16 @@ wanted to created a simple website that would allow you to test the endpoints an
 edit or delete records.
 
 #### Scope
+I wanted users to be able to test out the API without writing any code or using a development tool such as **Postman**.
+And if when they were ready to start using the API that there was an informative documentation available for the API.
+The website is simple in design, you can search for the resource, add a new resource or edit/delete an existing resouce.
+
+As for the API itself, I wanted it to be as easy to use as possible, if a users input was invalid in anyway I wanted to 
+send back a response that would be user friendly and point them in the right direction on what went wrong in their request.
+I was originally aiming for another two endpoints that would add more relational data, and make use of the retalation database. 
+Unfortunately as the data I extracted from the wiki was 'dirty data' and needed to be validated. I then scrapped a few fields that
+would have utilized the relational database. I still feel as though there is enough there to showcase the API and sets a foundation 
+add more.
 
 #### Structure
 - ##### Website
@@ -256,6 +266,10 @@ Below you can find the schema of each table along with the datatypes for each fi
 | desc   	| text             	|         	|                	|
 | planets 	| int(3) unsigned 	|         	|                	|
 
+As I'm using ClearDB on Heroku the auto_increment increases by '10', Unfortunately this
+cannot be changed with the permissions I have to the database. But it doesnt affect the
+application. This is just a note to explain the high count of ID's on the resources.
+
 ## Features
 - Users can filter the data using *query strings*, such as by *name*, *status*, *gender* etc.
 - Users can retrieve single records using the ID of said record in the URI.
@@ -307,6 +321,16 @@ this allowed me to test all the different methods (GET, PUT, POST, DELETE)
 and check that i got the appropriate response back.
 
 ### Manual Testing
+As I was building the website for the API I was able to extensively test it. Since I was connecting
+the my API with javascript and retrieving the data as an end-user would. I was able to find some bugs that I
+later patched and returned an appropriate responds code/message.
+
+#### Website
+On first load of the index page the results box is filled with the API's base urls resource. If I
+search for any of the endpoints I get back the appropriate JSON data. This also adds a ADD RECORD button to
+the bottom right of the results box (middle in smaller devices).
+
+#### API
 
 ### Automated Testing
 I did do some basic unit testing using pythons *unittest* and *nose* modules.
