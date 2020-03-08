@@ -12,7 +12,7 @@ You can try the live version of the API [Here](https://expanse-api.herokuapp.com
 #### User Stories
 - As a user I should be able test the API from the website.
 <p align="center">
-<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/testAPI.gif" alt="Test API" width="80%">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/testApi.gif" alt="Test API" width="80%">
 </p>
 
 - As a user I should be able to view a resource.
