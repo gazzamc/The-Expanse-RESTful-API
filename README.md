@@ -33,6 +33,10 @@ You can try the live version of the API [Here](https://expanse-api.herokuapp.com
 </p>
 
 - As a user I should be able to delete a resource.
+<p align="center">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/deleteResource.gif" alt="Delete Resource" width="80%">
+</p>
+
 - As a user I should be able to add a resource.
 <p align="center">
 <img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/addResource.gif" alt="Add Resource" width="80%">
@@ -43,7 +47,7 @@ You can try the live version of the API [Here](https://expanse-api.herokuapp.com
 <img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/filter.png" alt="Filter Resource" width="80%">
 </p>
 
-- As a user I should get appropriate error/response responses.
+- As a user I should get appropriate error/response messages.
 <p align="center">
 <img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/404.png" alt="404 error"><br />
 <img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/404_2.png" alt="another 404 error">
@@ -67,6 +71,129 @@ edit or delete records.
 #### Scope
 
 #### Structure
+- ##### Website
+    For the index page of the website i wanted to keep it simple and straight to the point.
+
+    At the top of the page is the navigation bar with the two pages linked, this changes into a hamburger
+    button on smaller screens. Then have a hero image with a jumbotron containing the sites name.
+
+    The user is then presented with a search bar under the hero image. Right below that is the results 
+    box which is pre-filled on the first load with the API's base url's resource. This is a directory
+    of endpoints and their corresponding filters.
+
+    Under the results is a short about section that gives a brief description of the API and it's resources.
+    This is followed by "How to use" section which points the user the sites documentation for further information
+    on the API and how to use it.
+
+    On the documentation pages, the User is presented with a menu on the left and the main content on the right.
+    The User can select any of the menu items and the page will scroll to the corresponding section.
+
+    Finally in the footer we have social links to Github, Linkedin and the github branch of this project.
+
+- ##### API
+
+    On a GET request of any of the endpoints resources the user will be presented a JSON object, like the one below:
+    ```
+    {
+        "code": 200,
+        "results": 1,
+        "pages": "1 of 1",
+        "data": {
+            "id": 1,
+            "name": "Captain McDowell",
+            "status": "alive",
+            "gender": "Male",
+            "desc": "Captain McDowell has been commissioned by the 
+            Pur'n'Kleen Water Company as the commanding officer of the Canterbury"
+        }
+    }
+    ```
+
+    The people resource will consist of the resource `id`, `name`, `status`, `gender` and `desc`.<br />
+    The locations resource will consist of the resource `id`, `name`, `population`, `system` and `desc`.<br />
+    The systems resource will consist of the resource `id`, `name`, `planets` and `desc`.<br />
+
+    Each endpoint has certain filters than the user can use to query specific resources.
+
+    ##### Filters:
+    ###### people:
+    - offset:<br />
+        As the default amount of results returned is 25, this allows users to get results beyond this point.<br /><br />
+    - name:<br />
+        Searches resources by its `name`, if blank will return all. If no match is found error message is returned.<br /><br />
+    - status:<br />
+        Searches resources by `status`, if input is not `alive`, `deceased` or `unknown` and error message will be returned.<br /><br />
+    - gender:<br />
+        Searches resources by `gender`, if input is not `male`, `female` or `unknown` and error message will be returned.<br />
+    
+    ###### locations:
+    - offset:<br /><br />
+    - name:<br /><br />
+    - systems:<br />
+        Searches resources by `gender`, if input is not `male`, `female` or `unknown` and error message will be returned.<br />
+
+    ###### systems:
+    - offset:<br /><br />
+    - name:<br /><br />
+
+    For more information on these filters you can view the documentation on the website [here](https://expanse-api.herokuapp.com/documentation#filters).
+
+    #### CRUD Functionality:
+    ##### Website
+    There is two ways to manipulate the data in the API, you can do directly by sending HTTP requests to the API or
+    you can use the website as an interface. On the website when the user goes to add or edit a resource they will be 
+    provided with a form within the JSON result. I find this to be the easiest way for the user to understand what data
+    needs to go where. To delete a resource the user simply has to search for the resource using the `id` and click delete.
+
+    ##### Directly
+    When a user wants to Add, Edit or Delete a resource using a direct path to the API. They simply need to send the keys/values
+    in JSON format with the appropiate request method. Below I will give examples of what the request would look like for each
+    method.
+
+    - GET 
+    <br /><br />
+        ```
+        No JSON needed, sending a GET request with a valid endpoint will return a JSON object.
+        ```
+    <br /><br />
+    - POST
+    <br /><br />
+        ```
+            {
+                "name": string,
+                "status": string,
+                "gender": string,
+                "desc": string
+            }
+        ```
+        These keys will vary, please check the corresponding documentation for each endpoint [here](https://expanse-api.herokuapp.com/documentation#resource)
+    <br /><br />
+    - PUT
+    <br /><br />
+        ```
+            {
+                "id": integer,
+                "name": string,
+                "status": string,
+                "gender": string,
+                "desc": string
+            }
+        ```
+        These keys will vary, please check the corresponding documentation for each endpoint [here](https://expanse-api.herokuapp.com/documentation#resource)
+    <br /><br />
+    - DELETE
+    <br /><br />
+        ```
+
+            {
+                "id": integer,
+            }
+        ```
+        These keys will vary, please check the corresponding documentation for each endpoint [here](https://expanse-api.herokuapp.com/documentation#resource)
+    <br /><br />
+
+    If these requests are successful you will recieve a JSON response back with a code and message. 
+    Otherwise an error message will be send back with details of what went wrong.
 
 #### Skeleton
 
