@@ -309,11 +309,8 @@ limit queries.
 - [CSS3](https://en.wikipedia.org/wiki/Cascading_Style_Sheets)
     - **CSS3** was used to add custom styles and positioning of the HTML elements.
 
-- [HTML5](https://en.wikipedia.org/wiki/HTML5)
-    - **HTML5** was used to layout the basic structure of the website.
-
 - [Bootstrap](https://getbootstrap.com/)
-    - **HTML5** was used to layout the basic structure of the website.
+    - **Bootstrap** was used to layout the basic structure of the website.
 
 
 ## Testing
@@ -325,13 +322,44 @@ and check that i got the appropriate response back.
 
 ### Manual Testing
 As I was building the website for the API I was able to extensively test it. Since I was connecting
-the my API with javascript and retrieving the data as an end-user would. I was able to find some bugs that I
+to my API with javascript and retrieving the data as an end-user would. I was able to find some bugs that I
 later patched and returned an appropriate responds code/message.
 
 #### Website
 On first load of the index page the results box is filled with the API's base urls resource. If I
 search for any of the endpoints I get back the appropriate JSON data. This also adds a ADD RECORD button to
 the bottom right of the results box (middle in smaller devices).
+
+##### EndPoints
+- Searching an invalid endpoint returns a 404 message in the results.
+- When searching a valid endpoint an *Add Resource* button will appear under the results.
+    - Clicking this button will replace the JSON result with a form (With the same JSON layout).
+        - A *Save* and *Cancel* button will appear below the results section.
+            - Clicking the save button will bring up a modal to confirm the new resource.
+                - If you fail to enter anything but `desc` an appropiate error message will appear below the results section.
+    - Clicking the *Cancel* button will refresh the results and bring you back to the original endpoint results.
+- When searching a specific resource using the `id` eg. `people/1`, Edit and Delete buttons will appear below the result.
+    - When clicking the delete button a modal will appear to confirm the deletion of the resource.
+        - If you click *YES* the modal will close and the resource will be deleted. A JSON message confirming that will appear in the results box.
+        - If you click *NO* the modal will close.
+    - If you click the *Edit* button, the JSON result will be replaced with a form but keeping the same structure. 
+        The two previous buttons will disappear and a *Cancel* and *Save* button now appears below the result box.
+        - If you click save without entering any information a modal will appear once again.
+            - Clicking *YES* will make the modal disappear and an appropiate error message will appear below the results box.
+        - If you click save and enter invalid data.
+            - Clicking *YES* will make the modal disappear and an appropiate error message will appear below the results box.
+        - If you click save and enter only one of the fields.
+            - Clicking *YES* will make the modal disappear and successful message will appear in the results box in JSON format.
+            - Any fields not entered wont be overwritten.
+- If you input an invalid `id` in the endpoint you will get a `404` message `"Record does not exist"`.
+- If you input an `id` that isn't an integer you will get a `400` message `"Bad Request. ID must be an integer"`.
+
+##### Filters
+- Searching an endpoint with an invalid filter will return a `400` message `"Bad Request. Query string unrecognised"`.
+- If the query you used for the filter can't find a record it will return a `404` message `"No records found for query '{query}'"`.
+- If you use the pagination filter `offset` and go out of range of the results you will get a `404` error message `"Page does not exist"`.
+- If your filter search is successful you will get a `count` of the resources matching your query. The `id` and the `name` of the query in JSON.
+    - Except for the `offset` filter, this will simply show you the next 25 results after your set offset. So it will return like a normal endpoint search.
 
 #### API
 
