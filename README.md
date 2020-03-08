@@ -407,6 +407,9 @@ the bottom right of the results box (middle in smaller devices).
 
 #### API
 
+#### Bugs
+- In the lowest breakpoint in the chrome dev tools the search bar is misaligned.
+
 ### Automated Testing
 I did do some basic unit testing using pythons *unittest* and *nose* modules.
 These tests can be found in the `api_test.py` file. In order to run these tests 
@@ -495,3 +498,4 @@ python3 routes.py
 - [This](https://stackoverflow.com/questions/42050765/sql-how-to-replace-foreign-key-column-with-data-from-referenced-table) example helped me with joining data between tables
 - [This](https://stackoverflow.com/questions/37255313/what-is-a-right-way-for-rest-api-response) helped me when trying to figure out the right way to respond to certain requests.
 - [This](https://stackoverflow.com/questions/16908943/display-json-returned-from-flask-in-a-neat-way) helped when trying to return the JSON with the correct indentation in the flask response
+- I would also like to thank my Mentor Aaron Sinnott for letting me know about the fetch() function when calling the API.
