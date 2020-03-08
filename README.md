@@ -5,7 +5,9 @@ Data Centric Development Milestone Project - Code Institute
 
 ## Demo
 You can try the live version of the API [Here](https://expanse-api.herokuapp.com/)<br><br>
-
+<p align="center">
+<img src="https://github.com/gazzamc/Milestone-Project-Three/raw/master/screenshots/demo.png" alt="Responsiveness" width="80%">
+</p>
 
 ## UX
 
